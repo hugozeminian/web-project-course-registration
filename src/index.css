@@ -10,6 +10,7 @@
   --color_font1: #000000;
   --color_font2: #626262;
   --color_font3: #747474;
+  --color_font4: #ffffff;
 
   --font-standard: Arial, Verdana, Helvetica, sans-serif;
 
@@ -29,8 +30,6 @@
 * {
   box-sizing: border-box;
   font-family: var(--font-standard);
-  background-color: var(--color_main12);
-  color: var(--color_font3);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
