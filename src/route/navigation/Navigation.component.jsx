@@ -1,4 +1,4 @@
-import "./Navigation.styles.css";
+import React from "react";
 import {
   NavBarWrapper,
   Icon,
@@ -29,7 +29,7 @@ const Navigation = ({ title, userName }) => {
           <Navbar.Brand href="#" className="me-4">
             <Icon icon={faBars} className="menu-icon" />
           </Navbar.Brand>
-          <Navbar.Brand href="#" className="me-4">
+          <Navbar.Brand className="me-4">
             <Icon icon={faGraduationCap} className="menu-icon" />
           </Navbar.Brand>
           <Navbar.Brand>

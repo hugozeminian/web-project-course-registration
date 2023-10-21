@@ -116,12 +116,11 @@ const Home = () => {
 <h1> this is a HOME </h1>
 <h1> this is a HOME </h1>
 <h1> this is a HOME </h1>
-<h1> this is a HOME </h1>
-<h1> this is a HOME </h1>
-<h1> this is a HOME </h1>
-<h1> this is a HOME </h1>
-<h1> this is a HOME </h1>
-
+<h1> 5this is a HOME </h1>
+<h1> 6this is a HOME </h1>
+<h1> 7this is a HOME </h1>
+<h1> 8this is a HOME </h1>
+<h1> 9this is a HOME </h1>
     </>
 
   ) 
