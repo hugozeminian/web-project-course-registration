@@ -1,4 +1,3 @@
-import React from "react";
 import {
   NavBarWrapper,
   Icon,
@@ -16,8 +15,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = ({ title, userName }) => {
-  title = "Title page";
-  userName = "User name";
+  
+  title = "This is a title6789";
+  userName = "User name!012";
+  
+  const maxCharTitle = 15;
+  const maxCharUserName = 10
+
+  const truncatedCharTitle = title.length > maxCharTitle ? title.slice(0, maxCharTitle) : title
+  const truncatedUserName = userName.length > maxCharUserName ? userName.slice(0, maxCharUserName) : userName
 
   return (
     <>
@@ -25,25 +31,28 @@ const Navigation = ({ title, userName }) => {
         expand="lg"
         className="bg-body-tertiary nav-bar"
         sticky="top">
-        <Container fluid className="d-flex align-items-center">
-          <Navbar.Brand href="#" className="me-4">
-            <Icon icon={faBars} className="menu-icon" />
-          </Navbar.Brand>
-          <Navbar.Brand className="me-4">
-            <Icon icon={faGraduationCap} className="menu-icon" />
-          </Navbar.Brand>
-          <Navbar.Brand>
-            <NavTitlePage>{title}</NavTitlePage>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Brand href="#">
+        <Container fluid className="d-flex flex-nowrap">
+          <div className="d-flex align-items-center">
+            <Navbar.Brand href="#" className="me-4">
+              <Icon icon={faBars} className="menu-icon fa-lg" />
+            </Navbar.Brand>
+            <Navbar.Collapse>
+              <Navbar.Brand href="/" className="me-4">
+                <Icon icon={faGraduationCap} className="menu-icon fa-lg" />
+              </Navbar.Brand>
+            </Navbar.Collapse>
+            <Navbar.Text>
+              <NavTitlePage>{truncatedCharTitle}</NavTitlePage>
+            </Navbar.Text>
+          </div>
+          <div className="d-flex">
+            <Navbar.Brand href="#" className="me-0">
               <div className="d-flex flex-column">
-                <Icon icon={faUser} className="menu-icon" />
-                <UserName>{userName}</UserName>
+                <Icon icon={faUser} className="menu-icon fa-lg" />
+                <UserName>{truncatedUserName}</UserName>
               </div>
             </Navbar.Brand>
-          </Navbar.Collapse>
+          </div>
         </Container>
       </NavBarWrapper>
     </>

@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const NavBarWrapper = styled(Navbar)`
   background-color: var(--color_main2) !important;
+  height: 90px;
 `;
 
 export const Icon = styled(FontAwesomeIcon)`
   color: var(--color_font4);
+  margin: 0;
 `;
 
 export const NavTitlePage = styled.h3`
