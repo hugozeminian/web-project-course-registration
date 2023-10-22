@@ -4,6 +4,11 @@ export const FooterContainer = styled.div`
   height: 100px;
   background-color: var(--color_main2);
   text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+
 
   @media (max-width: 576px) {
     display: flex;

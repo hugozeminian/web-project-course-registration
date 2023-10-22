@@ -1,10 +1,10 @@
 import React from "react";
-import {FooterContainer, FooterInfo} from "./Footer.styled"
+import {FooterContainer, FooterInfo} from "./Footer.styles"
 
 const Footer = () => {
   return (
     <>
-      <FooterContainer className="d-flex justify-content-around align-items-center">
+      <FooterContainer className="footer-container">
         <div>
           <FooterInfo>
             <strong>&reg; Bow Courses Institute</strong>
