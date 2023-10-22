@@ -1,4 +1,6 @@
+import React from "react";
 import { Routes, Route } from 'react-router-dom';
+
 import { Container } from "react-bootstrap"
 
 import Navigation from "./route/navigation/Navigation.component"
@@ -25,9 +27,10 @@ import AdmForms from './route/adm-forms/AdmForms.component'
 
 
 const App = () => {
+
     return (
         <>
-            <Navigation />
+            <Navigation userName="User name!012" />
             <Container>
                 <Routes>
                     <Route>
@@ -45,6 +48,7 @@ const App = () => {
                         <Route path='add-courses' element={<AddCourses />} />
                         <Route path='my-courses' element={<MyCourses />} />
                         <Route path='contact' element={<Contact />} />
+                        
                         <Route path='new-password' element={<NewPassword />} />
 
                         <Route path='adm-profile' element={<AdmProfile />} />
