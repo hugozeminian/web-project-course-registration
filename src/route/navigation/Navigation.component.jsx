@@ -29,10 +29,12 @@ const Navigation = ({ userName }) => {
 
   const toggleMenuLeft = () => {
     setMenuLeftOpen(!menuLeftOpen);
+    setMenuRightOpen(false);
   };
 
   const toggleMenuRight = () => {
     setMenuRightOpen(!menuRightOpen);
+    setMenuLeftOpen(false);
   };
 
   const handlePageChange = (newTitle) => {
