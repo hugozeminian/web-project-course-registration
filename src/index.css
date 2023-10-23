@@ -37,3 +37,27 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/*CSS for Programs page*/
+
+.program-container {
+  display: flex;
+  /*justify-content: space-between;*/
+
+  width: 80%;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.program-content {
+  flex: 2;
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.fees-details {
+  flex: 1;
+  padding: 20px;
+  background-color:#F9F9F9;
+
+}
