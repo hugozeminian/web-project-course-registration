@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
-import NavigationLeftMenu from "../navigation-left-menu/NavigationLeftMenu.component";
-import NavigationRightMenu from "../navigation-right-menu/NavigationRightMenu.component";
+import NavigationLeftMenu from "../../components/navigation-left-menu/NavigationLeftMenu.component";
+import NavigationRightMenu from "../../components/navigation-right-menu/NavigationRightMenu.component";
 
 import {
   NavBarWrapper,
@@ -22,7 +22,7 @@ const Navigation = ({ userName }) => {
 
   const [menuLeftOpen, setMenuLeftOpen] = useState(false);
   const [menuRightOpen, setMenuRightOpen] = useState(false);
-  const [pageTitle, setPageTitle] = useState('Home');
+  const [pageTitle, setPageTitle] = useState('HOME');
   const [userNameNav, setUserNameNav] = useState(userName);
   const maxCharTitle = 15;
   const maxCharUserName = 10;
@@ -40,6 +40,7 @@ const Navigation = ({ userName }) => {
   const handlePageChange = (newTitle) => {
     setPageTitle(newTitle);
   };
+  
 
   useEffect(() => {
     if (pageTitle.length > maxCharTitle) {
