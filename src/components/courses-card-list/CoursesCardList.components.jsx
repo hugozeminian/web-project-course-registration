@@ -1,15 +1,20 @@
 import CourseCard from "../course-card/CourseCard.component";
 
-const CourseCardList = (courses) => {
-  const { coursesData } = courses;
+const CourseCardList = ({ coursesData, addCourseButtonHidden }) => {
 
   return (
     <>
-        <div>
-          {coursesData.map((courseData) => {
-            return <CourseCard key={courseData.id} courseData={courseData} />;
-          })}
-        </div>
+      <div>
+        {coursesData.map((courseData) => {
+          return (
+            <CourseCard
+              key={courseData.id}
+              courseData={courseData}
+              addCourseButtonHidden={addCourseButtonHidden}
+            />
+          );
+        })}
+      </div>
     </>
   );
 };

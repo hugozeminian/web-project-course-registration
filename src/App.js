@@ -27,7 +27,6 @@ import AdmForms from './route/adm-forms/AdmForms.component'
 
 import coursesDataJson from './util/json-information/courses.json'
 
-
 const App = () => {
 
     const [coursesData, setCoursesData] = useState(coursesDataJson)
@@ -46,10 +45,10 @@ const App = () => {
 
                         <Route path='user-dashboard' element={<UserDashboard />} />
                         <Route path='programs' element={<Programs />} />
-                        <Route path='courses' element={<Courses />} />
+                        <Route path='courses' element={<Courses coursesData={coursesData} addCourseButtonHidden={true}/>} />
                         <Route path='about' element={<About />} />
                         <Route path='profile' element={<Profile />} />
-                        <Route path='add-courses' element={<AddCourses coursesData={coursesData}/>} />
+                        <Route path='add-courses' element={<AddCourses coursesData={coursesData} addCourseButtonHidden={false}/>} />
                         <Route path='my-courses' element={<MyCourses />} />
                         <Route path='contact' element={<Contact />} />
 
