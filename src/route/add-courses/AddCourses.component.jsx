@@ -43,7 +43,7 @@ const AddCourses = ({ coursesData }) => {
         <DropdownTerm onTermSelect={handleTermSelect} />
         <SearchBar onSearch={handleSearch} searchText={searchText} />
       </FiltersContainer>
-      <CourseCardList coursesData={filteredCourseData} />
+      <CourseCardList coursesData={filteredCourseData} addCourseButtonHidden={false} removeCourseButtonHidden={true}/>
     </>
   );
 };

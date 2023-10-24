@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "courseId": 1,
     "term": 1,
     "course_number": "CM0101",
     "title": "Creative Coding Workshop",
@@ -15,7 +15,7 @@
     "class_size": 40
   },
   {
-    "id": 2,
+    "courseId": 2,
     "term": 1,
     "course_number": "CS0202",
     "title": "Full-Stack Web Development Bootcamp",
@@ -30,7 +30,7 @@
     "class_size": 40
   },
   {
-    "id": 3,
+    "courseId": 3,
     "term": 2,
     "course_number": "DB0303",
     "title": "Database Design and Management",
@@ -45,7 +45,7 @@
     "class_size": 40
   },
   {
-    "id": 4,
+    "courseId": 4,
     "term": 2,
     "course_number": "AI0404",
     "title": "Artificial Intelligence Masterclass",
@@ -60,7 +60,7 @@
     "class_size": 40
   },
   {
-    "id": 5,
+    "courseId": 5,
     "term": 3,
     "course_number": "UX0505",
     "title": "User Experience Design Workshop",
@@ -75,7 +75,7 @@
     "class_size": 40
   },
   {
-    "id": 6,
+    "courseId": 6,
     "term": 3,
     "course_number": "PM0707",
     "title": "Project Management Certification",
@@ -90,7 +90,7 @@
     "class_size": 40
   },
   {
-    "id": 7,
+    "courseId": 7,
     "term": 4,
     "course_number": "DS0808",
     "title": "Data Science Bootcamp",
@@ -105,7 +105,7 @@
     "class_size": 40
   },
   {
-    "id": 8,
+    "courseId": 8,
     "term": 4,
     "course_number": "ML1010",
     "title": "Machine Learning Fundamentals",
