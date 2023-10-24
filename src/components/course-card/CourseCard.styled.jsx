@@ -19,6 +19,7 @@ export const CustomButton = styled.button`
   color: var(--color_main1);
   padding: 5px 10px;
   border-radius: 10px;
+  display: ${(props) => (props.hidden ? "none" : "block")};;
 
   &:hover {
     background-color: var(--color_font5);

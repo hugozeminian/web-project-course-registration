@@ -1,8 +1,14 @@
+import React from 'react';
 import Card from "react-bootstrap/Card";
 import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styled";
 
-function CourseCard(courseData) {
+function CourseCard({courseData, addCourseButtonHidden}) {
+
+  if (!courseData) {
+    return null;
+  }
+
   const {
     term,
     course_number,
@@ -16,7 +22,7 @@ function CourseCard(courseData) {
     delivery_mode,
     seats_available,
     class_size,
-  } = courseData.courseData;
+  } = courseData;
 
   return (
     <CardWrapper>
@@ -100,7 +106,7 @@ function CourseCard(courseData) {
             </Table>
 
             <div className="d-flex justify-content-end">
-              <CustomButton>Add Course</CustomButton>
+              <CustomButton hidden={addCourseButtonHidden}>Add Course</CustomButton>
             </div>
           </Col>
         </Row>
