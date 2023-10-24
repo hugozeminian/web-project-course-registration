@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from 'react-router-dom';
 
 import { Container } from "react-bootstrap"
 
 import Navigation from "./route/navigation/Navigation.component"
-import Footer from "./route/footer/Footer.component"
+import Footer from "./components/footer/Footer.component"
 
 import Home from "./route/home/Home.component"
 import Login from './route/login/Login.component';
@@ -25,13 +25,17 @@ import AdmNewCourseForm from './route/adm-new-course-form/AdmNewCourseForm.compo
 import AdmStudentList from './route/adm-student-list/AdmStudentList.component'
 import AdmForms from './route/adm-forms/AdmForms.component'
 
+import coursesDataJson from './util/json-information/courses.json'
+
 
 const App = () => {
+
+    const [coursesData, setCoursesData] = useState(coursesDataJson)
 
     return (
         <>
             <Navigation userName="User name!012" />
-            <Container>
+            <Container className="d-flex flex-column align-items-center" style={{ paddingTop: '40px', paddingBottom: '100px' }}>
                 <Routes>
                     <Route>
                         <Route index element={<Home />} />
@@ -45,10 +49,10 @@ const App = () => {
                         <Route path='courses' element={<Courses />} />
                         <Route path='about' element={<About />} />
                         <Route path='profile' element={<Profile />} />
-                        <Route path='add-courses' element={<AddCourses />} />
+                        <Route path='add-courses' element={<AddCourses coursesData={coursesData}/>} />
                         <Route path='my-courses' element={<MyCourses />} />
                         <Route path='contact' element={<Contact />} />
-                        
+
                         <Route path='new-password' element={<NewPassword />} />
 
                         <Route path='adm-profile' element={<AdmProfile />} />
