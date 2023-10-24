@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styled";
+import { addCourseRegistration, getCourseRegistrationList, removeCourseRegistration } from "../../util/api/api";
 
-function CourseCard({courseData, addCourseButtonHidden}) {
+function CourseCard({ courseData, addCourseButtonHidden, removeCourseButtonHidden }) {
+  const [courseInformation, setCourseInformation] = useState(courseData);
 
   if (!courseData) {
     return null;
   }
 
   const {
+    courseId,
     term,
     course_number,
     title,
@@ -22,7 +25,50 @@ function CourseCard({courseData, addCourseButtonHidden}) {
     delivery_mode,
     seats_available,
     class_size,
-  } = courseData;
+  } = courseInformation;
+
+  const handleButtonClickAddCourse = () => {
+    const courseInformation = {
+      id: "",
+      courseId: courseId,
+      term: term,
+      course_number: course_number,
+      title: title,
+      description: description,
+      week_day: week_day,
+      hour: hour,
+      start_date: start_date,
+      end_date: end_date,
+      campus: campus,
+      delivery_mode: delivery_mode,
+      seats_available: seats_available,
+      class_size: class_size,
+    };
+
+    addCourseRegistration(courseInformation);
+  };
+
+  const handleButtonClickRemoveCourse = () => {
+    const courseInformation = {
+      id: "",
+      courseId: courseId,
+      term: term,
+      course_number: course_number,
+      title: title,
+      description: description,
+      week_day: week_day,
+      hour: hour,
+      start_date: start_date,
+      end_date: end_date,
+      campus: campus,
+      delivery_mode: delivery_mode,
+      seats_available: seats_available,
+      class_size: class_size,
+    };
+
+    removeCourseRegistration(courseInformation)
+    window.location.reload();
+  }
 
   return (
     <CardWrapper>
@@ -35,7 +81,9 @@ function CourseCard({courseData, addCourseButtonHidden}) {
         <Col xs={12} md={6}>
           <div className="text-center">
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              <strong>{title} - {course_number}</strong>
+              <strong>
+                {title} - {course_number}
+              </strong>
             </Card.Title>
           </div>
         </Col>
@@ -43,7 +91,9 @@ function CourseCard({courseData, addCourseButtonHidden}) {
       <Card.Body>
         <Row>
           <Col md={12} xl={6}>
-            <Card.Title className="mt-3" style={{ color: "var(--color_font2)" }}>
+            <Card.Title
+              className="mt-3"
+              style={{ color: "var(--color_font2)" }}>
               <strong>Description: </strong>
             </Card.Title>
             <Card.Text style={{ color: "var(--color_font3)" }}>
@@ -52,7 +102,9 @@ function CourseCard({courseData, addCourseButtonHidden}) {
           </Col>
           <Col md={12} xl={6}>
             <div className="text-center">
-              <Card.Title className="mt-3" style={{ color: "var(--color_font1)" }}>
+              <Card.Title
+                className="mt-3"
+                style={{ color: "var(--color_font1)" }}>
                 <strong>
                   <em>{week_day}</em>
                 </strong>
@@ -106,7 +158,19 @@ function CourseCard({courseData, addCourseButtonHidden}) {
             </Table>
 
             <div className="d-flex justify-content-end">
-              <CustomButton hidden={addCourseButtonHidden}>Add Course</CustomButton>
+              <CustomButton
+                hidden={addCourseButtonHidden}
+                onClick={handleButtonClickAddCourse}>
+                Add Course
+              </CustomButton>
+            </div>
+
+            <div className="d-flex justify-content-end">
+              <CustomButton
+                hidden={removeCourseButtonHidden}
+                onClick={handleButtonClickRemoveCourse}>
+                Remove Course
+              </CustomButton>
             </div>
           </Col>
         </Row>
