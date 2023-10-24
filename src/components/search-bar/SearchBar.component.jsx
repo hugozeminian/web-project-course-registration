@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { MDBCol } from "mdbreact";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import {CustomMDBCol} from "./SearchBar.styles"
 
 const SearchBar = ({ onSearch, searchText }) => {
   const handleSearch = (event) => {
@@ -9,7 +9,7 @@ const SearchBar = ({ onSearch, searchText }) => {
   };
 
   return (
-    <MDBCol md="6" className="mt-2">
+    <CustomMDBCol md="6" className="mt-2">
       <form className="form-inline mt-0 mb-0">
         <div className="input-group">
           <div className="input-group-prepend">
@@ -27,7 +27,7 @@ const SearchBar = ({ onSearch, searchText }) => {
           />
         </div>
       </form>
-    </MDBCol>
+    </CustomMDBCol>
   );
 };
 

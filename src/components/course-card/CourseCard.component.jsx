@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card";
 import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styled";
 
-function CourseCard({courseData}) {
+function CourseCard(courseData) {
   const {
     term,
     course_number,
@@ -16,7 +16,7 @@ function CourseCard({courseData}) {
     delivery_mode,
     seats_available,
     class_size,
-  } = courseData;
+  } = courseData.courseData;
 
   return (
     <CardWrapper>

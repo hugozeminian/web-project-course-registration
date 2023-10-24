@@ -1,6 +1,7 @@
 import CourseCard from "../course-card/CourseCard.component";
 
-const CourseCardList = ({ coursesData }) => {
+const CourseCardList = (courses) => {
+  const { coursesData } = courses;
 
   return (
     <>
