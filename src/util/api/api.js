@@ -10,6 +10,22 @@
 ##### STUDENT FUNCTIONS #####
 #############################
 */
+
+export const getNextAvailableID = (existingIDs) => {
+    let maxID = 0;
+
+    if (existingIDs) {
+        existingIDs.forEach((existingID) => {
+            if (existingID.id > maxID) {
+                maxID = existingID.id;
+            }
+        });
+    }
+
+    return maxID + 1;
+}
+
+
 export const getNextCourseRegistrationID = (courseRegistrations) => {
     let courseId = 0;
 
@@ -19,7 +35,7 @@ export const getNextCourseRegistrationID = (courseRegistrations) => {
         }
     });
 
-    return courseId+1;
+    return courseId + 1;
 }
 
 export const addCourseRegistration = (courseInformation) => {
@@ -56,8 +72,8 @@ export const removeCourseRegistration = (courseInformation) => {
     if (courseRegistrations) {
         const indexToRemove = courseRegistrations.findIndex(
             (courseRegistration) =>
-            // courseRegistration.studentId === courseInformation.studentId &&
-            courseRegistration.courseId === courseInformation.courseId
+                // courseRegistration.studentId === courseInformation.studentId &&
+                courseRegistration.courseId === courseInformation.courseId
         );
 
         if (indexToRemove !== -1) {
@@ -67,3 +83,18 @@ export const removeCourseRegistration = (courseInformation) => {
 
     }
 }
+
+export const sendMessageContact = (messageStudentsData) => {
+    let messageStudents = JSON.parse(localStorage.getItem("messageStudents"));
+
+    if (!messageStudents) {
+        messageStudents = [];
+    }
+
+    let nextId = getNextAvailableID(messageStudents);
+    messageStudentsData.id = nextId;
+    messageStudents.push(messageStudentsData);
+    localStorage.setItem("messageStudents", JSON.stringify(messageStudents));
+}
+
+
