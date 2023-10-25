@@ -5,6 +5,7 @@ import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styled";
 import {
   addCourseRegistration,
+  deleteCourse,
   removeCourseRegistration,
 } from "../../util/api/api";
 
@@ -12,10 +13,11 @@ function CourseCard({
   courseData,
   addCourseButtonHidden,
   removeCourseButtonHidden,
+  deleteCourseButtonHidden,
 }) {
   const [courseInformation, setCourseInformation] = useState(courseData);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [confirmationMessage, setConfirmationMessage] = useState(""); // New state variable for the message
+  const [confirmationMessage, setConfirmationMessage] = useState("");
 
   if (!courseData) {
     return null;
@@ -70,23 +72,22 @@ function CourseCard({
     const courseInformation = {
       id: "",
       courseId: courseId,
-      term: term,
-      course_number: course_number,
-      title: title,
-      description: description,
-      week_day: week_day,
-      hour: hour,
-      start_date: start_date,
-      end_date: end_date,
-      campus: campus,
-      delivery_mode: delivery_mode,
-      seats_available: seats_available,
-      class_size: class_size,
     };
 
     removeCourseRegistration(courseInformation);
     window.location.reload();
   };
+
+  const handleButtonClickDeleteCourse = () => {
+    
+    const courseInformation = {
+      id: "",
+      courseId: courseId,
+    };
+
+    deleteCourse(courseInformation)
+    window.location.reload();
+  }
 
   return (
     <>
@@ -189,6 +190,14 @@ function CourseCard({
                   hidden={removeCourseButtonHidden}
                   onClick={handleButtonClickRemoveCourse}>
                   Remove Course
+                </CustomButton>
+              </div>
+
+              <div className="d-flex justify-content-end">
+                <CustomButton
+                  hidden={deleteCourseButtonHidden}
+                  onClick={handleButtonClickDeleteCourse}>
+                  Delete Course
                 </CustomButton>
               </div>
             </Col>

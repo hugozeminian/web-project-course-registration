@@ -20,16 +20,30 @@ import MyCourses from './route/my-courses/MyCourses.component'
 import Contact from './route/contact/Contact.component'
 import NewPassword from './route/new-password/NewPassword.component'
 import AdmProfile from './route/adm-profile/AdmProfile.component'
-import AdmAddCourses from './route/adm-add-courses/AdmAddCourses.component'
+import AdmCourses from './route/adm-courses/AdmCourses.component'
 import AdmNewCourseForm from './route/adm-new-course-form/AdmNewCourseForm.component'
 import AdmStudentList from './route/adm-student-list/AdmStudentList.component'
 import AdmForms from './route/adm-forms/AdmForms.component'
 
-import coursesDataJson from './util/json-information/courses.json'
+import coursesDataJson from './util/json-information/startCoursesList.json'
+import studentDataJson from './util/json-information/startStudentList.json'
+import adminDataJson from './util/json-information/startAdmList.json'
+import { setLocalStoreList } from "./util/general-functions/generalFunctions"; 
 
 const App = () => {
 
-    const [coursesData, setCoursesData] = useState(coursesDataJson)
+    useEffect(() => {
+        if (!localStorage.getItem("coursesData")) {
+            setLocalStoreList("coursesData", coursesDataJson);
+        }
+        if (!localStorage.getItem("studentData")) {
+            setLocalStoreList("studentData", studentDataJson);
+        }
+        if (!localStorage.getItem("adminData")) {
+            setLocalStoreList("adminData", adminDataJson);
+        }
+    }, []);
+    
 
     return (
         <>
@@ -45,17 +59,17 @@ const App = () => {
 
                         <Route path='user-dashboard' element={<UserDashboard />} />
                         <Route path='programs' element={<Programs />} />
-                        <Route path='courses' element={<Courses coursesData={coursesData} />} />
+                        <Route path='courses' element={<Courses />} />
                         <Route path='about' element={<About />} />
                         <Route path='profile' element={<Profile />} />
-                        <Route path='add-courses' element={<AddCourses coursesData={coursesData} />} />
+                        <Route path='add-courses' element={<AddCourses />} />
                         <Route path='my-courses' element={<MyCourses />} />
                         <Route path='contact' element={<Contact />} />
 
                         <Route path='new-password' element={<NewPassword />} />
 
                         <Route path='adm-profile' element={<AdmProfile />} />
-                        <Route path='adm-add-courses' element={<AdmAddCourses />} />
+                        <Route path='adm-add-courses' element={<AdmCourses />} />
                         <Route path='adm-new-course-form' element={<AdmNewCourseForm />} />
                         <Route path='adm-student-list' element={<AdmStudentList />} />
                         <Route path='adm-forms' element={<AdmForms />} />
