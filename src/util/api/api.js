@@ -1,8 +1,26 @@
+import { getNextAvailableID } from "../general-functions/generalFunctions";
 /*
 #############################
 #####  ADMIN FUNCTIONS  #####
 #############################
 */
+export const deleteCourse = (courseInformation) => {
+    let courseList = getCoursesList();
+
+    if (courseList) {
+        const indexToRemove = courseList.findIndex(
+            (course) =>
+                // courseRegistration.studentId === courseInformation.studentId &&
+                course.courseId === courseInformation.courseId
+        );
+
+        if (indexToRemove !== -1) {
+            courseList.splice(indexToRemove, 1);
+            localStorage.setItem("coursesData", JSON.stringify(courseList));
+        }
+
+    }
+}
 
 
 /*
@@ -10,21 +28,6 @@
 ##### STUDENT FUNCTIONS #####
 #############################
 */
-
-export const getNextAvailableID = (existingIDs) => {
-    let maxID = 0;
-
-    if (existingIDs) {
-        existingIDs.forEach((existingID) => {
-            if (existingID.id > maxID) {
-                maxID = existingID.id;
-            }
-        });
-    }
-
-    return maxID + 1;
-}
-
 export const addCourseRegistration = (courseInformation) => {
     let courseRegistrations = JSON.parse(localStorage.getItem("courseRegistrations"));
 
@@ -54,6 +57,7 @@ export const getCourseRegistrationList = () => {
     return myCourseList;
 }
 
+
 export const removeCourseRegistration = (courseInformation) => {
     let courseRegistrations = JSON.parse(localStorage.getItem("courseRegistrations"));
 
@@ -72,6 +76,7 @@ export const removeCourseRegistration = (courseInformation) => {
     }
 }
 
+
 export const sendMessageContact = (messageStudentsData) => {
     let messageStudents = JSON.parse(localStorage.getItem("messageStudents"));
 
@@ -86,3 +91,25 @@ export const sendMessageContact = (messageStudentsData) => {
 }
 
 
+/*
+#############################
+##### PUBLIC  FUNCTIONS #####
+#############################
+*/
+export const getCoursesList = () => {
+    let coursesData = localStorage.getItem("coursesData");
+    let coursesList = JSON.parse(coursesData || "[]");
+    return coursesList;
+}
+
+export const getStudentList = () => {
+    let studentData = localStorage.getItem("coursesData");
+    let studentList = JSON.parse(studentData || "[]");
+    return studentList;
+}
+
+export const getAdminList = () => {
+    let adminData = localStorage.getItem("coursesData");
+    let adminList = JSON.parse(adminData || "[]");
+    return adminList;
+}

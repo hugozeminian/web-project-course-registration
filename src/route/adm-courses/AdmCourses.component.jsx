@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import CourseCardList from "../../components/courses-card-list/CoursesCardList.components";
 import DropdownTerm from "../../components/dropdown-term/DropdownTerm.components";
 import SearchBar from "../../components/search-bar/SearchBar.component";
-import { FiltersContainer } from "./AddCourses.styles";
+import { FiltersContainer } from "./AdmAddCourses.styles";
 import TitlePage from "../../components/title-page/TitlePage.component";
 import { getCoursesList } from "../../util/api/api";
 
-const AddCourses = () => {
+const AdmCourses = () => {
   const coursesData = getCoursesList();
 
   const [selectedTerm, setSelectedTerm] = useState(0);
@@ -48,12 +48,12 @@ const AddCourses = () => {
       </FiltersContainer>
       <CourseCardList
         coursesData={filteredCourseData}
-        addCourseButtonHidden={false}
+        addCourseButtonHidden={true}
         removeCourseButtonHidden={true}
-        deleteCourseButtonHidden={true}
+        deleteCourseButtonHidden={false}
       />
     </>
   );
 };
 
-export default AddCourses;
+export default AdmCourses;
