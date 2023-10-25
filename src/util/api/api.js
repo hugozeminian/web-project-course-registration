@@ -25,19 +25,6 @@ export const getNextAvailableID = (existingIDs) => {
     return maxID + 1;
 }
 
-
-export const getNextCourseRegistrationID = (courseRegistrations) => {
-    let courseId = 0;
-
-    courseRegistrations.forEach((courseRegistration) => {
-        if (courseRegistration.id > courseId) {
-            courseId = courseRegistration.id;
-        }
-    });
-
-    return courseId + 1;
-}
-
 export const addCourseRegistration = (courseInformation) => {
     let courseRegistrations = JSON.parse(localStorage.getItem("courseRegistrations"));
 
@@ -50,12 +37,13 @@ export const addCourseRegistration = (courseInformation) => {
     });
 
     if (isAlreadyRegistered) {
-        alert("This course is already registered.");
+        return true
     } else {
-        let nextId = getNextCourseRegistrationID(courseRegistrations);
+        let nextId = getNextAvailableID(courseRegistrations);
         courseInformation.id = nextId;
         courseRegistrations.push(courseInformation);
         localStorage.setItem("courseRegistrations", JSON.stringify(courseRegistrations));
+        return false;
     }
 }
 
