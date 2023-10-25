@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 
 export const CardWrapper = styled(Card)`
   background-color: var(--color_main3) !important;
@@ -9,24 +9,16 @@ export const CardWrapper = styled(Card)`
   padding: 10px 20px;
   margin-bottom: 40px;
 
-  &:last-child{
+  &:last-child {
     margin-bottom: 0px;
   }
 `;
 
-export const CustomButton = styled.button`
+export const CustomButton = styled(Button)`
   background-color: var(--color_main2);
-  color: var(--color_main1);
-  padding: 5px 10px;
-  border-radius: 10px;
-  display: ${(props) => (props.hidden ? "none" : "block")};;
-
-  &:hover {
-    background-color: var(--color_font5);
-  }
 `;
 
 export const CustomTd = styled.td`
-  background-color:  var(--color_main3) !important;
-  border: 'none'
+  background-color: var(--color_main3) !important;
+  border: "none";
 `;

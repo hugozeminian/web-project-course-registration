@@ -1,5 +1,92 @@
+import React, { useState } from "react";
+
+import Form from "react-bootstrap/Form";
+import TitlePage from "../../components/title-page/TitlePage.component";
+import { FormWrapper, CustomButton } from "./Contact.styles";
+import { getFormattedDate } from "../../util/general-functions/generalFunctions";
+import { sendMessageContact } from "../../util/api/api";
+
 const Contact = () => {
-  return <h1> Contact page </h1>;
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+    } else {
+      const formattedDate = getFormattedDate();
+
+      const messageStudentsData = {
+        id: "",
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value,
+        date: formattedDate,
+      };
+
+      sendMessageContact(messageStudentsData);
+
+      form.reset();
+    }
+  };
+
+  return (
+    <>
+      <TitlePage title="Ask us a question" />
+      <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label style={{ color: "var(--color_font2)" }}>
+            <strong>Name:</strong>
+          </Form.Label>
+          <Form.Control type="text" placeholder="First name" required />
+          <Form.Control.Feedback type="invalid">
+            Please enter your name.
+          </Form.Control.Feedback>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label style={{ color: "var(--color_font2)" }}>
+            <strong>Email address:</strong>
+          </Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            aria-describedby="inputGroupPrepend"
+            required
+            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+          />
+          <Form.Control.Feedback type="invalid">
+            Please enter your name.
+          </Form.Control.Feedback>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="message">
+          <Form.Label style={{ color: "var(--color_font2)" }}>
+            <strong>Message:</strong>
+          </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Message"
+            as="textarea"
+            rows={6}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            Please inform your message.
+          </Form.Control.Feedback>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+
+        <CustomButton type="submit">Submit</CustomButton>
+      </FormWrapper>
+    </>
+  );
 };
 
 export default Contact;
