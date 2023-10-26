@@ -15,7 +15,7 @@ function DropdownTerm({ onTermSelect }) {
       <Dropdown onSelect={handleSelect}>
         <CustomDropdownToggle variant="none" >{selectedTerm}</CustomDropdownToggle>
         <Dropdown.Menu>
-          <Dropdown.ItemText>Select term</Dropdown.ItemText>
+          <Dropdown.ItemText >Select term</Dropdown.ItemText>
           <CustomDropdownItem eventKey="1">Term 1</CustomDropdownItem>
           <CustomDropdownItem eventKey="2">Term 2</CustomDropdownItem>
           <CustomDropdownItem eventKey="3">Term 3</CustomDropdownItem>

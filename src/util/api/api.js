@@ -4,22 +4,34 @@ import { getNextAvailableID } from "../general-functions/generalFunctions";
 #####  ADMIN FUNCTIONS  #####
 #############################
 */
-export const deleteCourse = (courseInformation) => {
+export const admDeleteCourse = (courseInformation) => {
     let courseList = getCoursesList();
 
     if (courseList) {
         const indexToRemove = courseList.findIndex(
-            (course) =>
-                // courseRegistration.studentId === courseInformation.studentId &&
-                course.courseId === courseInformation.courseId
+            (course) => course.courseId === courseInformation.courseId
         );
 
         if (indexToRemove !== -1) {
             courseList.splice(indexToRemove, 1);
-            localStorage.setItem("coursesData", JSON.stringify(courseList));
+            localStorage.setItem("bvc-coursesData", JSON.stringify(courseList));
         }
 
     }
+}
+
+
+export const admAddNewCourse = (courseInformation) => {
+    let courseList = getCoursesList();
+
+    if (!courseList) {
+        courseList = [];
+    }
+
+    let nextId = getNextAvailableID(courseList, "courseId");
+    courseInformation.courseId = nextId;
+    courseList.push(courseInformation);
+    localStorage.setItem("bvc-coursesData", JSON.stringify(courseList));
 }
 
 
@@ -29,7 +41,7 @@ export const deleteCourse = (courseInformation) => {
 #############################
 */
 export const addCourseRegistration = (courseInformation) => {
-    let courseRegistrations = JSON.parse(localStorage.getItem("courseRegistrations"));
+    let courseRegistrations = JSON.parse(localStorage.getItem("bvc-courseRegistrations"));
 
     if (!courseRegistrations) {
         courseRegistrations = [];
@@ -45,21 +57,21 @@ export const addCourseRegistration = (courseInformation) => {
         let nextId = getNextAvailableID(courseRegistrations);
         courseInformation.id = nextId;
         courseRegistrations.push(courseInformation);
-        localStorage.setItem("courseRegistrations", JSON.stringify(courseRegistrations));
+        localStorage.setItem("bvc-courseRegistrations", JSON.stringify(courseRegistrations));
         return false;
     }
 }
 
 
 export const getCourseRegistrationList = () => {
-    let courseRegistrations = localStorage.getItem("courseRegistrations");
+    let courseRegistrations = localStorage.getItem("bvc-courseRegistrations");
     let myCourseList = JSON.parse(courseRegistrations || "[]");
     return myCourseList;
 }
 
 
 export const removeCourseRegistration = (courseInformation) => {
-    let courseRegistrations = JSON.parse(localStorage.getItem("courseRegistrations"));
+    let courseRegistrations = JSON.parse(localStorage.getItem("bvc-courseRegistrations"));
 
     if (courseRegistrations) {
         const indexToRemove = courseRegistrations.findIndex(
@@ -70,7 +82,7 @@ export const removeCourseRegistration = (courseInformation) => {
 
         if (indexToRemove !== -1) {
             courseRegistrations.splice(indexToRemove, 1);
-            localStorage.setItem("courseRegistrations", JSON.stringify(courseRegistrations));
+            localStorage.setItem("bvc-courseRegistrations", JSON.stringify(courseRegistrations));
         }
 
     }
@@ -78,7 +90,7 @@ export const removeCourseRegistration = (courseInformation) => {
 
 
 export const sendMessageContact = (messageStudentsData) => {
-    let messageStudents = JSON.parse(localStorage.getItem("messageStudents"));
+    let messageStudents = JSON.parse(localStorage.getItem("bvc-messageStudents"));
 
     if (!messageStudents) {
         messageStudents = [];
@@ -87,7 +99,7 @@ export const sendMessageContact = (messageStudentsData) => {
     let nextId = getNextAvailableID(messageStudents);
     messageStudentsData.id = nextId;
     messageStudents.push(messageStudentsData);
-    localStorage.setItem("messageStudents", JSON.stringify(messageStudents));
+    localStorage.setItem("bvc-messageStudents", JSON.stringify(messageStudents));
 }
 
 
@@ -97,19 +109,19 @@ export const sendMessageContact = (messageStudentsData) => {
 #############################
 */
 export const getCoursesList = () => {
-    let coursesData = localStorage.getItem("coursesData");
+    let coursesData = localStorage.getItem("bvc-coursesData");
     let coursesList = JSON.parse(coursesData || "[]");
     return coursesList;
 }
 
 export const getStudentList = () => {
-    let studentData = localStorage.getItem("coursesData");
+    let studentData = localStorage.getItem("bvc-coursesData");
     let studentList = JSON.parse(studentData || "[]");
     return studentList;
 }
 
 export const getAdminList = () => {
-    let adminData = localStorage.getItem("coursesData");
+    let adminData = localStorage.getItem("bvc-coursesData");
     let adminList = JSON.parse(adminData || "[]");
     return adminList;
 }

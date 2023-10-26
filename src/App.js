@@ -33,14 +33,14 @@ import { setLocalStoreList } from "./util/general-functions/generalFunctions";
 const App = () => {
 
     useEffect(() => {
-        if (!localStorage.getItem("coursesData")) {
-            setLocalStoreList("coursesData", coursesDataJson);
+        if (!localStorage.getItem("bvc-coursesData")) {
+            setLocalStoreList("bvc-coursesData", coursesDataJson);
         }
-        if (!localStorage.getItem("studentData")) {
-            setLocalStoreList("studentData", studentDataJson);
+        if (!localStorage.getItem("bvc-studentData")) {
+            setLocalStoreList("bvc-studentData", studentDataJson);
         }
-        if (!localStorage.getItem("adminData")) {
-            setLocalStoreList("adminData", adminDataJson);
+        if (!localStorage.getItem("bvc-adminData")) {
+            setLocalStoreList("bvc-adminData", adminDataJson);
         }
     }, []);
     
