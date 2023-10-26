@@ -24,7 +24,7 @@ const Navigation = ({ userName }) => {
   const [menuRightOpen, setMenuRightOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState('HOME');
   const [userNameNav, setUserNameNav] = useState(userName);
-  const maxCharTitle = 15;
+  const maxCharTitle = 16;
   const maxCharUserName = 10;
 
   const toggleMenuLeft = () => {

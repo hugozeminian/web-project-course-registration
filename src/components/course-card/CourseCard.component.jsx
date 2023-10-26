@@ -74,7 +74,9 @@ function CourseCard({
     };
 
     removeCourseRegistration(courseInformation);
-    window.location.reload();
+
+    setConfirmationMessage("Course removed.");
+    setShowConfirmationModal(true);
   };
 
   const handleButtonClickDeleteCourse = () => {
@@ -84,7 +86,9 @@ function CourseCard({
     };
 
     admDeleteCourse(courseInformation);
-    window.location.reload();
+
+    setConfirmationMessage("Course Deleted.");
+    setShowConfirmationModal(true);
   };
 
   return (
@@ -212,12 +216,17 @@ function CourseCard({
 
       <Modal
         show={showConfirmationModal}
-        onHide={() => setShowConfirmationModal(false)}>
+        onHide={() => {
+          setShowConfirmationModal(false);
+          window.location.reload();
+        }}>
         <Modal.Header
           closeButton
           className={
             confirmationMessage === "The course has been added successfully."
               ? "bg-success text-white"
+              : confirmationMessage === "Course removed."
+              ? "bg-warning"
               : "bg-danger text-white"
           }>
           <Modal.Title>Confirmation message</Modal.Title>
@@ -226,7 +235,11 @@ function CourseCard({
           <p>{confirmationMessage}</p>
         </Modal.Body>
         <Modal.Footer>
-          <CustomButton onClick={() => setShowConfirmationModal(false)}>
+          <CustomButton
+            onClick={() => {
+              setShowConfirmationModal(false);
+              window.location.reload();
+            }}>
             Close
           </CustomButton>
         </Modal.Footer>
