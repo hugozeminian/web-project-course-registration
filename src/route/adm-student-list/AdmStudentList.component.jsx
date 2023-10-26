@@ -1,5 +1,14 @@
+import React from "react";
+import TitlePage from "../../components/title-page/TitlePage.component";
+import TableStudentList from "../../components/table-student-list/TableStudentList.component";
+
 const AdmStudentList = () => {
-  return <h1> Adm Student List page </h1>;
+  return (
+    <>
+      <TitlePage title="Student List" />
+      <TableStudentList />
+    </>
+  );
 };
 
 export default AdmStudentList;

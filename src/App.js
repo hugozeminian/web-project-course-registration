@@ -28,7 +28,8 @@ import AdmForms from './route/adm-forms/AdmForms.component'
 import coursesDataJson from './util/json-information/startCoursesList.json'
 import studentDataJson from './util/json-information/startStudentList.json'
 import adminDataJson from './util/json-information/startAdmList.json'
-import { setLocalStoreList } from "./util/general-functions/generalFunctions"; 
+import contactListDataJson from "./util/json-information/startContactList.json"
+import { setLocalStoreList } from "./util/general-functions/generalFunctions";
 
 const App = () => {
 
@@ -42,8 +43,11 @@ const App = () => {
         if (!localStorage.getItem("bvc-adminData")) {
             setLocalStoreList("bvc-adminData", adminDataJson);
         }
+        if (!localStorage.getItem("bvc-contactListData")) {
+            setLocalStoreList("bvc-contactListData", contactListDataJson);
+        }
     }, []);
-    
+
 
     return (
         <>

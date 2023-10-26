@@ -115,13 +115,19 @@ export const getCoursesList = () => {
 }
 
 export const getStudentList = () => {
-    let studentData = localStorage.getItem("bvc-coursesData");
+    let studentData = localStorage.getItem("bvc-studentData");
     let studentList = JSON.parse(studentData || "[]");
     return studentList;
 }
 
 export const getAdminList = () => {
-    let adminData = localStorage.getItem("bvc-coursesData");
+    let adminData = localStorage.getItem("bvc-adminData");
+    let adminList = JSON.parse(adminData || "[]");
+    return adminList;
+}
+
+export const getContactList = () => {
+    let adminData = localStorage.getItem("bvc-contactListData");
     let adminList = JSON.parse(adminData || "[]");
     return adminList;
 }
