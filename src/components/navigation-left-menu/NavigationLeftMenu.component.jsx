@@ -1,6 +1,6 @@
 import React from "react";
 import {CurtainMenuContainerBackground, CurtainMenuContainer, MenuItems, MenuItem, MenuLink, Icon} from "./NavigationLeftMenu.styles"
-import { faFileLines, faArrowRightToBracket, faCubes, faPen, faInfo} from "@fortawesome/free-solid-svg-icons";
+import { faFileLines, faArrowRightToBracket, faCubes, faPen, faInfo, } from "@fortawesome/free-solid-svg-icons";
 
 const NavigationLeftMenu = ({ open, toggleMenu, setTitle }) => {
 

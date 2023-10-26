@@ -3,14 +3,13 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import TitlePage from "../../components/title-page/TitlePage.component";
 import { FormWrapper, CustomButton } from "./Contact.styles";
-import { getFormattedDate } from "../../util/general-functions/generalFunctions";
+import { getCurrentFormattedDateAndTime } from "../../util/general-functions/generalFunctions";
 import { sendMessageContact } from "../../util/api/api";
 
 const Contact = () => {
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -18,10 +17,11 @@ const Contact = () => {
       event.stopPropagation();
       setValidated(true);
     } else {
-      const formattedDate = getFormattedDate();
+      const formattedDate = getCurrentFormattedDateAndTime();
 
       const messageStudentsData = {
-        id: "",
+        // id: "",
+        // messageId: "",
         name: form.name.value,
         email: form.email.value,
         message: form.message.value,
@@ -29,8 +29,6 @@ const Contact = () => {
       };
 
       sendMessageContact(messageStudentsData);
-
-      form.reset();
     }
   };
 

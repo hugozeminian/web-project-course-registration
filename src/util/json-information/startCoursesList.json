@@ -10,7 +10,7 @@
     "start_date": "June 1, 2024",
     "end_date": "August 31, 2024",
     "campus": "Calgary",
-    "delivery_mode": "Real-time",
+    "delivery_mode": "Real-time Online",
     "seats_available": 18,
     "class_size": 40
   },
@@ -25,7 +25,7 @@
     "start_date": "July 15, 2024",
     "end_date": "November 30, 2024",
     "campus": "Calgary",
-    "delivery_mode": "Class",
+    "delivery_mode": "In Class",
     "seats_available": 22,
     "class_size": 40
   },
@@ -40,7 +40,7 @@
     "start_date": "September 5, 2024",
     "end_date": "December 10, 2024",
     "campus": "Airdrie",
-    "delivery_mode": "Real-time",
+    "delivery_mode": " q",
     "seats_available": 25,
     "class_size": 40
   },

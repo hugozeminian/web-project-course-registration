@@ -5,7 +5,7 @@ import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styled";
 import {
   addCourseRegistration,
-  deleteCourse,
+  admDeleteCourse,
   removeCourseRegistration,
 } from "../../util/api/api";
 
@@ -40,7 +40,6 @@ function CourseCard({
   } = courseInformation;
 
   const handleButtonClickAddCourse = () => {
-
     const courseInformation = {
       id: "",
       courseId: courseId,
@@ -57,14 +56,14 @@ function CourseCard({
       seats_available: seats_available,
       class_size: class_size,
     };
-   
+
     const isAlreadyRegistered = addCourseRegistration(courseInformation);
     if (isAlreadyRegistered) {
       setConfirmationMessage("This course is already registered.");
-      setShowConfirmationModal(true)
+      setShowConfirmationModal(true);
     } else {
       setConfirmationMessage("The course has been added successfully.");
-      setShowConfirmationModal(true)
+      setShowConfirmationModal(true);
     }
   };
 
@@ -79,36 +78,42 @@ function CourseCard({
   };
 
   const handleButtonClickDeleteCourse = () => {
-    
     const courseInformation = {
       id: "",
       courseId: courseId,
     };
 
-    deleteCourse(courseInformation)
+    admDeleteCourse(courseInformation);
     window.location.reload();
-  }
+  };
 
   return (
     <>
       <CardWrapper>
         <Row>
-          <Col xs={12} md={3} className="ms-2">
-            <Card.Title style={{ color: "var(--color_font2)" }}>
-              <strong>Term: {term}</strong>
-            </Card.Title>
-          </Col>
-          <Col xs={12} md={6}>
+          <Col>
             <div className="text-center">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>
-                  {title} - {course_number}
-                </strong>
+                <strong>{title}</strong>
               </Card.Title>
             </div>
           </Col>
         </Row>
+
         <Card.Body>
+          <Row>
+            <Col xs="auto">
+              <Card.Title style={{ color: "var(--color_font2)" }}>
+                <strong>Term: {term}</strong>
+              </Card.Title>
+            </Col>
+
+            <Col xs="auto">
+              <Card.Title style={{ color: "var(--color_font2)" }}>
+                <strong>Code: {course_number}</strong>
+              </Card.Title>
+            </Col>
+          </Row>
           <Row>
             <Col md={12} xl={6}>
               <Card.Title
@@ -206,23 +211,26 @@ function CourseCard({
       </CardWrapper>
 
       <Modal
-  show={showConfirmationModal}
-  onHide={() => setShowConfirmationModal(false)}
->
-  <Modal.Header closeButton className={confirmationMessage === "The course has been added successfully." ? "bg-success text-white" : "bg-danger text-white"}>
-    <Modal.Title>Confirmation message</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <p>{confirmationMessage}</p>
-  </Modal.Body>
-  <Modal.Footer>
-    <CustomButton
-      onClick={() => setShowConfirmationModal(false)}
-    >
-      Close
-    </CustomButton>
-  </Modal.Footer>
-</Modal>
+        show={showConfirmationModal}
+        onHide={() => setShowConfirmationModal(false)}>
+        <Modal.Header
+          closeButton
+          className={
+            confirmationMessage === "The course has been added successfully."
+              ? "bg-success text-white"
+              : "bg-danger text-white"
+          }>
+          <Modal.Title>Confirmation message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{confirmationMessage}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <CustomButton onClick={() => setShowConfirmationModal(false)}>
+            Close
+          </CustomButton>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
