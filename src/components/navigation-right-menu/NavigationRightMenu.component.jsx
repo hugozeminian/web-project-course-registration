@@ -10,7 +10,7 @@ const NavigationRightMenu = ({ open, toggleMenu, setTitle }) => {
   };
 
   //accessLevel -> TODO user or admin 
-  const isAdmin = true
+  const isAdmin = false
 
   return (
     <>
