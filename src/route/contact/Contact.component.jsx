@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import Form from "react-bootstrap/Form";
 import TitlePage from "../../components/title-page/TitlePage.component";
+import Form from "react-bootstrap/Form";
 import { FormWrapper, CustomButton } from "./Contact.styles";
 import { getCurrentFormattedDateAndTime } from "../../util/general-functions/generalFunctions";
 import { sendMessageContact } from "../../util/api/api";

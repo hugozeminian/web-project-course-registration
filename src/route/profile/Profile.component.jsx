@@ -1,5 +1,13 @@
+import ProfileInformation from "../../components/profile-information/ProfileInformation.component";
+import TitlePage from "../../components/title-page/TitlePage.component";
+
 const Profile = () => {
-  return <h1> Profile page </h1>;
+  return (
+    <>
+      <TitlePage title="Profile Information" />
+      <ProfileInformation isAdminProfile={false} />
+    </>
+  );
 };
 
 export default Profile;
