@@ -40,6 +40,20 @@ export const admAddNewCourse = (courseInformation) => {
 ##### STUDENT FUNCTIONS #####
 #############################
 */
+export const addStudentRegistration = (studentInformation) => {
+    let studentRegistration = JSON.parse(localStorage.getItem("bvc-studentData"));
+
+    if (!studentRegistration) {
+        studentRegistration = [];
+    }
+
+    let nextId = getNextAvailableID(studentRegistration, "studentId");
+    studentInformation.studentId = nextId;
+    studentRegistration.push(studentInformation);
+    localStorage.setItem("bvc-studentData", JSON.stringify(studentRegistration));
+    return false;
+}
+
 export const addCourseRegistration = (courseInformation) => {
     let courseRegistrations = JSON.parse(localStorage.getItem("bvc-courseRegistrations"));
 
@@ -84,7 +98,6 @@ export const removeCourseRegistration = (courseInformation) => {
             courseRegistrations.splice(indexToRemove, 1);
             localStorage.setItem("bvc-courseRegistrations", JSON.stringify(courseRegistrations));
         }
-
     }
 }
 

@@ -1,18 +1,6 @@
-// export const getNextAvailableID = (existingIDs) => {
-//   let maxID = 0;
-
-//   if (existingIDs) {
-//     existingIDs.forEach((existingID) => {
-//       if (existingID.id > maxID) {
-//         maxID = existingID.id;
-//       }
-//     });
-//   }
-
-//   return maxID + 1;
-// }
-
 export const getNextAvailableID = (existingIDs, idProperty = 'id') => {
+  console.log("🚀 ~ file: generalFunctions.js:2 ~ getNextAvailableID ~ idProperty:", idProperty)
+  console.log("🚀 ~ file: generalFunctions.js:2 ~ getNextAvailableID ~ existingIDs:", existingIDs)
   let maxID = 0;
 
   if (existingIDs) {
@@ -25,7 +13,6 @@ export const getNextAvailableID = (existingIDs, idProperty = 'id') => {
 
   return maxID + 1;
 }
-
 
 
 export const setLocalStoreList = (storageName, dataCollection) => {
@@ -102,4 +89,9 @@ export const capitalizeEachWord = (str) => {
   });
 
   return capitalizedWords.join(' ');
+}
+
+
+export const getFormattedPhoneNumber = (countryCode, numericPhoneNumber) => {
+  return `${countryCode} (${numericPhoneNumber.slice(0, 3)}) ${numericPhoneNumber.slice(3, 6)}-${numericPhoneNumber.slice(6)}`;
 }

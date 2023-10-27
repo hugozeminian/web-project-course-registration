@@ -6,7 +6,7 @@ import { FiltersContainer } from "./AdmAddCourses.styles";
 import TitlePage from "../../components/title-page/TitlePage.component";
 import { getCoursesList } from "../../util/api/api";
 
-const AdmCourses = () => {
+const AdmAddCourses = () => {
   const coursesData = getCoursesList();
 
   const [selectedTerm, setSelectedTerm] = useState(0);
@@ -56,4 +56,4 @@ const AdmCourses = () => {
   );
 };
 
-export default AdmCourses;
+export default AdmAddCourses;
