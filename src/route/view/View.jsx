@@ -16,15 +16,15 @@ const View = () => {
     },
     "/login": {
       navPageTitle: "LOGIN",
-      pageTitle: "Go inside our portal as Student",
+      pageTitle: "Student Login",
     },
     "/adm-login": {
       navPageTitle: "ADM-LOGIN",
-      pageTitle: "Go inside our portal as Admin",
+      pageTitle: "Admin Login",
     },
     "/sign-up": {
       navPageTitle: "SIGN-UP",
-      pageTitle: "Registration form",
+      pageTitle: "Registration Form",
     },
     "/user-dashboard": {
       navPageTitle: "DASHBOARD",
