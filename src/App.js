@@ -26,6 +26,7 @@ import studentDataJson from './util/json-information/startStudentList.json'
 import adminDataJson from './util/json-information/startAdmList.json'
 import contactListDataJson from "./util/json-information/startContactList.json"
 import { setLocalStoreList } from "./util/general-functions/generalFunctions";
+import NotFound from "./route/not-found/NotFound.component";
 
 
 const App = () => {
@@ -72,6 +73,8 @@ const App = () => {
                     <Route path='adm-new-course-form' element={<AdmNewCourseForm />} />
                     <Route path='adm-student-list' element={<AdmStudentList />} />
                     <Route path='adm-forms' element={<AdmForms />} />
+
+                    <Route path='*' element={<NotFound />} />
 
                 </Route>
             </Routes>
