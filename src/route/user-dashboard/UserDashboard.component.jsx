@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { CardWrapper } from "./UserDashboard.styles";
-import { Row, Col } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import { getAdminList, getStudentList } from "../../util/api/api";
 
