@@ -9,7 +9,6 @@ const Courses = () => {
 
   return (
     <>
-      <TitlePage title="Software Development Department" />
       <CourseCardList coursesData={coursesData} addCourseButtonHidden={true} removeCourseButtonHidden={true} deleteCourseButtonHidden={true}/>
     </>
   );

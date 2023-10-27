@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from 'react-router-dom';
 
-import { Container } from "react-bootstrap"
-
-import Navigation from "./route/navigation/Navigation.component"
-import Footer from "./components/footer/Footer.component"
-
+import View from "./route/view/View";
 import Home from "./route/home/Home.component"
 import Login from './route/login/Login.component';
 import AdmLogin from './route/adm-login/AdmLogin.component';
@@ -31,6 +27,7 @@ import adminDataJson from './util/json-information/startAdmList.json'
 import contactListDataJson from "./util/json-information/startContactList.json"
 import { setLocalStoreList } from "./util/general-functions/generalFunctions";
 
+
 const App = () => {
 
     useEffect(() => {
@@ -51,37 +48,33 @@ const App = () => {
 
     return (
         <>
-            <Navigation userName="User name!012" />
-            <Container className="d-flex flex-column align-items-center" style={{ paddingTop: '40px', paddingBottom: '100px' }}>
-                <Routes>
-                    <Route>
-                        <Route index element={<Home />} />
+            <Routes>
+                <Route element={<View children />}>
+                    <Route index element={<Home />} />
 
-                        <Route path='login' index element={<Login />} />
-                        <Route path='adm-login' element={<AdmLogin />} />
-                        <Route path='sign-up' element={<SignUp />} />
+                    <Route path='login' index element={<Login />} />
+                    <Route path='adm-login' element={<AdmLogin />} />
+                    <Route path='sign-up' element={<SignUp />} />
 
-                        <Route path='user-dashboard' element={<UserDashboard />} />
-                        <Route path='programs' element={<Programs />} />
-                        <Route path='courses' element={<Courses />} />
-                        <Route path='about' element={<About />} />
-                        <Route path='profile' element={<Profile />} />
-                        <Route path='add-courses' element={<AddCourses />} />
-                        <Route path='my-courses' element={<MyCourses />} />
-                        <Route path='contact' element={<Contact />} />
+                    <Route path='user-dashboard' element={<UserDashboard />} />
+                    <Route path='programs' element={<Programs />} />
+                    <Route path='courses' element={<Courses />} />
+                    <Route path='about' element={<About />} />
+                    <Route path='profile' element={<Profile />} />
+                    <Route path='add-courses' element={<AddCourses />} />
+                    <Route path='my-courses' element={<MyCourses />} />
+                    <Route path='contact' element={<Contact />} />
 
-                        <Route path='new-password' element={<NewPassword />} />
+                    <Route path='new-password' element={<NewPassword />} />
 
-                        <Route path='adm-profile' element={<AdmProfile />} />
-                        <Route path='adm-add-courses' element={<AdmAddCourses />} />
-                        <Route path='adm-new-course-form' element={<AdmNewCourseForm />} />
-                        <Route path='adm-student-list' element={<AdmStudentList />} />
-                        <Route path='adm-forms' element={<AdmForms />} />
+                    <Route path='adm-profile' element={<AdmProfile />} />
+                    <Route path='adm-add-courses' element={<AdmAddCourses />} />
+                    <Route path='adm-new-course-form' element={<AdmNewCourseForm />} />
+                    <Route path='adm-student-list' element={<AdmStudentList />} />
+                    <Route path='adm-forms' element={<AdmForms />} />
 
-                    </Route>
-                </Routes>
-            </Container>
-            <Footer />
+                </Route>
+            </Routes>
         </>
     )
 }

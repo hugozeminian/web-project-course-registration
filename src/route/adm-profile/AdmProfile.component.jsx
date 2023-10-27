@@ -4,7 +4,6 @@ import ProfileInformation from "../../components/profile-information/ProfileInfo
 const AdmProfile = () => {
   return (
     <>
-      <TitlePage title="Admin Profile Information" />
       <ProfileInformation isAdminProfile={true} />
     </>
   );

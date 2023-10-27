@@ -47,8 +47,6 @@ const SignUp = () => {
 
   return (
     <>
-      <TitlePage title="Registration form" />
-
       <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="first_name">
           <Form.Label style={{ color: "var(--color_font2)" }}>

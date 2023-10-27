@@ -4,7 +4,6 @@ import TitlePage from "../../components/title-page/TitlePage.component";
 const Profile = () => {
   return (
     <>
-      <TitlePage title="Profile Information" />
       <ProfileInformation isAdminProfile={false} />
     </>
   );

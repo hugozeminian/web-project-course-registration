@@ -34,7 +34,6 @@ const Contact = () => {
 
   return (
     <>
-      <TitlePage title="Ask us a question" />
       <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label style={{ color: "var(--color_font2)" }}>

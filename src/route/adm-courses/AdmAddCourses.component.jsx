@@ -41,7 +41,6 @@ const AdmAddCourses = () => {
 
   return (
     <>
-      <TitlePage title="Software Development Department" />
       <FiltersContainer>
         <DropdownTerm onTermSelect={handleTermSelect} />
         <SearchBar onSearch={handleSearch} searchText={searchText} />

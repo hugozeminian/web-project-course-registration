@@ -5,7 +5,6 @@ import TableStudentList from "../../components/table-student-list/TableStudentLi
 const AdmStudentList = () => {
   return (
     <>
-      <TitlePage title="Student List" />
       <TableStudentList />
     </>
   );
