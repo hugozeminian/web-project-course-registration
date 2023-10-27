@@ -4,13 +4,17 @@ import TitlePage from "../../components/title-page/TitlePage.component";
 import { FormWrapper, CustomButton } from "./SignUp.styles";
 
 import { Form, Col, Row } from "react-bootstrap";
+import {
+  getFormattedPhoneNumber,
+  capitalizeEachWord,
+} from "../../util/general-functions/generalFunctions";
+import { addStudentRegistration } from "../../util/api/api";
 
 const SignUp = () => {
   const [validated, setValidated] = useState(false);
-  const [countryCode, setCountryCode] = useState("+1"); // State variable for country code
+  const [countryCode, setCountryCode] = useState("+1");
 
   const handleSubmit = (event) => {
-    event.preventDefault();
 
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -18,32 +22,26 @@ const SignUp = () => {
       event.stopPropagation();
       setValidated(true);
     } else {
-      // const startTime = convertToAMPM(form.startTime.value);
-      // const endTime = convertToAMPM(form.endTime.value);
-
-      // const newCourseData = {
-      //   courseId: "",
-      //   term: Number(form.term.value),
-      //   course_number: form.code.value.toUpperCase(),
-      //   title: capitalizeEachWord(form.name.value),
-      //   description: form.description.value,
-      //   week_day: form.weekDay.value,
-      //   hour: startTime + " - " + endTime,
-      //   start_date: getFormatDate(form.startDate.value),
-      //   end_date: getFormatDate(form.endDate.value),
-      //   campus: form.campus.value,
-      //   delivery_mode: form.deliveryMode.value,
-      //   seats_available: form.classSize.value,
-      //   class_size: form.classSize.value,
-      // };
-
-      // admAddNewCourse(newCourseData);
-
       const numericPhoneNumber = form.phone.value.replace(/\D/g, "");
-      const formattedPhoneNumber = `${countryCode} (${numericPhoneNumber.slice(
-        0,
-        3
-      )}) ${numericPhoneNumber.slice(3, 6)}-${numericPhoneNumber.slice(6)}`;
+      const formattedPhoneNumber = getFormattedPhoneNumber(
+        countryCode,
+        numericPhoneNumber
+      );
+
+      const newStudentData = {
+        studentId: "",
+        first_name: capitalizeEachWord(form.first_name.value),
+        last_name: capitalizeEachWord(form.last_name.value),
+        email: form.email.value,
+        phone: formattedPhoneNumber,
+        date_of_birth: form.date_of_birth.value,
+        department: "Software Development",
+        program: form.program.value,
+        username: form.username.value,
+        current_password: form.current_password.value,
+      };
+
+      addStudentRegistration(newStudentData);
     }
   };
 
@@ -52,7 +50,7 @@ const SignUp = () => {
       <TitlePage title="Registration form" />
 
       <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="fname">
+        <Form.Group className="mb-3" controlId="first_name">
           <Form.Label style={{ color: "var(--color_font2)" }}>
             <strong>First Name:</strong>
           </Form.Label>
@@ -63,13 +61,30 @@ const SignUp = () => {
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="lname">
+        <Form.Group className="mb-3" controlId="last_name">
           <Form.Label style={{ color: "var(--color_font2)" }}>
             <strong>Last Name:</strong>
           </Form.Label>
           <Form.Control type="text" placeholder="Last Name" required />
           <Form.Control.Feedback type="invalid">
             Please enter your last name.
+          </Form.Control.Feedback>
+          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label style={{ color: "var(--color_font2)" }}>
+            <strong>Email address:</strong>
+          </Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            aria-describedby="inputGroupPrepend"
+            required
+            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+          />
+          <Form.Control.Feedback type="invalid">
+            Please enter your name.
           </Form.Control.Feedback>
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
@@ -87,7 +102,6 @@ const SignUp = () => {
                 <option value="+1">+1 (United States)</option>
                 <option value="+44">+44 (United Kingdom)</option>
                 <option value="+55">+55 (Brazil)</option>
-                {/* Add more country code options as needed */}
               </Form.Control>
             </Form.Group>
           </Col>
@@ -99,7 +113,7 @@ const SignUp = () => {
               </Form.Label>
               <Form.Control
                 type="tel"
-                placeholder="10 digit phone XXXXXXXXXX"
+                placeholder="10 digits phone"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                 required
               />
@@ -110,7 +124,7 @@ const SignUp = () => {
           </Col>
         </Row>
 
-        <Form.Group className="mb-3" controlId="birthday">
+        <Form.Group className="mb-3" controlId="date_of_birth">
           <Form.Label style={{ color: "var(--color_font2)" }}>
             <strong>Date of Birthday:</strong>
           </Form.Label>
@@ -126,7 +140,7 @@ const SignUp = () => {
             <strong>Department:</strong>
           </Form.Label>
           <Form.Select disabled>
-            <option value="Software Development" selected>
+            <option value="Software Development">
               Software Development
             </option>
           </Form.Select>
@@ -141,7 +155,7 @@ const SignUp = () => {
             <strong>Program:</strong>
           </Form.Label>
           <Form.Select required>
-            <option value="" disabled selected>
+          <option value="" disabled selected>
               Select a program
             </option>
             <option value="Diploma (2 years)">Diploma (2 years)</option>
@@ -167,7 +181,7 @@ const SignUp = () => {
           <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="password">
+        <Form.Group className="mb-3" controlId="current_password">
           <Form.Label style={{ color: "var(--color_font2)" }}>
             <strong>Password:</strong>
           </Form.Label>

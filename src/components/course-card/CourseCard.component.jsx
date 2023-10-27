@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import { Row, Col, Table } from "react-bootstrap";
-import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styled";
+import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styles";
 import {
   addCourseRegistration,
   admDeleteCourse,

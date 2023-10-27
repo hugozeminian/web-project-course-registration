@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from 'react-router-dom';
 
 import { Container } from "react-bootstrap"
@@ -20,7 +20,7 @@ import MyCourses from './route/my-courses/MyCourses.component'
 import Contact from './route/contact/Contact.component'
 import NewPassword from './route/new-password/NewPassword.component'
 import AdmProfile from './route/adm-profile/AdmProfile.component'
-import AdmCourses from './route/adm-courses/AdmCourses.component'
+import AdmAddCourses from './route/adm-courses/AdmAddCourses.component'
 import AdmNewCourseForm from './route/adm-new-course-form/AdmNewCourseForm.component'
 import AdmStudentList from './route/adm-student-list/AdmStudentList.component'
 import AdmForms from './route/adm-forms/AdmForms.component'
@@ -73,7 +73,7 @@ const App = () => {
                         <Route path='new-password' element={<NewPassword />} />
 
                         <Route path='adm-profile' element={<AdmProfile />} />
-                        <Route path='adm-add-courses' element={<AdmCourses />} />
+                        <Route path='adm-add-courses' element={<AdmAddCourses />} />
                         <Route path='adm-new-course-form' element={<AdmNewCourseForm />} />
                         <Route path='adm-student-list' element={<AdmStudentList />} />
                         <Route path='adm-forms' element={<AdmForms />} />
