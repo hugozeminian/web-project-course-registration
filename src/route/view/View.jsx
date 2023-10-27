@@ -42,9 +42,13 @@ const View = () => {
       navPageTitle: "ABOUT",
       pageTitle: "About our project group",
     },
+    "/dashboard": {
+      navPageTitle: "DASHBOARD",
+      pageTitle: "Profile Information",
+    },
     "/profile": {
       navPageTitle: "PROFILE",
-      pageTitle: "Profile Information",
+      pageTitle: "Welcome to your Dashboard",
     },
     "/add-courses": {
       navPageTitle: "ADM-COURSES",
@@ -86,7 +90,10 @@ const View = () => {
 
   useEffect(() => {
     const routePath = location.pathname;
-    const titles = routeToTitles[routePath] || {};
+    const titles = routeToTitles[routePath] || {
+      navPageTitle: "ERROR 404",
+      pageTitle: "ERROR 404 😔",
+    };
 
     setPageTitle(titles.pageTitle || "");
     setNavPageTitle(titles.navPageTitle || "");
