@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import NavigationLeftMenu from "../../components/navigation-left-menu/NavigationLeftMenu.component";
 import NavigationRightMenu from "../../components/navigation-right-menu/NavigationRightMenu.component";
 
@@ -18,13 +18,11 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Navigation = ({ userName }) => {
-
+const Navigation = ({ userName, navPageTitle }) => {
   const [menuLeftOpen, setMenuLeftOpen] = useState(false);
   const [menuRightOpen, setMenuRightOpen] = useState(false);
-  const [pageTitle, setPageTitle] = useState('HOME');
+  const [pageTitle, setPageTitle] = useState();
   const [userNameNav, setUserNameNav] = useState(userName);
-  const maxCharTitle = 16;
   const maxCharUserName = 10;
 
   const toggleMenuLeft = () => {
@@ -37,23 +35,17 @@ const Navigation = ({ userName }) => {
     setMenuLeftOpen(false);
   };
 
-  const handlePageChange = (newTitle) => {
-    setPageTitle(newTitle);
-  };
-  
+  useEffect(() => {
+    setPageTitle(navPageTitle);
+  }, [navPageTitle]);
 
   useEffect(() => {
-    if (pageTitle.length > maxCharTitle) {
-      setPageTitle(pageTitle.slice(0, maxCharTitle));
+    if (userNameNav) {
+      if (userNameNav.length > maxCharUserName) {
+        setUserNameNav(userNameNav.slice(0, maxCharUserName));
+      }
     }
-  }, [pageTitle]);
-
-  useEffect(() => {
-    if (userNameNav.length > maxCharUserName) {
-      setUserNameNav(userNameNav.slice(0, maxCharUserName));
-    }
-  }, []);
-
+  }, [userNameNav]);
 
   return (
     <>
@@ -94,12 +86,10 @@ const Navigation = ({ userName }) => {
       <NavigationLeftMenu
         open={menuLeftOpen}
         toggleMenu={toggleMenuLeft}
-        setTitle={handlePageChange}
       />
       <NavigationRightMenu
         open={menuRightOpen}
         toggleMenu={toggleMenuRight}
-        setTitle={handlePageChange}
       />
     </>
   );

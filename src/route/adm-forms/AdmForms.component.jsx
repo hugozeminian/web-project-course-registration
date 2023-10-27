@@ -4,7 +4,6 @@ import TitlePage from "../../components/title-page/TitlePage.component";
 const AdmForms = () => {
   return (
     <>
-    <TitlePage title="Questions forms"/>
     <TableContactList/>
     </>
     

@@ -53,8 +53,6 @@ const AdmNewCourseForm = () => {
 
   return (
     <>
-      <TitlePage />
-
       <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
         <Row>
           <Col sm={12} md={6}>
