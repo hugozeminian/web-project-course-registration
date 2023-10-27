@@ -131,3 +131,11 @@ export const getContactList = () => {
     let adminList = JSON.parse(adminData || "[]");
     return adminList;
 }
+
+
+export const getProgramsList = () => {
+    let programsData = localStorage.getItem("bvc-programsData");
+    let programsList = JSON.parse(programsData || "[]");
+    console.log("Programs data retrieved from localStorage:", programsList);
+    return programsList;
+}

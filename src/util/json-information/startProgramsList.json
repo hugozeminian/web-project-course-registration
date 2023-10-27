@@ -1,0 +1,15 @@
+[
+  {
+    "program_code": "Course code SDDW24",
+    "description": "A two-year software development diploma program...",
+    "season": "Winter",
+    "start_date": "January 10, 2024",
+    "end_date": "April 24, 2025",
+    "fees": "$9,254 domestic, $27,735 international"
+  },
+  {
+    "program_code": "Another Program Code"
+
+  }
+
+]

@@ -30,6 +30,7 @@ import studentDataJson from './util/json-information/startStudentList.json'
 import adminDataJson from './util/json-information/startAdmList.json'
 import contactListDataJson from "./util/json-information/startContactList.json"
 import { setLocalStoreList } from "./util/general-functions/generalFunctions";
+import programsListDataJson from './util/json-information/startProgramsList.json'
 
 const App = () => {
 
@@ -45,6 +46,9 @@ const App = () => {
         }
         if (!localStorage.getItem("bvc-contactListData")) {
             setLocalStoreList("bvc-contactListData", contactListDataJson);
+        }
+        if (!localStorage.getItem("bvc-programsData")) {
+            setLocalStoreList("bvc-programsData", programsListDataJson);
         }
     }, []);
 
