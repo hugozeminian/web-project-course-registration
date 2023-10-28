@@ -8,17 +8,17 @@ import { getCoursesList } from "../../util/api/api";
 const AdmAddCourses = ({ isAuthenticated }) => {
   const coursesData = getCoursesList();
 
-  const [selectedTerm, setSelectedTerm] = useState(0);
+  const [selectedSeason, setSelectedSeason] = useState("Select season");
   const [filteredCourseData, setFilteredCourseData] = useState(coursesData);
   const [searchText, setSearchText] = useState("");
 
-  const handleTermSelect = (selectedTerm) => {
-    setSelectedTerm(selectedTerm);
-    if (selectedTerm == 0) {
+  const handleTermSelect = (selectedSeason) => {
+    setSelectedSeason(selectedSeason);
+    if (selectedSeason === "Select season") {
       setFilteredCourseData(coursesData);
     } else {
       const filteredData = coursesData.filter(
-        (course) => course.term === parseInt(selectedTerm)
+        (course) => course.season === selectedSeason
       );
       setFilteredCourseData(filteredData);
     }
@@ -28,7 +28,7 @@ const AdmAddCourses = ({ isAuthenticated }) => {
   const handleSearch = (searchText) => {
     const filteredData = coursesData.filter((course) => {
       const termMatch =
-        selectedTerm == 0 || course.term === parseInt(selectedTerm);
+        selectedSeason === "Select season" || course.season === selectedSeason;
       const searchMatch =
         course.title.toLowerCase().includes(searchText.toLowerCase()) ||
         course.course_number.toLowerCase().includes(searchText.toLowerCase());

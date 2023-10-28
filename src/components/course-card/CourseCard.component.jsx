@@ -25,7 +25,7 @@ function CourseCard({
 
   const {
     courseId,
-    term,
+    season,
     course_number,
     title,
     description,
@@ -43,7 +43,7 @@ function CourseCard({
     const courseInformation = {
       id: "",
       courseId: courseId,
-      term: term,
+      season: season,
       course_number: course_number,
       title: title,
       description: description,
@@ -108,7 +108,7 @@ function CourseCard({
           <Row>
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>Term: {term}</strong>
+                <strong>Season: {season}</strong>
               </Card.Title>
             </Col>
 

@@ -1,7 +1,7 @@
 [
   {
     "courseId": 1,
-    "term": 1,
+    "season": "Spring",
     "course_number": "CM0101",
     "title": "Creative Coding Workshop",
     "description": "Unlock your creativity through coding in this interactive art workshop. No prior coding experience is needed, and all you need is a passion for digital art and design. In this immersive course, you'll dive deep into the world of creative coding and interactive art. Through hands-on projects and expert guidance, you'll learn to create stunning digital artworks using code. From generative art to interactive installations, you'll explore various facets of digital creativity. Join us on Saturdays from 10:00 AM to 12:00 PM, starting on June 1, 2024, and ending on August 31, 2024. This real-time course is held in Calgary and offers a unique opportunity to unleash your artistic potential.",
@@ -16,7 +16,7 @@
   },
   {
     "courseId": 2,
-    "term": 1,
+    "season": "Summer",
     "course_number": "CS0202",
     "title": "Full-Stack Web Development",
     "description": "Take a deep dive into the world of web development with our Full-Stack Web Development Bootcamp. In this intensive program, you'll master web development from front-end to back-end, equipping you with the latest technologies and frameworks to build modern web applications. Whether you're a beginner or an experienced developer looking to expand your skill set, this bootcamp will help you achieve your goals. Join us on Mondays from 6:30 PM to 8:30 PM, starting on July 15, 2024, and ending on November 30, 2024, in Calgary. This class-based program offers a collaborative learning environment and has a limited number of seats available, so reserve your spot now to secure your future in web development.",
@@ -31,7 +31,7 @@
   },
   {
     "courseId": 3,
-    "term": 2,
+    "season": "Fall",
     "course_number": "DB0303",
     "title": "Database Design and Management",
     "description": "Dive into the world of database design and management in our comprehensive course. Get hands-on experience designing and managing databases, learn SQL, data modeling, and discover how to ensure data security and integrity. Our expert instructors will guide you through the intricacies of database management, providing you with valuable skills and knowledge. Join us on Tuesdays from 7:00 PM to 9:00 PM, starting on September 5, 2024, and ending on December 10, 2024, in Airdrie. This real-time course offers a unique opportunity to become proficient in database design and management. With 25 seats available, secure your spot and embark on a journey to become a database expert.",
@@ -46,7 +46,7 @@
   },
   {
     "courseId": 4,
-    "term": 2,
+    "season": "Fall",
     "course_number": "AI0404",
     "title": "Artificial Intelligence Masterclass",
     "description": "Embark on an exciting journey into the world of artificial intelligence with our masterclass. Dive deep into machine learning, explore neural networks, and understand the intricacies of natural language processing. This comprehensive program will help you unlock the potential of AI and its applications in various domains. Join us on Thursdays from 5:30 PM to 7:30 PM, starting on October 10, 2024, and ending on March 10, 2025, in Banff. This real-time course offers a limited number of seats, with only 15 available, so reserve your spot to become an AI expert.",
@@ -61,7 +61,7 @@
   },
   {
     "courseId": 5,
-    "term": 3,
+    "season": "Spring",
     "course_number": "UX0505",
     "title": "User Experience Design Workshop",
     "description": "Join our User Experience Design Workshop and learn to create intuitive and user-friendly interfaces. Explore UX research, wireframing, and prototyping to design products that users will love. This immersive program will equip you with the skills and knowledge to excel in the field of user experience design. Join us on Saturdays from 1:00 PM to 3:00 PM, starting on May 3, 2024, and ending on July 5, 2024, in Okotoks. This real-time course provides a unique opportunity to become a UX design expert.",
@@ -76,7 +76,7 @@
   },
   {
     "courseId": 6,
-    "term": 3,
+    "season": "Winter",
     "course_number": "PM0707",
     "title": "Project Management Certification",
     "description": "Become a certified project manager with our Project Management Certification program. Learn the best practices, tools, and methodologies to successfully plan, execute, and close projects. This comprehensive course will equip you with the skills and knowledge required to excel in project management. Join us on Thursdays from 7:00 PM to 9:00 PM, starting on January 6, 2025, and ending on April 30, 2025, in Cochrane. This class-based program offers a limited number of seats, with only 30 available, so secure your spot now to take your career to the next level.",
@@ -91,7 +91,7 @@
   },
   {
     "courseId": 7,
-    "term": 4,
+    "season": "Summer",
     "course_number": "DS0808",
     "title": "Data Science Bootcamp",
     "description": "Dive into the world of data science with our comprehensive Data Science Bootcamp. Learn data analysis, machine learning, and data visualization to launch your career in the data science field. Join us on Fridays from 6:00 PM to 8:00 PM, starting on June 7, 2024, and ending on November 30, 2024, in Airdrie. This real-time course offers a limited number of seats, so reserve your spot to become a data science expert.",
@@ -106,7 +106,7 @@
   },
   {
     "courseId": 8,
-    "term": 4,
+    "season": "Fall",
     "course_number": "ML1010",
     "title": "Machine Learning Fundamentals",
     "description": "Delve into the fascinating world of machine learning with our Machine Learning Fundamentals course. Learn about various machine learning algorithms, deep learning techniques, and the applications of AI in different domains. This in-depth program will help you master the art of machine learning. Join us on Mondays from 6:00 PM to 8:00 PM, starting on September 9, 2024, and ending on December 9, 2024, in Calgary. This class-based program provides a collaborative learning environment and has a limited number of seats, so secure your spot now to become a machine learning expert.",

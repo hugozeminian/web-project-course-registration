@@ -40,7 +40,7 @@ const View = () => {
     },
     "/courses": {
       navPageTitle: "COURSES",
-      pageTitle: "Software Development Department",
+      pageTitle: "Check Our Courses",
     },
     "/about": {
       navPageTitle: "ABOUT",
@@ -52,19 +52,22 @@ const View = () => {
       pageProtected: true
     },
     "/add-courses": {
-      navPageTitle: "ADM-COURSES",
+      navPageTitle: "COURSES",
       pageTitle: "Software Development Department",
       pageProtected: true,
+      userAccessLevel: true
     },
     "/my-courses": {
       navPageTitle: "MY COURSES",
       pageTitle: "Software Development Department",
-      pageProtected: true
+      pageProtected: true,
+      userAccessLevel: true
     },
     "/contact": {
       navPageTitle: "CONTACT",
       pageTitle: "Ask Us A Question",
-      pageProtected: true
+      pageProtected: true,
+      userAccessLevel: true
     },
     "/new-password": {
       navPageTitle: "NEW PASSWORD",
@@ -128,6 +131,13 @@ const View = () => {
     if (!isAdmin) {
       console.log('The user is not an Admin');
       navigate("/adm-login");
+    }
+  }
+
+  if (pageData.userAccessLevel) {
+    if (isAdmin) {
+      console.log('The Admin is not an User');
+      navigate("/login");
     }
   }
   }, [location]);
