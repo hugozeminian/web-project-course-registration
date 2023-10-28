@@ -23,6 +23,7 @@ const NavigationRightMenu = ({ open, toggleMenu }) => {
           </MenuItems>
           ) : (
           <MenuItems>
+            <MenuItem> <MenuLink to='/user-dashboard'> <Icon icon={faLaptop} className="fa-lg"/> DASHBOARD </MenuLink></MenuItem>
             <MenuItem> <MenuLink to='/profile'> <Icon icon={faAddressCard} className="fa-lg"/> PROFILE </MenuLink></MenuItem>
             <MenuItem> <MenuLink to='/add-courses'> <Icon icon={faPen} className="fa-lg"/> ADD COURSES </MenuLink> </MenuItem>
             <MenuItem> <MenuLink to='/my-courses'> <Icon icon={faFileLines} className="fa-lg"/> MY COURSES </MenuLink> </MenuItem>
