@@ -145,6 +145,12 @@ export const getContactList = () => {
     return contactList;
 }
 
+export const getProgramsList = () => {
+    let programsData = localStorage.getItem("bvc-programsData");
+    let programsList = JSON.parse(programsData || "[]");
+    console.log("Programs data retrieved from localStorage:", programsList);
+    return programsList;
+  
 export const getAuthenticatedUser = () => {
     let authenticatedData = localStorage.getItem("bvc-authentication");
 
