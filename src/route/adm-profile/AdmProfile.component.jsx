@@ -1,10 +1,12 @@
-import TitlePage from "../../components/title-page/TitlePage.component";
+import React from "react";
 import ProfileInformation from "../../components/profile-information/ProfileInformation.component";
+import { getAuthenticatedUser } from "../../util/api/api";
 
 const AdmProfile = () => {
+  const authenticatedUser = getAuthenticatedUser() || {};
   return (
     <>
-      <ProfileInformation isAdminProfile={true} />
+      <ProfileInformation authenticatedUser={authenticatedUser} />
     </>
   );
 };

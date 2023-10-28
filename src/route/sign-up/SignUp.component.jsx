@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import TitlePage from "../../components/title-page/TitlePage.component";
 
 import { FormWrapper, CustomButton } from "./SignUp.styles";
 
