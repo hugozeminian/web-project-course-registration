@@ -140,7 +140,67 @@ export const getAdminList = () => {
 }
 
 export const getContactList = () => {
-    let adminData = localStorage.getItem("bvc-contactListData");
-    let adminList = JSON.parse(adminData || "[]");
-    return adminList;
+    let contactData = localStorage.getItem("bvc-contactListData");
+    let contactList = JSON.parse(contactData || "[]");
+    return contactList;
+}
+
+export const getAuthenticatedUser = () => {
+    let authenticatedData = localStorage.getItem("bvc-authentication");
+
+    if (authenticatedData) {
+        try {
+            return JSON.parse(authenticatedData);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+        }
+    }
+
+    return null;
+}
+
+const authenticationData = {
+    "isAuthenticated": false,
+    "isAdmin": false,
+    "username": "",
+    "first_name": "Visitor",
+};
+
+export const loginVerification = (loginData, isAdmin = false) => {
+    const studentList = isAdmin ? getAdminList() : getStudentList();
+
+    const isLoginValid = studentList.some((student) => {
+        return student.username === loginData.username && student.current_password === loginData.password;
+    });
+
+    const matchingStudent = studentList.find((student) => {
+        return student.username === loginData.username && student.current_password === loginData.password;
+    });
+
+    authenticationData.isAuthenticated = isLoginValid
+    authenticationData.isAdmin = isAdmin
+    authenticationData.username = matchingStudent ? matchingStudent.username : null
+    authenticationData.first_name = matchingStudent ? matchingStudent.first_name : null
+
+    localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
+
+    return isLoginValid;
+}
+
+export const logout = () => {
+    authenticationData.isAuthenticated = false;
+    authenticationData.isAdmin = false;
+    authenticationData.username = "";
+    authenticationData.first_name = "Visitor";
+
+    localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
+
+}
+
+export const getUserInformation = (authenticatedData, userInformationList) => {
+    const matchingStudent = userInformationList.find((user) => {
+        return user.username === authenticatedData.username;
+    });
+
+    return matchingStudent
 }

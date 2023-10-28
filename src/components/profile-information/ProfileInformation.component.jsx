@@ -2,17 +2,17 @@ import React from "react";
 
 import { FormWrapper } from "./ProfileInformation.styles";
 import { Form } from "react-bootstrap";
-import { getAdminList, getStudentList } from "../../util/api/api";
+import { getAdminList, getStudentList, getUserInformation } from "../../util/api/api";
 
-const ProfileInformation = ({ isAdminProfile }) => {
+const ProfileInformation = ({ authenticatedUser }) => {
   let profileInformation;
 
-  if (isAdminProfile) {
+  if (authenticatedUser.isAdmin) {
     const adminProfileList = getAdminList();
-    profileInformation = adminProfileList[0];
+    profileInformation = getUserInformation(authenticatedUser, adminProfileList)
   } else {
     const studentProfileList = getStudentList();
-    profileInformation = studentProfileList[0];
+    profileInformation = getUserInformation(authenticatedUser, studentProfileList)
   }
 
   const {
@@ -27,11 +27,10 @@ const ProfileInformation = ({ isAdminProfile }) => {
     department,
     program,
     current_password,
-  } = profileInformation;
-
+  } = profileInformation || {};
   return (
     <>
-      {isAdminProfile ? (
+      {authenticatedUser.isAdmin ? (
         <FormWrapper noValidate>
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
@@ -82,7 +81,6 @@ const ProfileInformation = ({ isAdminProfile }) => {
             <Form.Control type="password" value={current_password} disabled />
           </Form.Group>
 
-          {/* <CustomButton onClick={() => setShowModal(true)}>Change Password</CustomButton> */}
         </FormWrapper>
       ) : (
         <FormWrapper noValidate>

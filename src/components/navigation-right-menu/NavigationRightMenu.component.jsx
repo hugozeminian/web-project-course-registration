@@ -1,11 +1,12 @@
 import React from "react";
 import {CurtainMenuContainerBackground, CurtainMenuContainer, MenuItems, MenuItem, MenuLink, Icon} from "./NavigationRightMenu.styles"
 import { faAddressCard, faFileLines, faPen, faCircleQuestion, faTable, faRectangleList, faLaptop} from "@fortawesome/free-solid-svg-icons";
+import { getAuthenticatedUser } from "../../util/api/api";
 
 const NavigationRightMenu = ({ open, toggleMenu }) => {
 
-  //accessLevel -> TODO user or admin 
-  const isAdmin = true
+  const authenticatedUser = getAuthenticatedUser() || {}
+  const isAdmin = authenticatedUser.isAdmin
 
   return (
     <>

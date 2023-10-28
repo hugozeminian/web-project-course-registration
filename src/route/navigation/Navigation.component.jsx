@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavigationLeftMenu from "../../components/navigation-left-menu/NavigationLeftMenu.component";
 import NavigationRightMenu from "../../components/navigation-right-menu/NavigationRightMenu.component";
+import { getAuthenticatedUser } from "../../util/api/api";
 
 import {
   NavBarWrapper,
@@ -18,12 +19,15 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Navigation = ({ userName, navPageTitle }) => {
+const Navigation = ({ navPageTitle }) => {
   const [menuLeftOpen, setMenuLeftOpen] = useState(false);
   const [menuRightOpen, setMenuRightOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState();
-  const [userNameNav, setUserNameNav] = useState(userName);
+  const [userNameNav, setUserNameNav] = useState();
   const maxCharUserName = 10;
+
+  const authenticatedUser = getAuthenticatedUser() || {};
+  const isAuthenticated = authenticatedUser.isAuthenticated;
 
   const toggleMenuLeft = () => {
     setMenuLeftOpen(!menuLeftOpen);
@@ -31,8 +35,10 @@ const Navigation = ({ userName, navPageTitle }) => {
   };
 
   const toggleMenuRight = () => {
-    setMenuRightOpen(!menuRightOpen);
-    setMenuLeftOpen(false);
+    if (isAuthenticated) {
+      setMenuRightOpen(!menuRightOpen);
+      setMenuLeftOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -40,12 +46,16 @@ const Navigation = ({ userName, navPageTitle }) => {
   }, [navPageTitle]);
 
   useEffect(() => {
-    if (userNameNav) {
-      if (userNameNav.length > maxCharUserName) {
+    const userName = getAuthenticatedUser();
+
+    if (userName) {
+      setUserNameNav(userName.first_name || "");
+
+      if (userNameNav && userNameNav.length > maxCharUserName) {
         setUserNameNav(userNameNav.slice(0, maxCharUserName));
       }
     }
-  }, [userNameNav]);
+  }, [menuRightOpen, menuLeftOpen]);
 
   return (
     <>
@@ -59,7 +69,7 @@ const Navigation = ({ userName, navPageTitle }) => {
               className="me-4"
               onClick={toggleMenuLeft}
               style={{ cursor: "pointer" }}>
-              <Icon icon={faBars} className="menu-icon fa-lg"></Icon>
+              <Icon icon={faBars} className="menu-icon fa-lg ms-4"></Icon>
             </Navbar.Brand>
             <Navbar.Collapse>
               <Navbar.Brand className="me-4">
@@ -75,7 +85,7 @@ const Navigation = ({ userName, navPageTitle }) => {
               className="me-0"
               onClick={toggleMenuRight}
               style={{ cursor: "pointer" }}>
-              <div className="d-flex flex-column">
+              <div className="d-flex flex-column me-4">
                 <Icon icon={faUser} className="menu-icon fa-lg" />
                 <UserName>{userNameNav}</UserName>
               </div>
@@ -83,14 +93,8 @@ const Navigation = ({ userName, navPageTitle }) => {
           </div>
         </Container>
       </NavBarWrapper>
-      <NavigationLeftMenu
-        open={menuLeftOpen}
-        toggleMenu={toggleMenuLeft}
-      />
-      <NavigationRightMenu
-        open={menuRightOpen}
-        toggleMenu={toggleMenuRight}
-      />
+      <NavigationLeftMenu open={menuLeftOpen} toggleMenu={toggleMenuLeft} />
+      <NavigationRightMenu open={menuRightOpen} toggleMenu={toggleMenuRight} />
     </>
   );
 };

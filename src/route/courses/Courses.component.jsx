@@ -1,5 +1,4 @@
 import React from "react";
-import TitlePage from "../../components/title-page/TitlePage.component";
 import CourseCardList from "../../components/courses-card-list/CoursesCardList.components";
 import { getCoursesList } from "../../util/api/api";
 

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Navigation from "../navigation/Navigation.component";
 import Footer from "../../components/footer/Footer.component";
+import { getAuthenticatedUser } from "../../util/api/api";
 
 const View = () => {
   const [navPageTitle, setNavPageTitle] = useState("");
   const [pageTitle, setPageTitle] = useState("");
+
   const location = useLocation();
+  const navigate = useNavigate()
 
   const routeToTitles = {
     "/": {
@@ -28,11 +31,12 @@ const View = () => {
     },
     "/user-dashboard": {
       navPageTitle: "DASHBOARD",
-      pageTitle: "Welcome to your dashboard",
+      pageTitle: "Welcome To Your Dashboard",
+      pageProtected: true
     },
     "/programs": {
       navPageTitle: "PROGRAMS",
-      pageTitle: "Check our programs",
+      pageTitle: "Check Our Programs",
     },
     "/courses": {
       navPageTitle: "COURSES",
@@ -40,68 +44,99 @@ const View = () => {
     },
     "/about": {
       navPageTitle: "ABOUT",
-      pageTitle: "About our project group",
-    },
-    "/dashboard": {
-      navPageTitle: "DASHBOARD",
-      pageTitle: "Profile Information",
+      pageTitle: "About Our Project Group",
     },
     "/profile": {
       navPageTitle: "PROFILE",
-      pageTitle: "Welcome to your Dashboard",
+      pageTitle: "Profile Information",
+      pageProtected: true
     },
     "/add-courses": {
       navPageTitle: "ADM-COURSES",
       pageTitle: "Software Development Department",
+      pageProtected: true,
     },
     "/my-courses": {
       navPageTitle: "MY COURSES",
       pageTitle: "Software Development Department",
+      pageProtected: true
     },
     "/contact": {
       navPageTitle: "CONTACT",
-      pageTitle: "Ask us a question",
+      pageTitle: "Ask Us A Question",
+      pageProtected: true
     },
     "/new-password": {
       navPageTitle: "NEW PASSWORD",
       pageTitle: "Change Password",
+      pageProtected: true
     },
     "/adm-profile": {
       navPageTitle: "ADM-PROFILE",
       pageTitle: "Admin Profile Information",
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-add-courses": {
       navPageTitle: "ADM-COURSES",
       pageTitle: "Software Development Department",
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-new-course-form": {
       navPageTitle: "ADM-ADD NEW COURSES",
       pageTitle: "New Course Form",
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-student-list": {
       navPageTitle: "ADM-STUDENT LIST",
       pageTitle: "Students Information List",
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-forms": {
       navPageTitle: "ADM-FORMS LIST",
       pageTitle: "Student Questions List",
+      pageProtected: true,
+      admAccessLevel: true
     },
   };
+  
 
   useEffect(() => {
     const routePath = location.pathname;
-    const titles = routeToTitles[routePath] || {
+    const pageData = routeToTitles[routePath] || {
       navPageTitle: "ERROR 404",
       pageTitle: "ERROR 404 😔",
     };
 
-    setPageTitle(titles.pageTitle || "");
-    setNavPageTitle(titles.navPageTitle || "");
+    setNavPageTitle(pageData.navPageTitle || "");
+    setPageTitle(pageData.pageTitle || "");
+
+    const authenticatedUser = getAuthenticatedUser() || {};
+    const {isAuthenticated, isAdmin} = authenticatedUser || false
+
+  if (pageData.pageProtected) {
+    if (!isAuthenticated) {
+      console.log('User is not authenticated for this protected route');
+      navigate("/login");
+    }
+  }
+
+  if (pageData.admAccessLevel) {
+    if (!isAdmin) {
+      console.log('The user is not an Admin');
+      navigate("/adm-login");
+    }
+  }
   }, [location]);
+
+  
 
   return (
     <>
-      <Navigation userName="User name!012" navPageTitle={navPageTitle} />
+      <Navigation navPageTitle={navPageTitle} />
       <Container
         className="d-flex flex-column align-items-center"
         style={{ paddingTop: "40px", paddingBottom: "100px" }}>
