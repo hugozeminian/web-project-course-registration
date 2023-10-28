@@ -54,7 +54,7 @@ const View = () => {
     "/add-courses": {
       navPageTitle: "ADM-COURSES",
       pageTitle: "Software Development Department",
-      pageProtected: true
+      pageProtected: true,
     },
     "/my-courses": {
       navPageTitle: "MY COURSES",
@@ -74,27 +74,32 @@ const View = () => {
     "/adm-profile": {
       navPageTitle: "ADM-PROFILE",
       pageTitle: "Admin Profile Information",
-      pageProtected: true
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-add-courses": {
       navPageTitle: "ADM-COURSES",
       pageTitle: "Software Development Department",
-      pageProtected: true
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-new-course-form": {
       navPageTitle: "ADM-ADD NEW COURSES",
       pageTitle: "New Course Form",
-      pageProtected: true
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-student-list": {
       navPageTitle: "ADM-STUDENT LIST",
       pageTitle: "Students Information List",
-      pageProtected: true
+      pageProtected: true,
+      admAccessLevel: true
     },
     "/adm-forms": {
       navPageTitle: "ADM-FORMS LIST",
       pageTitle: "Student Questions List",
-      pageProtected: true
+      pageProtected: true,
+      admAccessLevel: true
     },
   };
   
@@ -110,12 +115,19 @@ const View = () => {
     setPageTitle(pageData.pageTitle || "");
 
     const authenticatedUser = getAuthenticatedUser() || {};
-  const isAuthenticated = authenticatedUser.isAuthenticated || false;
+    const {isAuthenticated, isAdmin} = authenticatedUser || false
 
   if (pageData.pageProtected) {
     if (!isAuthenticated) {
       console.log('User is not authenticated for this protected route');
       navigate("/login");
+    }
+  }
+
+  if (pageData.admAccessLevel) {
+    if (!isAdmin) {
+      console.log('The user is not an Admin');
+      navigate("/adm-login");
     }
   }
   }, [location]);
