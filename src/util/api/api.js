@@ -62,7 +62,7 @@ export const addCourseRegistration = (courseInformation) => {
     }
 
     const isAlreadyRegistered = courseRegistrations.some((registeredCourse) => {
-        return registeredCourse.courseId === courseInformation.courseId;
+        return registeredCourse.studentId === courseInformation.studentId && registeredCourse.courseId === courseInformation.courseId;
     });
 
     if (isAlreadyRegistered) {
@@ -79,18 +79,32 @@ export const addCourseRegistration = (courseInformation) => {
 
 export const getCourseRegistrationList = () => {
     let courseRegistrations = localStorage.getItem("bvc-courseRegistrations");
-    let myCourseList = JSON.parse(courseRegistrations || "[]");
+      
+    if (!courseRegistrations) {
+      courseRegistrations = [];
+    } else {
+      courseRegistrations = JSON.parse(courseRegistrations);
+    }
+  
+    let authenticatedUser = getAuthenticatedUser();
+    let userId = authenticatedUser.userId;
+  
+    let myCourseList = courseRegistrations.filter(registration => registration.studentId === userId);
+  
     return myCourseList;
-}
+  }
+  
 
 
 export const removeCourseRegistration = (courseInformation) => {
+    console.log("🚀 ~ file: api.js:100 ~ removeCourseRegistration ~ courseInformation:", courseInformation)
     let courseRegistrations = JSON.parse(localStorage.getItem("bvc-courseRegistrations"));
+    console.log("🚀 ~ file: api.js:102 ~ removeCourseRegistration ~ courseRegistrations:", courseRegistrations)
 
     if (courseRegistrations) {
         const indexToRemove = courseRegistrations.findIndex(
             (courseRegistration) =>
-                // courseRegistration.studentId === courseInformation.studentId &&
+                courseRegistration.studentId === courseInformation.studentId &&
                 courseRegistration.courseId === courseInformation.courseId
         );
 
@@ -150,7 +164,7 @@ export const getProgramsList = () => {
     let programsList = JSON.parse(programsData || "[]");
     return programsList;
 }
-  
+
 export const getAuthenticatedUser = () => {
     let authenticatedData = localStorage.getItem("bvc-authentication");
 
@@ -170,23 +184,25 @@ const authenticationData = {
     "isAdmin": false,
     "username": "",
     "first_name": "Visitor",
+    "userId": ""
 };
 
 export const loginVerification = (loginData, isAdmin = false) => {
-    const studentList = isAdmin ? getAdminList() : getStudentList();
+    const userList = isAdmin ? getAdminList() : getStudentList();
 
-    const isLoginValid = studentList.some((student) => {
-        return student.username === loginData.username && student.current_password === loginData.password;
+    const isLoginValid = userList.some((user) => {
+        return user.username === loginData.username && user.current_password === loginData.password;
     });
 
-    const matchingStudent = studentList.find((student) => {
-        return student.username === loginData.username && student.current_password === loginData.password;
+    const matchingUser = userList.find((user) => {
+        return user.username === loginData.username && user.current_password === loginData.password;
     });
 
     authenticationData.isAuthenticated = isLoginValid
     authenticationData.isAdmin = isAdmin
-    authenticationData.username = matchingStudent ? matchingStudent.username : null
-    authenticationData.first_name = matchingStudent ? matchingStudent.first_name : null
+    authenticationData.username = matchingUser ? matchingUser.username : null
+    authenticationData.first_name = matchingUser ? matchingUser.first_name : null
+    authenticationData.userId = matchingUser ? isAdmin ? matchingUser.adminId : matchingUser.studentId : null
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
 
@@ -198,6 +214,7 @@ export const logout = () => {
     authenticationData.isAdmin = false;
     authenticationData.username = "";
     authenticationData.first_name = "Visitor";
+    authenticationData.userId = ""
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
 
