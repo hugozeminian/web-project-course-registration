@@ -1,15 +1,47 @@
 [
   {
-    "program_code": "Course code SDDW24",
-    "description": "A two-year software development diploma program...",
+    "title": "Software Development Diploma (2 years)",
+    "program_code": "SDDW24",
+    "description": "A comprehensive two-year software development diploma program designed to equip students with advanced coding skills and industry-ready expertise. Join us this winter and embark on a journey to a rewarding tech career.",
     "season": "Winter",
     "start_date": "January 10, 2024",
     "end_date": "April 24, 2025",
     "fees": "$9,254 domestic, $27,735 international"
   },
   {
-    "program_code": "Another Program Code"
-
+    "title": "Software Development Post Diploma (1 year)",
+    "program_code": "SDPD12",
+    "description": "Jumpstart your tech career with our one-year post-diploma program in software development. Gain specialized knowledge in a fall session that starts in September and concludes in June, making you job-ready.",
+    "season": "Fall",
+    "start_date": "September 5, 2024",
+    "end_date": "June 15, 2025",
+    "fees": "$7,895 domestic, $23,675 international"
+  },
+  {
+    "title": "Software Development Certificate (3 months)",
+    "program_code": "CERT3M",
+    "description": "In just three months, our spring program offers a focused certificate in software development. Perfect for those seeking a quick entry into the tech world, with affordable fees for both domestic and international students.",
+    "season": "Spring",
+    "start_date": "March 1, 2024",
+    "end_date": "May 31, 2024",
+    "fees": "$2,500 domestic, $6,750 international"
+  },
+  {
+    "title": "Software Development Certificate (6 months)",
+    "program_code": "CERT6M",
+    "description": "Our summer certificate program spans six months, offering an in-depth exploration of software development. Enjoy a longer learning journey with a comprehensive curriculum, ideal for students aiming for excellence.",
+    "season": "Summer",
+    "start_date": "June 15, 2024",
+    "end_date": "December 15, 2024",
+    "fees": "$4,500 domestic, $10,800 international"
+  },
+  {
+    "title": "Software Development Post Diploma (1 year)",
+    "program_code": "SDPD24",
+    "description": "Explore our one-year post-diploma program in software development, beginning in the fall. This program provides a deeper dive into software development, preparing you for a rewarding career in tech.",
+    "season": "Fall",
+    "start_date": "September 3, 2024",
+    "end_date": "June 30, 2025",
+    "fees": "$8,500 domestic, $25,600 international"
   }
-
 ]

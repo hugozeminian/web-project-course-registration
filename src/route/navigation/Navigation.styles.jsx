@@ -20,4 +20,12 @@ export const NavTitlePage = styled.h3`
 export const UserName = styled.p`
   color: var(--color_main1) !important;
   margin: 0;
+  font-size: large;
+`;
+
+export const AccessLevel = styled.p`
+  color: var(--color_main1) !important;
+  margin: 0;
+  font-size: small;
+  text-align:center
 `;

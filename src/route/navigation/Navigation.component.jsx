@@ -8,6 +8,7 @@ import {
   Icon,
   NavTitlePage,
   UserName,
+  AccessLevel,
 } from "./Navigation.styles";
 
 import Container from "react-bootstrap/Container";
@@ -24,6 +25,7 @@ const Navigation = ({ navPageTitle }) => {
   const [menuRightOpen, setMenuRightOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState();
   const [userNameNav, setUserNameNav] = useState();
+  const [userAcessLevel, setUserAcessLevel] = useState();
   const maxCharUserName = 10;
 
   const authenticatedUser = getAuthenticatedUser() || {};
@@ -46,10 +48,11 @@ const Navigation = ({ navPageTitle }) => {
   }, [navPageTitle]);
 
   useEffect(() => {
-    const userName = getAuthenticatedUser();
+    const userData = getAuthenticatedUser();
 
-    if (userName) {
-      setUserNameNav(userName.first_name || "");
+    if (userData) {
+      setUserNameNav(userData.first_name || "");
+      setUserAcessLevel((userData.isAdmin ? "Admin" : ""))
 
       if (userNameNav && userNameNav.length > maxCharUserName) {
         setUserNameNav(userNameNav.slice(0, maxCharUserName));
@@ -88,6 +91,7 @@ const Navigation = ({ navPageTitle }) => {
               <div className="d-flex flex-column me-4">
                 <Icon icon={faUser} className="menu-icon fa-lg" />
                 <UserName>{userNameNav}</UserName>
+                <AccessLevel>{userAcessLevel}</AccessLevel>
               </div>
             </Navbar.Brand>
           </div>
