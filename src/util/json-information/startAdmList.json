@@ -7,7 +7,7 @@
     "phone": "+1 (123) 456-7890",
     "date_of_birth": "1998-05-15",
     "username": "regina",
-    "password": "123"
+    "current_password": "123"
   },
   {
     "adminId": 2,
@@ -17,7 +17,7 @@
     "phone": "+1 (123) 456-7890",
     "date_of_birth": "1998-05-15",
     "username": "fabio",
-    "password": "123"
+    "current_password": "123"
   },
   {
     "adminId": 3,
@@ -27,7 +27,7 @@
     "phone": "+1 (123) 456-7890",
     "date_of_birth": "1998-05-15",
     "username": "will",
-    "password": "123"
+    "current_password": "123"
   },
   {
     "adminId": 4,
@@ -37,6 +37,6 @@
     "phone": "+1 (123) 456-7890",
     "date_of_birth": "2000-10-13",
     "username": "hugo-adm",
-    "password": "123"
+    "current_password": "123"
   }
 ]

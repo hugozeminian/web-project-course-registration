@@ -3,10 +3,9 @@ import CourseCardList from "../../components/courses-card-list/CoursesCardList.c
 import DropdownTerm from "../../components/dropdown-term/DropdownTerm.components";
 import SearchBar from "../../components/search-bar/SearchBar.component";
 import { FiltersContainer } from "./AdmAddCourses.styles";
-import TitlePage from "../../components/title-page/TitlePage.component";
 import { getCoursesList } from "../../util/api/api";
 
-const AdmCourses = () => {
+const AdmAddCourses = ({ isAuthenticated }) => {
   const coursesData = getCoursesList();
 
   const [selectedTerm, setSelectedTerm] = useState(0);
@@ -41,7 +40,6 @@ const AdmCourses = () => {
 
   return (
     <>
-      <TitlePage title="Software Development Department" />
       <FiltersContainer>
         <DropdownTerm onTermSelect={handleTermSelect} />
         <SearchBar onSearch={handleSearch} searchText={searchText} />
@@ -56,4 +54,4 @@ const AdmCourses = () => {
   );
 };
 
-export default AdmCourses;
+export default AdmAddCourses;

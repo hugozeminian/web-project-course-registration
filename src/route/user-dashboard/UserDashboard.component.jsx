@@ -1,6 +1,66 @@
+import { CardWrapper } from "./UserDashboard.styles";
+import Card from "react-bootstrap/Card";
+import {
+  getAdminList,
+  getStudentList,
+  getAuthenticatedUser,
+} from "../../util/api/api";
+
 const UserDashboard = () => {
-    return <h1> User Dashboard page </h1>;
-  };
-  
-  export default UserDashboard;
-  
+  const authenticatedUser = getAuthenticatedUser() || {};
+  const isAdmin = authenticatedUser.isAdmin;
+  const userInformationList = isAdmin ? getAdminList() : getStudentList();
+  const matchingUser = userInformationList.find((user) => {
+    return user.username === authenticatedUser.username;
+  });
+  const userInformation = matchingUser;
+  const { first_name, program } = userInformation || {}
+
+  return (
+    <>
+      {isAdmin ? (
+        <CardWrapper>
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              Hello, <strong>{first_name}</strong>
+            </Card.Title>
+          </Card.Body>
+
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              You are an <strong>ADMIN</strong> user.
+            </Card.Title>
+          </Card.Body>
+        </CardWrapper>
+      ) : (
+        <CardWrapper>
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              Hello, <strong>{first_name}</strong>
+            </Card.Title>
+          </Card.Body>
+
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              You are an <strong>STUDENT</strong> user.
+            </Card.Title>
+          </Card.Body>
+
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              Department: <strong>Software Development</strong>
+            </Card.Title>
+          </Card.Body>
+
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              Program: <strong>{program}</strong>
+            </Card.Title>
+          </Card.Body>
+        </CardWrapper>
+      )}
+    </>
+  );
+};
+
+export default UserDashboard;

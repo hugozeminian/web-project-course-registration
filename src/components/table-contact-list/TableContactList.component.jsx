@@ -6,6 +6,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
 import { getContactList } from "../../util/api/api";
+import { Container } from "@mui/system";
 
 const TableContactList = () => {
   const muiCache = createCache({
@@ -61,12 +62,14 @@ const TableContactList = () => {
   return (
     <CacheProvider value={muiCache}>
       <ThemeProvider theme={createTheme()}>
-        <MUIDataTable
-          title={""}
-          data={data}
-          columns={columns}
-          options={options}
-        />
+        <Container>
+          <MUIDataTable
+            title={""}
+            data={data}
+            columns={columns}
+            options={options}
+          />
+        </Container>
       </ThemeProvider>
     </CacheProvider>
   );

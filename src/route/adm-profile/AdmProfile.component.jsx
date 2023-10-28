@@ -1,5 +1,14 @@
+import React from "react";
+import ProfileInformation from "../../components/profile-information/ProfileInformation.component";
+import { getAuthenticatedUser } from "../../util/api/api";
+
 const AdmProfile = () => {
-  return <h1> Adm Profile page </h1>;
+  const authenticatedUser = getAuthenticatedUser() || {};
+  return (
+    <>
+      <ProfileInformation authenticatedUser={authenticatedUser} />
+    </>
+  );
 };
 
 export default AdmProfile;

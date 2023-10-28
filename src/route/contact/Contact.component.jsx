@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
 import Form from "react-bootstrap/Form";
-import TitlePage from "../../components/title-page/TitlePage.component";
 import { FormWrapper, CustomButton } from "./Contact.styles";
 import { getCurrentFormattedDateAndTime } from "../../util/general-functions/generalFunctions";
 import { sendMessageContact } from "../../util/api/api";
@@ -34,7 +32,6 @@ const Contact = () => {
 
   return (
     <>
-      <TitlePage title="Ask us a question" />
       <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label style={{ color: "var(--color_font2)" }}>

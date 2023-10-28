@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import TitlePage from "../../components/title-page/TitlePage.component";
 import {
   FormWrapper,
   CustomButton,
@@ -53,8 +52,6 @@ const AdmNewCourseForm = () => {
 
   return (
     <>
-      <TitlePage />
-
       <FormWrapper noValidate validated={validated} onSubmit={handleSubmit}>
         <Row>
           <Col sm={12} md={6}>

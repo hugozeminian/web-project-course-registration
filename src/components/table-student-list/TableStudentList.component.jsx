@@ -6,6 +6,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
 import { getStudentList } from "../../util/api/api";
+import { Container } from "@mui/system";
 
 const TableStudentList = () => {
   const muiCache = createCache({
@@ -21,32 +22,29 @@ const TableStudentList = () => {
       name: "first_name",
       label: "First Name",
       options: {
-        setCellProps: () => ({ style: { width: "140px" } }),
       },
     },
     {
       name: "last_name",
       label: "Last Name",
       options: {
-        setCellProps: () => ({ style: { width: "140px" } }),
       },
     },
     {
       name: "email",
       label: "Email",
       options: {
-        setCellProps: () => ({ style: { width: "260px" } }),
       },
     },
     {
       name: "phone",
       label: "Phone",
-      options: {},
+      options: { setCellProps: () => ({ style: { width: "160px" } }) },
     },
     {
       name: "date_of_birth",
       label: "Birthday",
-      options: {},
+      options: { setCellProps: () => ({ style: { width: "110px" } }) },
     },
     {
       name: "department",
@@ -57,7 +55,6 @@ const TableStudentList = () => {
       name: "program",
       label: "Program",
       options: {
-        setCellProps: () => ({ style: { width: "260px" } }),
       },
     },
   ];
@@ -83,12 +80,14 @@ const TableStudentList = () => {
   return (
     <CacheProvider value={muiCache}>
       <ThemeProvider theme={createTheme()}>
-        <MUIDataTable
-          title={""}
-          data={data}
-          columns={columns}
-          options={options}
-        />
+        <Container>
+          <MUIDataTable
+            title={""}
+            data={data}
+            columns={columns}
+            options={options}
+          />
+        </Container>
       </ThemeProvider>
     </CacheProvider>
   );
