@@ -19,8 +19,8 @@ const TableContactList = () => {
 
   const columns = [
     {
-      name: "first_name",
-      label: "First Name",
+      name: "name",
+      label: "Name",
       options: {
         setCellProps: () => ({ style: { width: "140px" } }),
       },
@@ -29,7 +29,14 @@ const TableContactList = () => {
       name: "email",
       label: "Email",
       options: {
-        setCellProps: () => ({ style: { width: "260px" } }),
+        setCellProps: () => ({ style: { width: "160px" } }),
+      },
+    },
+    {
+      name: "date",
+      label: "Date",
+      options: {
+        setCellProps: () => ({ style: { width: "200px" } }),
       },
     },
     {
@@ -64,7 +71,7 @@ const TableContactList = () => {
       <ThemeProvider theme={createTheme()}>
         <Container>
           <MUIDataTable
-            title={""}
+            title={"BVC Form"}
             data={data}
             columns={columns}
             options={options}
