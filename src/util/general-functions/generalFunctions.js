@@ -1,6 +1,4 @@
 export const getNextAvailableID = (existingIDs, idProperty = 'id') => {
-  console.log("🚀 ~ file: generalFunctions.js:2 ~ getNextAvailableID ~ idProperty:", idProperty)
-  console.log("🚀 ~ file: generalFunctions.js:2 ~ getNextAvailableID ~ existingIDs:", existingIDs)
   let maxID = 0;
 
   if (existingIDs) {

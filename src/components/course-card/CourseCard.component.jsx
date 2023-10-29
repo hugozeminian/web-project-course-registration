@@ -7,6 +7,7 @@ import {
   addCourseRegistration,
   admDeleteCourse,
   removeCourseRegistration,
+  getAuthenticatedUser,
 } from "../../util/api/api";
 
 function CourseCard({
@@ -22,6 +23,8 @@ function CourseCard({
   if (!courseData) {
     return null;
   }
+
+  const authenticatedUser = getAuthenticatedUser();
 
   const {
     courseId,
@@ -42,6 +45,7 @@ function CourseCard({
   const handleButtonClickAddCourse = () => {
     const courseInformation = {
       id: "",
+      studentId: authenticatedUser.userId,
       courseId: courseId,
       season: season,
       course_number: course_number,
@@ -56,7 +60,6 @@ function CourseCard({
       seats_available: seats_available,
       class_size: class_size,
     };
-
     const isAlreadyRegistered = addCourseRegistration(courseInformation);
     if (isAlreadyRegistered) {
       setConfirmationMessage("This course is already registered.");
@@ -71,6 +74,7 @@ function CourseCard({
     const courseInformation = {
       id: "",
       courseId: courseId,
+      studentId: authenticatedUser.userId,
     };
 
     removeCourseRegistration(courseInformation);

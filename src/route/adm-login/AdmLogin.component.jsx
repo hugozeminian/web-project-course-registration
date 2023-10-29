@@ -18,7 +18,7 @@ const AdmLogin = () => {
 
     const admLoginData = {
       username: form.username.value,
-      password: form.password.value,
+      current_password: form.current_password.value,
     };
     const isLoginValid = loginVerification(admLoginData, true);
     if (isLoginValid) {
@@ -65,7 +65,7 @@ const AdmLogin = () => {
                   <Form.Control
                     type="password"
                     placeholder="Enter your password"
-                    name="password"
+                    name="current_password"
                   />
                 </Form.Group>
               </Col>

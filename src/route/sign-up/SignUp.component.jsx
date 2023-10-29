@@ -7,14 +7,20 @@ import {
   getFormattedPhoneNumber,
   capitalizeEachWord,
 } from "../../util/general-functions/generalFunctions";
-import { addStudentRegistration } from "../../util/api/api";
+import {
+  addStudentRegistration,
+  signUpToLoginToDashboard,
+} from "../../util/api/api";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [validated, setValidated] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
 
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
@@ -41,6 +47,17 @@ const SignUp = () => {
       };
 
       addStudentRegistration(newStudentData);
+
+      const userLoginData = {
+        username: newStudentData.username,
+        current_password: newStudentData.current_password,
+      };
+
+      const signWithLoginCompleted = signUpToLoginToDashboard(userLoginData);
+      if (signWithLoginCompleted) {
+        navigate("/user-dashboard");
+        window.location.reload();
+      }
     }
   };
 
@@ -137,9 +154,7 @@ const SignUp = () => {
             <strong>Department:</strong>
           </Form.Label>
           <Form.Select disabled>
-            <option value="Software Development">
-              Software Development
-            </option>
+            <option value="Software Development">Software Development</option>
           </Form.Select>
           <Form.Control.Feedback type="invalid">
             Please select a department.
@@ -152,7 +167,7 @@ const SignUp = () => {
             <strong>Program:</strong>
           </Form.Label>
           <Form.Select required>
-          <option value="" disabled selected>
+            <option value="" disabled selected>
               Select a program
             </option>
             <option value="Diploma (2 years)">Diploma (2 years)</option>

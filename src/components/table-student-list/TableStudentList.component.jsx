@@ -82,7 +82,7 @@ const TableStudentList = () => {
       <ThemeProvider theme={createTheme()}>
         <Container>
           <MUIDataTable
-            title={""}
+            title={"BVC Students"}
             data={data}
             columns={columns}
             options={options}

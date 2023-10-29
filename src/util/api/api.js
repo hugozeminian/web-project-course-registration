@@ -41,6 +41,7 @@ export const admAddNewCourse = (courseInformation) => {
 #############################
 */
 export const addStudentRegistration = (studentInformation) => {
+
     let studentRegistration = JSON.parse(localStorage.getItem("bvc-studentData"));
 
     if (!studentRegistration) {
@@ -51,7 +52,6 @@ export const addStudentRegistration = (studentInformation) => {
     studentInformation.studentId = nextId;
     studentRegistration.push(studentInformation);
     localStorage.setItem("bvc-studentData", JSON.stringify(studentRegistration));
-    return false;
 }
 
 export const addCourseRegistration = (courseInformation) => {
@@ -62,7 +62,7 @@ export const addCourseRegistration = (courseInformation) => {
     }
 
     const isAlreadyRegistered = courseRegistrations.some((registeredCourse) => {
-        return registeredCourse.courseId === courseInformation.courseId;
+        return registeredCourse.studentId === courseInformation.studentId && registeredCourse.courseId === courseInformation.courseId;
     });
 
     if (isAlreadyRegistered) {
@@ -79,18 +79,28 @@ export const addCourseRegistration = (courseInformation) => {
 
 export const getCourseRegistrationList = () => {
     let courseRegistrations = localStorage.getItem("bvc-courseRegistrations");
-    let myCourseList = JSON.parse(courseRegistrations || "[]");
+
+    if (!courseRegistrations) {
+        courseRegistrations = [];
+    } else {
+        courseRegistrations = JSON.parse(courseRegistrations);
+    }
+
+    let authenticatedUser = getAuthenticatedUser();
+    let userId = authenticatedUser.userId;
+
+    let myCourseList = courseRegistrations.filter(registration => registration.studentId === userId);
     return myCourseList;
 }
 
 
+
 export const removeCourseRegistration = (courseInformation) => {
     let courseRegistrations = JSON.parse(localStorage.getItem("bvc-courseRegistrations"));
-
     if (courseRegistrations) {
         const indexToRemove = courseRegistrations.findIndex(
             (courseRegistration) =>
-                // courseRegistration.studentId === courseInformation.studentId &&
+                courseRegistration.studentId === courseInformation.studentId &&
                 courseRegistration.courseId === courseInformation.courseId
         );
 
@@ -103,16 +113,16 @@ export const removeCourseRegistration = (courseInformation) => {
 
 
 export const sendMessageContact = (messageStudentsData) => {
-    let messageStudents = JSON.parse(localStorage.getItem("bvc-messageStudents"));
+    let contactListData = JSON.parse(localStorage.getItem("bvc-contactListData"));
 
-    if (!messageStudents) {
-        messageStudents = [];
+    if (!contactListData) {
+        contactListData = [];
     }
 
-    let nextId = getNextAvailableID(messageStudents);
+    let nextId = getNextAvailableID(contactListData);
     messageStudentsData.id = nextId;
-    messageStudents.push(messageStudentsData);
-    localStorage.setItem("bvc-messageStudents", JSON.stringify(messageStudents));
+    contactListData.push(messageStudentsData);
+    localStorage.setItem("bvc-contactListData", JSON.stringify(contactListData));
 }
 
 
@@ -150,7 +160,7 @@ export const getProgramsList = () => {
     let programsList = JSON.parse(programsData || "[]");
     return programsList;
 }
-  
+
 export const getAuthenticatedUser = () => {
     let authenticatedData = localStorage.getItem("bvc-authentication");
 
@@ -168,25 +178,24 @@ export const getAuthenticatedUser = () => {
 const authenticationData = {
     "isAuthenticated": false,
     "isAdmin": false,
-    "username": "",
+    "username": null,
     "first_name": "Visitor",
+    "userId": null
 };
 
 export const loginVerification = (loginData, isAdmin = false) => {
-    const studentList = isAdmin ? getAdminList() : getStudentList();
-
-    const isLoginValid = studentList.some((student) => {
-        return student.username === loginData.username && student.current_password === loginData.password;
+    const userList = isAdmin ? getAdminList() : getStudentList();
+    const isLoginValid = userList.some((user) => {
+        return user.username === loginData.username && user.current_password === loginData.current_password;
     });
-
-    const matchingStudent = studentList.find((student) => {
-        return student.username === loginData.username && student.current_password === loginData.password;
+    const matchingUser = userList.find((user) => {
+        return user.username === loginData.username && user.current_password === loginData.current_password;
     });
-
     authenticationData.isAuthenticated = isLoginValid
     authenticationData.isAdmin = isAdmin
-    authenticationData.username = matchingStudent ? matchingStudent.username : null
-    authenticationData.first_name = matchingStudent ? matchingStudent.first_name : null
+    authenticationData.username = matchingUser ? matchingUser.username : null
+    authenticationData.first_name = matchingUser ? matchingUser.first_name : "Visitor"
+    authenticationData.userId = matchingUser ? isAdmin ? matchingUser.adminId : matchingUser.studentId : null
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
 
@@ -196,8 +205,9 @@ export const loginVerification = (loginData, isAdmin = false) => {
 export const logout = () => {
     authenticationData.isAuthenticated = false;
     authenticationData.isAdmin = false;
-    authenticationData.username = "";
+    authenticationData.username = null
     authenticationData.first_name = "Visitor";
+    authenticationData.userId = null
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
 
@@ -209,4 +219,35 @@ export const getUserInformation = (authenticatedData, userInformationList) => {
     });
 
     return matchingStudent
+}
+
+export const signUpToLoginToDashboard = (objectToMatch, isAdmin = false) => {
+    const objectList = isAdmin ? getAdminList() : getStudentList();
+    const foundObject = objectList.find(currentObject => {
+        for (const key in objectToMatch) {
+            if (objectToMatch[key] !== currentObject[key]) {
+                return false;
+            }
+        }
+        return true; // All properties match
+    });
+    if (foundObject) {
+        authenticationData.isAuthenticated = true;
+        authenticationData.isAdmin = isAdmin;
+        authenticationData.username = foundObject.username;
+        authenticationData.first_name = foundObject.first_name || "Visitor";
+        authenticationData.userId = isAdmin ? foundObject.adminId : foundObject.studentId;
+
+        localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
+        return true
+    } else {
+        authenticationData.isAuthenticated = false;
+        authenticationData.isAdmin = false;
+        authenticationData.username = null;
+        authenticationData.first_name = "Visitor";
+        authenticationData.userId = null;
+
+        localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
+        return false
+    }
 }

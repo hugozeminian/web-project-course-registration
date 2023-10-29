@@ -18,7 +18,7 @@ const Login = () => {
 
     const userLoginData = {
       username: form.username.value,
-      password: form.password.value,
+      current_password: form.current_password.value,
     };
     const isLoginValid = loginVerification(userLoginData);
     if (isLoginValid) {
@@ -66,7 +66,7 @@ const Login = () => {
                   <Form.Control
                     type="password"
                     placeholder="Enter your password"
-                    name="password"
+                    name="current_password"
                   />
                 </Form.Group>
               </Col>
