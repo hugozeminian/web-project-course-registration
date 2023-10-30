@@ -70,9 +70,19 @@ export const addCourseRegistration = (courseInformation) => {
     } else {
         let nextId = getNextAvailableID(courseRegistrations);
         courseInformation.id = nextId;
+        courseInformation.seats_available = courseInformation.seats_available - 1
         courseRegistrations.push(courseInformation);
         localStorage.setItem("bvc-courseRegistrations", JSON.stringify(courseRegistrations));
-        return false;
+
+
+        let coursesList = getCoursesList()
+        coursesList.forEach(course => {
+            if (course.courseId === courseInformation.courseId) {
+                course.seats_available = course.seats_available - 1
+            }
+        });
+        localStorage.setItem("bvc-coursesData", JSON.stringify(coursesList));
+        return false
     }
 }
 
@@ -108,6 +118,14 @@ export const removeCourseRegistration = (courseInformation) => {
             courseRegistrations.splice(indexToRemove, 1);
             localStorage.setItem("bvc-courseRegistrations", JSON.stringify(courseRegistrations));
         }
+
+        let coursesList = getCoursesList()
+        coursesList.forEach(course => {
+            if (course.courseId === courseInformation.courseId) {
+                course.seats_available = course.seats_available + 1
+            }
+        });
+        localStorage.setItem("bvc-coursesData", JSON.stringify(coursesList));
     }
 }
 
@@ -229,7 +247,7 @@ export const signUpToLoginToDashboard = (objectToMatch, isAdmin = false) => {
                 return false;
             }
         }
-        return true; // All properties match
+        return true;
     });
     if (foundObject) {
         authenticationData.isAuthenticated = true;

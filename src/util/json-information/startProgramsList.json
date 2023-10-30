@@ -6,7 +6,9 @@
     "season": "Winter",
     "start_date": "January 10, 2024",
     "end_date": "April 24, 2025",
-    "fees": "$9,254 domestic, $27,735 international"
+    "fees_d": "$9,254 domestic",
+    "fees_i": "$27,735 international"
+
   },
   {
     "title": "Software Development Post Diploma (1 year)",
@@ -15,7 +17,8 @@
     "season": "Fall",
     "start_date": "September 5, 2024",
     "end_date": "June 15, 2025",
-    "fees": "$7,895 domestic, $23,675 international"
+    "fees_d": "$7,895 domestic",
+    "fees_i": "$23,675 international"
   },
   {
     "title": "Software Development Certificate (3 months)",
@@ -24,7 +27,8 @@
     "season": "Spring",
     "start_date": "March 1, 2024",
     "end_date": "May 31, 2024",
-    "fees": "$2,500 domestic, $6,750 international"
+    "fees_d": "$2,500 domestic",
+    "fees_i": "$6,750 international"
   },
   {
     "title": "Software Development Certificate (6 months)",
@@ -33,7 +37,8 @@
     "season": "Summer",
     "start_date": "June 15, 2024",
     "end_date": "December 15, 2024",
-    "fees": "$4,500 domestic, $10,800 international"
+    "fees_d": "$4,500 domestic",
+    "fees_i": "$10,800 international"
   },
   {
     "title": "Software Development Post Diploma (1 year)",
@@ -42,6 +47,7 @@
     "season": "Fall",
     "start_date": "September 3, 2024",
     "end_date": "June 30, 2025",
-    "fees": "$8,500 domestic, $25,600 international"
+    "fees_d": "$8,500 domestic",
+    "fees_i": "$25,600 international"
   }
 ]

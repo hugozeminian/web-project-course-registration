@@ -3,7 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { CustomDropdownToggle, CustomDropdownItem } from "./DropdownTerm.styles";
 
 function DropdownTerm({ onTermSelect }) {
-  const [selectedTerm, setSelectedTerm] = useState("Select season");
+  const [selectedTerm, setSelectedTerm] = useState("Select Term");
 
   const handleSelect = (eventKey) => {
     setSelectedTerm(eventKey);
@@ -19,7 +19,7 @@ function DropdownTerm({ onTermSelect }) {
           <CustomDropdownItem eventKey="Summer">Summer</CustomDropdownItem>
           <CustomDropdownItem eventKey="Fall">Fall</CustomDropdownItem>
           <CustomDropdownItem eventKey="Winter">Winter</CustomDropdownItem>
-          <CustomDropdownItem eventKey="Select season">Cancel</CustomDropdownItem>
+          <CustomDropdownItem eventKey="Select Term">Cancel</CustomDropdownItem>
         </Dropdown.Menu>
       </Dropdown>
     </>

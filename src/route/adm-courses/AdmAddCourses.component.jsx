@@ -14,7 +14,7 @@ const AdmAddCourses = ({ isAuthenticated }) => {
 
   const handleTermSelect = (selectedSeason) => {
     setSelectedSeason(selectedSeason);
-    if (selectedSeason === "Select season") {
+    if (selectedSeason === "Select Term") {
       setFilteredCourseData(coursesData);
     } else {
       const filteredData = coursesData.filter(

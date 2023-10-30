@@ -95,7 +95,7 @@ const SignUp = () => {
             placeholder="Email"
             aria-describedby="inputGroupPrepend"
             required
-            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+            pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
           />
           <Form.Control.Feedback type="invalid">
             Please enter your name.

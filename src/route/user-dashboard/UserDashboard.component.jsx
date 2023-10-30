@@ -42,7 +42,7 @@ const UserDashboard = () => {
 
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              You are an <strong>STUDENT</strong> user.
+              You are a <strong>STUDENT</strong> user.
             </Card.Title>
           </Card.Body>
 
