@@ -10,7 +10,7 @@ const View = () => {
   const [pageTitle, setPageTitle] = useState("");
 
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const routeToTitles = {
     "/": {
@@ -32,7 +32,7 @@ const View = () => {
     "/user-dashboard": {
       navPageTitle: "DASHBOARD",
       pageTitle: "Welcome To Your Dashboard",
-      pageProtected: true
+      pageProtected: true,
     },
     "/programs": {
       navPageTitle: "PROGRAMS",
@@ -49,63 +49,62 @@ const View = () => {
     "/profile": {
       navPageTitle: "PROFILE",
       pageTitle: "Profile Information",
-      pageProtected: true
+      pageProtected: true,
     },
     "/add-courses": {
       navPageTitle: "COURSES",
       pageTitle: "Software Development Department",
       pageProtected: true,
-      userAccessLevel: true
+      userAccessLevel: true,
     },
     "/my-courses": {
       navPageTitle: "MY COURSES",
       pageTitle: "Software Development Department",
       pageProtected: true,
-      userAccessLevel: true
+      userAccessLevel: true,
     },
     "/contact": {
       navPageTitle: "CONTACT",
       pageTitle: "Ask Us A Question",
       pageProtected: true,
-      userAccessLevel: true
+      userAccessLevel: true,
     },
     "/new-password": {
       navPageTitle: "NEW PASSWORD",
       pageTitle: "Change Password",
-      pageProtected: true
+      pageProtected: true,
     },
     "/adm-profile": {
       navPageTitle: "ADM-PROFILE",
       pageTitle: "Admin Profile Information",
       pageProtected: true,
-      admAccessLevel: true
+      admAccessLevel: true,
     },
     "/adm-add-courses": {
       navPageTitle: "ADM-COURSES",
       pageTitle: "Software Development Department",
       pageProtected: true,
-      admAccessLevel: true
+      admAccessLevel: true,
     },
     "/adm-new-course-form": {
       navPageTitle: "ADM-ADD NEW COURSES",
       pageTitle: "New Course Form",
       pageProtected: true,
-      admAccessLevel: true
+      admAccessLevel: true,
     },
     "/adm-student-list": {
       navPageTitle: "ADM-STUDENT LIST",
       pageTitle: "Students Information List",
       pageProtected: true,
-      admAccessLevel: true
+      admAccessLevel: true,
     },
     "/adm-forms": {
       navPageTitle: "ADM-FORMS LIST",
       pageTitle: "Student Questions List",
       pageProtected: true,
-      admAccessLevel: true
+      admAccessLevel: true,
     },
   };
-  
 
   useEffect(() => {
     const routePath = location.pathname;
@@ -118,34 +117,43 @@ const View = () => {
     setPageTitle(pageData.pageTitle || "");
 
     const authenticatedUser = getAuthenticatedUser() || {};
-    const {isAuthenticated, isAdmin} = authenticatedUser || false
+    const { isAuthenticated, isAdmin } = authenticatedUser || false;
 
-  if (pageData.pageProtected) {
-    if (!isAuthenticated) {
-      console.log('User is not authenticated for this protected route');
-      navigate("/login");
+    if (pageData.pageProtected) {
+      if (!isAuthenticated) {
+        console.log("User is not authenticated for this protected route");
+        navigate("/login");
+      }
     }
-  }
 
-  if (pageData.admAccessLevel) {
-    if (!isAdmin) {
-      console.log('The user is not an Admin');
-      navigate("/adm-login");
+    if (pageData.admAccessLevel) {
+      if (!isAdmin) {
+        console.log("The user is not an Admin");
+        navigate("/adm-login");
+      }
     }
-  }
 
-  if (pageData.userAccessLevel) {
-    if (isAdmin) {
-      console.log('The Admin is not an User');
-      navigate("/login");
+    if (pageData.userAccessLevel) {
+      if (isAdmin) {
+        console.log("The Admin is not an User");
+        navigate("/login");
+      }
     }
-  }
   }, [location]);
 
-  
+  const ScrollToTop = () => {
+    const { pathname } = useLocation();
+
+    React.useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+  };
 
   return (
     <>
+      <ScrollToTop />
       <Navigation navPageTitle={navPageTitle} />
       <Container
         className="d-flex flex-column align-items-center"

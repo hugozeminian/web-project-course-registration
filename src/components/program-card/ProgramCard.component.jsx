@@ -11,7 +11,8 @@ function ProgramCard({ programData }) {
     season,
     start_date,
     end_date,
-    fees,
+    fees_d,
+    fees_i,
   } = programData || {};
 
   return (
@@ -55,11 +56,24 @@ function ProgramCard({ programData }) {
                     <em>{season}</em>
                   </strong>
                 </Card.Title>
-                <Card.Title style={{ color: "var(--color_font1)" }}>
-                  <strong>
-                    <em>{fees}</em>
-                  </strong>
-                </Card.Title>
+
+                <Row>
+                  <Col md={12} xl={6}>
+                    <Card.Title style={{ color: "var(--color_font1)" }}>
+                      <strong>
+                        <em>{fees_d}</em>
+                      </strong>
+                    </Card.Title>
+                  </Col>
+              
+                  <Col lg={12} xl={6}>
+                    <Card.Title style={{ color: "var(--color_font1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      <strong>
+                        <em>{fees_i}</em>
+                      </strong>
+                    </Card.Title>
+                  </Col>
+                </Row>
               </div>
 
               <Table hover>

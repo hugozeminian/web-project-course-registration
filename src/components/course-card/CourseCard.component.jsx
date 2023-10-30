@@ -112,7 +112,7 @@ function CourseCard({
           <Row>
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>Season: {season}</strong>
+                <strong>Term: {season}</strong>
               </Card.Title>
             </Col>
 
