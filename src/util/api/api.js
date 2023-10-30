@@ -179,7 +179,7 @@ const authenticationData = {
     "isAuthenticated": false,
     "isAdmin": false,
     "username": null,
-    "first_name": "Visitor",
+    "first_name": "Login",
     "userId": null
 };
 
@@ -194,7 +194,7 @@ export const loginVerification = (loginData, isAdmin = false) => {
     authenticationData.isAuthenticated = isLoginValid
     authenticationData.isAdmin = isAdmin
     authenticationData.username = matchingUser ? matchingUser.username : null
-    authenticationData.first_name = matchingUser ? matchingUser.first_name : "Visitor"
+    authenticationData.first_name = matchingUser ? matchingUser.first_name : "Login"
     authenticationData.userId = matchingUser ? isAdmin ? matchingUser.adminId : matchingUser.studentId : null
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
@@ -206,7 +206,7 @@ export const logout = () => {
     authenticationData.isAuthenticated = false;
     authenticationData.isAdmin = false;
     authenticationData.username = null
-    authenticationData.first_name = "Visitor";
+    authenticationData.first_name = "Login";
     authenticationData.userId = null
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
@@ -235,7 +235,7 @@ export const signUpToLoginToDashboard = (objectToMatch, isAdmin = false) => {
         authenticationData.isAuthenticated = true;
         authenticationData.isAdmin = isAdmin;
         authenticationData.username = foundObject.username;
-        authenticationData.first_name = foundObject.first_name || "Visitor";
+        authenticationData.first_name = foundObject.first_name || "Login";
         authenticationData.userId = isAdmin ? foundObject.adminId : foundObject.studentId;
 
         localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
@@ -244,7 +244,7 @@ export const signUpToLoginToDashboard = (objectToMatch, isAdmin = false) => {
         authenticationData.isAuthenticated = false;
         authenticationData.isAdmin = false;
         authenticationData.username = null;
-        authenticationData.first_name = "Visitor";
+        authenticationData.first_name = "Login";
         authenticationData.userId = null;
 
         localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));

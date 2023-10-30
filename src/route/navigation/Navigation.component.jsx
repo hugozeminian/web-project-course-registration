@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavigationLeftMenu from "../../components/navigation-left-menu/NavigationLeftMenu.component";
 import NavigationRightMenu from "../../components/navigation-right-menu/NavigationRightMenu.component";
 import { getAuthenticatedUser } from "../../util/api/api";
+import { useNavigate } from "react-router-dom";
 
 import {
   NavBarWrapper,
@@ -18,14 +19,16 @@ import {
   faBars,
   faGraduationCap,
   faUser,
+  faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = ({ navPageTitle }) => {
+  const navigate = useNavigate();
   const [menuLeftOpen, setMenuLeftOpen] = useState(false);
   const [menuRightOpen, setMenuRightOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState();
   const [userNameNav, setUserNameNav] = useState();
-  const [userAcessLevel, setUserAcessLevel] = useState();
+  const [userAccessLevel, setUserAccessLevel] = useState();
   const maxCharUserName = 10;
 
   const authenticatedUser = getAuthenticatedUser() || {};
@@ -40,6 +43,8 @@ const Navigation = ({ navPageTitle }) => {
     if (isAuthenticated) {
       setMenuRightOpen(!menuRightOpen);
       setMenuLeftOpen(false);
+    } else {
+      navigate("/login");
     }
   };
 
@@ -52,7 +57,7 @@ const Navigation = ({ navPageTitle }) => {
 
     if (userData) {
       setUserNameNav(userData.first_name || "");
-      setUserAcessLevel((userData.isAdmin ? "Admin" : ""))
+      setUserAccessLevel(userData.isAdmin ? "Admin" : "");
 
       if (userNameNav && userNameNav.length > maxCharUserName) {
         setUserNameNav(userNameNav.slice(0, maxCharUserName));
@@ -83,16 +88,25 @@ const Navigation = ({ navPageTitle }) => {
               <NavTitlePage>{pageTitle}</NavTitlePage>
             </Navbar.Text>
           </div>
+
           <div className="d-flex">
             <Navbar.Brand
               className="me-0"
               onClick={toggleMenuRight}
               style={{ cursor: "pointer" }}>
               <div className="d-flex flex-column me-4">
-                <Icon icon={faUser} className="menu-icon fa-lg" />
+                {isAuthenticated ? (
+                  <Icon icon={faUser} className="menu-icon fa-lg" />
+                ) : (
+                  <Icon
+                    icon={faArrowRightToBracket}
+                    className="menu-icon fa-lg"
+                  />
+                )}
                 <UserName>{userNameNav}</UserName>
-                <AccessLevel>{userAcessLevel}</AccessLevel>
+                <AccessLevel>{userAccessLevel}</AccessLevel>
               </div>
+              
             </Navbar.Brand>
           </div>
         </Container>
