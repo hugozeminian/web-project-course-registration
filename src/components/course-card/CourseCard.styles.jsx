@@ -16,6 +16,7 @@ export const CardWrapper = styled(Card)`
 
 export const CustomButton = styled(Button)`
   background-color: var(--color_main2);
+  margin-right: 10px;
 `;
 
 export const CustomTd = styled.td`

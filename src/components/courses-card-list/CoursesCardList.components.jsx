@@ -7,7 +7,7 @@ const CourseCardList = ({ coursesData, disableaddCourseButton, addCourseButtonHi
     <>
       <div>
         {coursesData.length === 0 ? (
-          <p>No courses available, select term.</p>
+          <p>No courses available, select program first.</p>
         ) : (
           coursesData.map((courseData) => (
             <CourseCard

@@ -94,10 +94,10 @@ const AdmNewCourseForm = () => {
                 <option value="" disabled selected>
                   Select a Term
                 </option>
-                <option value="1">Term 1</option>
-                <option value="2">Term 2</option>
-                <option value="3">Term 3</option>
-                <option value="4">Term 4</option>
+                <option value="1">Spring</option>
+                <option value="2">Summer</option>
+                <option value="3">Fall</option>
+                <option value="4">Winter</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">
                 Please select a term.

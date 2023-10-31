@@ -35,6 +35,16 @@ export const admAddNewCourse = (courseInformation) => {
 }
 
 
+export const updateCourse = (courseInformation) => {
+
+
+    // ############### ToDo ###############
+
+
+    
+}
+
+
 /*
 #############################
 ##### STUDENT FUNCTIONS #####
@@ -50,8 +60,6 @@ export const addStudentRegistration = (studentInformation) => {
 
     let nextId = getNextAvailableID(studentRegistration, "studentId");
     studentInformation.studentId = nextId;
-    console.log("🚀 ~ file: api.js:53 ~ addStudentRegistration ~ studentInformation:", studentInformation)
-
     if (studentInformation.program === "Certificate (3 months and 6 months)") {
         studentInformation.course_min = 1
         studentInformation.course_max = 1
