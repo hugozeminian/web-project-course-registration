@@ -7,7 +7,7 @@ export const FiltersContainer = styled.div`
     margin-bottom: 30px;
     width: 75%;
 
-    @media (max-width: 576px) {
+    @media (max-width: 1000px) {
     display: flex;
     flex-direction: column;
     width: 100%;

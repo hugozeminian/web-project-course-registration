@@ -14,7 +14,8 @@ const UserDashboard = () => {
     return user.username === authenticatedUser.username;
   });
   const userInformation = matchingUser;
-  const { first_name, program } = userInformation || {}
+  const { first_name, program, studentId } = userInformation || {}
+  console.log("🚀 ~ file: UserDashboard.component.jsx:18 ~ UserDashboard ~ userInformation:", userInformation)
 
   return (
     <>
@@ -43,6 +44,12 @@ const UserDashboard = () => {
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
               You are a <strong>STUDENT</strong> user.
+            </Card.Title>
+          </Card.Body>
+
+          <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              Student ID: <strong>{studentId}</strong>.
             </Card.Title>
           </Card.Body>
 

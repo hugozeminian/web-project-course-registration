@@ -12,8 +12,12 @@
     "campus": "Calgary",
     "delivery_mode": "Real-time Online",
     "seats_available": 18,
-    "class_size": 40
-  },
+    "class_size": 40,
+    "program": "Certificate (3 months and 6 months)",
+    "course_min":1,
+    "course_max":1
+    
+  },  
   {
     "courseId": 2,
     "season": "Summer",
@@ -27,7 +31,10 @@
     "campus": "Calgary",
     "delivery_mode": "In Class",
     "seats_available": 22,
-    "class_size": 40
+    "class_size": 40,
+    "program": "Diploma (2 years)",
+    "course_min":1,
+    "course_max":1
   },
   {
     "courseId": 3,
@@ -42,7 +49,10 @@
     "campus": "Airdrie",
     "delivery_mode": "Any-time Online",
     "seats_available": 25,
-    "class_size": 40
+    "class_size": 40,
+    "program": "Post Diploma (1 year)",
+    "course_min":1,
+    "course_max":1
   },
   {
     "courseId": 4,
@@ -57,7 +67,10 @@
     "campus": "Banff",
     "delivery_mode": "Real-time",
     "seats_available": 15,
-    "class_size": 40
+    "class_size": 40,
+    "program": "Certificate (3 months and 6 months)",
+    "course_min":1,
+    "course_max":1
   },
   {
     "courseId": 5,
@@ -72,37 +85,10 @@
     "campus": "Okotoks",
     "delivery_mode": "Real-time",
     "seats_available": 20,
-    "class_size": 40
-  },
-  {
-    "courseId": 6,
-    "season": "Winter",
-    "course_number": "PM0707",
-    "title": "Project Management Certification",
-    "description": "Become a certified project manager with our Project Management Certification program. Learn the best practices, tools, and methodologies to successfully plan, execute, and close projects. This comprehensive course will equip you with the skills and knowledge required to excel in project management. Join us on Thursdays from 7:00 PM to 9:00 PM, starting on January 6, 2025, and ending on April 30, 2025, in Cochrane. This class-based program offers a limited number of seats, with only 30 available, so secure your spot now to take your career to the next level.",
-    "week_day": "Thursdays",
-    "hour": "7:00 PM - 9:00 PM",
-    "start_date": "January 6, 2025",
-    "end_date": "April 30, 2025",
-    "campus": "Cochrane",
-    "delivery_mode": "Class",
-    "seats_available": 30,
-    "class_size": 40
-  },
-  {
-    "courseId": 7,
-    "season": "Summer",
-    "course_number": "DS0808",
-    "title": "Data Science Bootcamp",
-    "description": "Dive into the world of data science with our comprehensive Data Science Bootcamp. Learn data analysis, machine learning, and data visualization to launch your career in the data science field. Join us on Fridays from 6:00 PM to 8:00 PM, starting on June 7, 2024, and ending on November 30, 2024, in Airdrie. This real-time course offers a limited number of seats, so reserve your spot to become a data science expert.",
-    "week_day": "Fridays",
-    "hour": "6:00 PM - 8:00 PM",
-    "start_date": "June 7, 2024",
-    "end_date": "November 30, 2024",
-    "campus": "Airdrie",
-    "delivery_mode": "Real-time",
-    "seats_available": 28,
-    "class_size": 40
+    "class_size": 40,
+    "program": "Certificate (3 months and 6 months)",
+    "course_min":1,
+    "course_max":1
   },
   {
     "courseId": 8,
@@ -117,6 +103,9 @@
     "campus": "Calgary",
     "delivery_mode": "Class",
     "seats_available": 32,
-    "class_size": 40
+    "class_size": 40,
+    "program": "Certificate (3 months and 6 months)",
+    "course_min":1,
+    "course_max":1
   }
 ]

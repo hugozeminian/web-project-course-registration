@@ -57,7 +57,9 @@ const Navigation = ({ navPageTitle }) => {
 
     if (userData) {
       setUserNameNav(userData.first_name || "");
-      setUserAccessLevel(userData.isAdmin ? "Admin" : "");
+
+      
+      setUserAccessLevel(userData.isAdmin ? "Admin" : userData.isAuthenticated ? "Student" : "");
 
       if (userNameNav && userNameNav.length > maxCharUserName) {
         setUserNameNav(userNameNav.slice(0, maxCharUserName));

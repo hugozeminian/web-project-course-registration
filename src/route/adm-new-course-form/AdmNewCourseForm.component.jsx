@@ -202,8 +202,6 @@ const AdmNewCourseForm = () => {
                   id={`inline-weekDay-${index}`}
                   value={day}
                   required={index === 1}
-                  // feedback="Please select one day."
-                  // feedbackType="invalid"
                 />
               </CustomGroupFormCheck>
             ))}

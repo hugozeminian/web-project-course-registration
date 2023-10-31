@@ -10,12 +10,13 @@ import {
   getAuthenticatedUser,
 } from "../../util/api/api";
 
-function CourseCard({
+const CourseCard = ({
   courseData,
+  disableaddCourseButton,
   addCourseButtonHidden,
   removeCourseButtonHidden,
   deleteCourseButtonHidden,
-}) {
+}) => {
   const [courseInformation, setCourseInformation] = useState(courseData);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -40,6 +41,9 @@ function CourseCard({
     delivery_mode,
     seats_available,
     class_size,
+    program,
+    course_min,
+    course_max
   } = courseInformation;
 
   const handleButtonClickAddCourse = () => {
@@ -59,6 +63,9 @@ function CourseCard({
       delivery_mode: delivery_mode,
       seats_available: seats_available,
       class_size: class_size,
+      program: program,
+      course_min: course_min,
+      course_max: course_max,
     };
     const isAlreadyRegistered = addCourseRegistration(courseInformation);
     if (isAlreadyRegistered) {
@@ -109,6 +116,11 @@ function CourseCard({
         </Row>
 
         <Card.Body>
+          <Row>
+          <Card.Title style={{ color: "var(--color_font2)" }}>
+                <strong>Program: {program}</strong>
+              </Card.Title>
+          </Row>
           <Row>
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
@@ -192,6 +204,7 @@ function CourseCard({
 
               <div className="d-flex justify-content-end">
                 <CustomButton
+                  disabled={disableaddCourseButton}
                   hidden={addCourseButtonHidden}
                   onClick={handleButtonClickAddCourse}>
                   Add Course

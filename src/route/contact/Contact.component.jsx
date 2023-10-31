@@ -18,7 +18,6 @@ const Contact = () => {
       const formattedDate = getCurrentFormattedDateAndTime();
 
       const messageStudentsData = {
-        // id: "",
         messageId: "",
         name: form.name.value,
         email: form.email.value,

@@ -21,9 +21,9 @@ const AddCourses = () => {
   const handleProgramSelect = (selectedProgram) => {
     setSelectedProgram(selectedProgram);
     if (selectedProgram === "Select Program") {
-      setFilteredCourseByProgram([]);
+      setFilteredCourseData([]);
     } else if (selectedProgram === "All") {
-      setFilteredCourseByProgram(coursesData);
+      setFilteredCourseData(coursesData);
     } else {
       const filteredCourses = coursesData.filter((course) =>
         course.program.includes(String(selectedProgram))
@@ -35,8 +35,8 @@ const AddCourses = () => {
 
   const handleTermSelect = (selectedTerm) => {
     setSelectedTerm(selectedTerm);
-    if (selectedTerm === "Select Term" || undefined) {
-      setFilteredCourseData(filteredCourseByProgram);
+    if (selectedTerm === "Select Term") {
+      setFilteredCourseData([]);
     } else if (selectedTerm === "All") {
       setFilteredCourseData(filteredCourseByProgram);
     } else {
@@ -73,11 +73,6 @@ const AddCourses = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setSelectedTerm("All")
-    handleTermSelect(selectedTerm)
-  }, [selectedProgram]);
-
   return (
     <>
       <Row style={{ width: "75%" }}>
@@ -95,7 +90,7 @@ const AddCourses = () => {
       </Row>
 
       <FiltersContainer>
-        <DropdownProgram onProgramSelect={handleProgramSelect} />
+        <DropdownProgram onTermSelect={handleProgramSelect} />
         <DropdownTerm onTermSelect={handleTermSelect} />
         <SearchBar onSearch={handleSearch} searchText={searchText} />
       </FiltersContainer>
