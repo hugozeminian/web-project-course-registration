@@ -54,7 +54,7 @@ export const getFormatDate = (inputDate) => {
   const dateParts = inputDate.split('-');
   const year = dateParts[0];
   const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(new Date(inputDate));
-  const day = String(parseInt(dateParts[2], 10)); // Remove leading zero
+  const day = String(parseInt(dateParts[2], 10));
 
   return `${month} ${day}, ${year}`;
 }

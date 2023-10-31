@@ -9,7 +9,10 @@
     "department": "Software Development",
     "program": "Certificate (3 months and 6 months)",
     "username": "johndoe123",
-    "current_password": "123"
+    "current_password": "123",
+    "course_registered": 0,
+    "course_min":1,
+    "course_max":1
   },
   {
     "studentId": 2,
@@ -21,7 +24,10 @@
     "department": "Software Development",
     "program": "Post Diploma (1 year)",
     "username": "janesmith456",
-    "current_password": "123"
+    "current_password": "123",
+    "course_registered": 0,
+    "course_min":2,
+    "course_max":5
   },
   {
     "studentId": 3,
@@ -33,7 +39,10 @@
     "department": "Software Development",
     "program": "Diploma (2 years)",
     "username": "michaelj",
-    "current_password": "123"
+    "current_password": "123",
+    "course_registered": 0,
+    "course_min":2,
+    "course_max":5
   },
   {
     "studentId": 4,
@@ -45,6 +54,9 @@
     "department": "Software Development",
     "program": "Diploma (2 years)",
     "username": "hugo",
-    "current_password": "123"
+    "current_password": "123",
+    "course_registered": 0,
+    "course_min":2,
+    "course_max":5
   }
 ]

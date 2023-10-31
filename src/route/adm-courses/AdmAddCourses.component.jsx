@@ -5,16 +5,18 @@ import SearchBar from "../../components/search-bar/SearchBar.component";
 import { FiltersContainer } from "./AdmAddCourses.styles";
 import { getCoursesList } from "../../util/api/api";
 
-const AdmAddCourses = ({ isAuthenticated }) => {
+const AdmAddCourses = () => {
   const coursesData = getCoursesList();
 
-  const [selectedSeason, setSelectedSeason] = useState("Select season");
+  const [selectedSeason, setSelectedSeason] = useState("Select Term");
   const [filteredCourseData, setFilteredCourseData] = useState(coursesData);
   const [searchText, setSearchText] = useState("");
 
   const handleTermSelect = (selectedSeason) => {
     setSelectedSeason(selectedSeason);
     if (selectedSeason === "Select Term") {
+      setFilteredCourseData(coursesData);
+    } else if (selectedSeason === "All") {
       setFilteredCourseData(coursesData);
     } else {
       const filteredData = coursesData.filter(

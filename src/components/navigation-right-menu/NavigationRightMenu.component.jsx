@@ -13,7 +13,6 @@ const NavigationRightMenu = ({ open, toggleMenu }) => {
   }
 
   const handleLinkClick = () => {
-    console.log('test');
     window.scrollTo(0, 0);
   };
 

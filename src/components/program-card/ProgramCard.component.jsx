@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomTd } from "./ProgramCard.styles";
 
-function ProgramCard({ programData }) {
+const ProgramCard = ({ programData }) => {
   const {
     title,
     program_code,

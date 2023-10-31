@@ -35,6 +35,16 @@ export const admAddNewCourse = (courseInformation) => {
 }
 
 
+export const updateCourse = (courseInformation) => {
+
+
+    // ############### ToDo ###############
+
+
+    
+}
+
+
 /*
 #############################
 ##### STUDENT FUNCTIONS #####
@@ -50,6 +60,16 @@ export const addStudentRegistration = (studentInformation) => {
 
     let nextId = getNextAvailableID(studentRegistration, "studentId");
     studentInformation.studentId = nextId;
+    if (studentInformation.program === "Certificate (3 months and 6 months)") {
+        studentInformation.course_min = 1
+        studentInformation.course_max = 1
+
+    } else {
+        studentInformation.course_min = 2
+        studentInformation.course_max = 5
+
+    }
+
     studentRegistration.push(studentInformation);
     localStorage.setItem("bvc-studentData", JSON.stringify(studentRegistration));
 }
@@ -65,7 +85,36 @@ export const addCourseRegistration = (courseInformation) => {
         return registeredCourse.studentId === courseInformation.studentId && registeredCourse.courseId === courseInformation.courseId;
     });
 
-    if (isAlreadyRegistered) {
+    const matchingRegistrations = courseRegistrations.filter((registeredCourse) => {
+        return registeredCourse.studentId === courseInformation.studentId
+    });
+
+    const quantityRegistrations = matchingRegistrations.length;
+    let isCourseRegistered = false;
+    if (courseInformation.program === "Certificate (3 months and 6 months)") {
+        courseInformation.course_min = 1
+        courseInformation.course_max = 1
+
+        if (quantityRegistrations < courseInformation.course_max && !isAlreadyRegistered) {
+            courseInformation.course_registered = courseInformation.course_registered + 1
+            isCourseRegistered = true
+        } else {
+            isCourseRegistered = false
+        }
+
+    } else {
+        courseInformation.course_min = 2
+        courseInformation.course_max = 5
+
+        if (quantityRegistrations < courseInformation.course_max && !isAlreadyRegistered) {
+            courseInformation.course_registered = courseInformation.course_registered + 1
+            isCourseRegistered = true
+        } else {
+            isCourseRegistered = false
+        }
+    }
+
+    if (!isCourseRegistered) {
         return true
     } else {
         let nextId = getNextAvailableID(courseRegistrations);
@@ -73,17 +122,19 @@ export const addCourseRegistration = (courseInformation) => {
         courseInformation.seats_available = courseInformation.seats_available - 1
         courseRegistrations.push(courseInformation);
         localStorage.setItem("bvc-courseRegistrations", JSON.stringify(courseRegistrations));
-
-
-        let coursesList = getCoursesList()
-        coursesList.forEach(course => {
-            if (course.courseId === courseInformation.courseId) {
-                course.seats_available = course.seats_available - 1
-            }
-        });
-        localStorage.setItem("bvc-coursesData", JSON.stringify(coursesList));
-        return false
     }
+
+
+
+    let coursesList = getCoursesList()
+    coursesList.forEach(course => {
+        if (course.courseId === courseInformation.courseId) {
+            course.seats_available = course.seats_available - 1
+        }
+    });
+    localStorage.setItem("bvc-coursesData", JSON.stringify(coursesList));
+    return false
+
 }
 
 
@@ -102,7 +153,6 @@ export const getCourseRegistrationList = () => {
     let myCourseList = courseRegistrations.filter(registration => registration.studentId === userId);
     return myCourseList;
 }
-
 
 
 export const removeCourseRegistration = (courseInformation) => {
@@ -143,6 +193,13 @@ export const sendMessageContact = (messageStudentsData) => {
     localStorage.setItem("bvc-contactListData", JSON.stringify(contactListData));
 }
 
+export const getStudentInformation = () => {
+    let authenticatedUser = getAuthenticatedUser();
+    let studentList = getStudentList()
+    let userId = authenticatedUser.userId;
+    let studentInformation = studentList.filter(student => student.studentId === userId);
+    return studentInformation[0]
+}
 
 /*
 #############################
