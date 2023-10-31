@@ -73,10 +73,10 @@ const AddCourses = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setSelectedTerm("All")
-    handleTermSelect(selectedTerm)
-  }, [selectedProgram]);
+  // useEffect(() => {
+  //   setSelectedTerm("All")
+  //   handleTermSelect(selectedTerm)
+  // }, [selectedProgram]);
 
   return (
     <>
