@@ -63,7 +63,7 @@ const AddCourses = () => {
 
   const courseRegistration = getCourseRegistrationList();
   const studentInformation = getStudentInformation();
-  const { program, course_max, course_min } = studentInformation;
+  const { program, course_max, course_min } = studentInformation || {};
 
   useEffect(() => {
     if (courseRegistration && courseRegistration.length >= course_max) {

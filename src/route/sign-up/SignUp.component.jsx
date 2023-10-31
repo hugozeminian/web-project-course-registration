@@ -33,8 +33,8 @@ const SignUp = () => {
         numericPhoneNumber
       );
 
-      const course_min = (form.program.value === "Certificate (3 months and 6 months)" ? 1 : 1)
-      const course_max = (form.program.value === "Certificate (3 months and 6 months)" ? 2 : 5)
+      const course_min = (form.program.value === "Certificate (3 months and 6 months)" ? 1 : 2)
+      const course_max = (form.program.value === "Certificate (3 months and 6 months)" ? 1 : 5)
 
       const newStudentData = {
         studentId: "",
