@@ -21,11 +21,12 @@ export const UserName = styled.p`
   color: var(--color_main1) !important;
   margin: 0;
   font-size: large;
+  text-align: center;
 `;
 
 export const AccessLevel = styled.p`
   color: var(--color_main1) !important;
   margin: 0;
   font-size: small;
-  text-align:center
+  text-align: center;
 `;

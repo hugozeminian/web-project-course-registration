@@ -91,7 +91,7 @@ const Navigation = ({ navPageTitle }) => {
             </Navbar.Text>
           </div>
 
-          <div className="d-flex">
+          <div className="d-flex align-items-center">
             <Navbar.Brand
               className="me-0"
               onClick={toggleMenuRight}
