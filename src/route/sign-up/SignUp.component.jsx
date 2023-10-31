@@ -33,6 +33,9 @@ const SignUp = () => {
         numericPhoneNumber
       );
 
+      const course_min = (form.program.value === "Certificate (3 months and 6 months)" ? 1 : 2)
+      const course_max = (form.program.value === "Certificate (3 months and 6 months)" ? 2 : 5)
+
       const newStudentData = {
         studentId: "",
         first_name: capitalizeEachWord(form.first_name.value),
@@ -44,6 +47,8 @@ const SignUp = () => {
         program: form.program.value,
         username: form.username.value,
         current_password: form.current_password.value,
+        course_min: course_min,
+        course_max: course_max
       };
 
       addStudentRegistration(newStudentData);

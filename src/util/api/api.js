@@ -51,6 +51,7 @@ export const updateCourse = (courseInformation) => {
 #############################
 */
 export const addStudentRegistration = (studentInformation) => {
+console.log("🚀 ~ file: api.js:54 ~ addStudentRegistration ~ studentInformation:", studentInformation)
 
     let studentRegistration = JSON.parse(localStorage.getItem("bvc-studentData"));
 
@@ -60,15 +61,15 @@ export const addStudentRegistration = (studentInformation) => {
 
     let nextId = getNextAvailableID(studentRegistration, "studentId");
     studentInformation.studentId = nextId;
-    if (studentInformation.program === "Certificate (3 months and 6 months)") {
-        studentInformation.course_min = 1
-        studentInformation.course_max = 1
+    // if (studentInformation.program === "Certificate (3 months and 6 months)") {
+    //     studentInformation.course_min = 1
+    //     studentInformation.course_max = 1
 
-    } else {
-        studentInformation.course_min = 2
-        studentInformation.course_max = 5
+    // } else {
+    //     studentInformation.course_min = 2
+    //     studentInformation.course_max = 5
 
-    }
+    // }
 
     studentRegistration.push(studentInformation);
     localStorage.setItem("bvc-studentData", JSON.stringify(studentRegistration));
