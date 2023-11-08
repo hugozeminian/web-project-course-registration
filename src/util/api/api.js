@@ -51,8 +51,6 @@ export const updateCourse = (courseInformation) => {
 #############################
 */
 export const addStudentRegistration = (studentInformation) => {
-console.log("🚀 ~ file: api.js:54 ~ addStudentRegistration ~ studentInformation:", studentInformation)
-
     let studentRegistration = JSON.parse(localStorage.getItem("bvc-studentData"));
 
     if (!studentRegistration) {
