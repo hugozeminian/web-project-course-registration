@@ -41,13 +41,14 @@ Bow online course registration is an online application that allow students to r
         o Advanced Project Management, Pro444
 
 
-The Bow system administrator has a separate login page to do the following.
+- The Bow system administrator has a separate login page to do the following.
     1. Add new course details including course name, course starting and ending dates, and any other course related information.
     2. Can search specific course using course name or course code
     3. Delete courses from the system.
     4. View list of registered students for different program
     5. View any form submitted from students.
-On Bow course registration system students can do the following
+
+- On Bow course registration system students can do the following
     1. They can search for available courses from the website using course name or course code.
     2. They can send questions using contact forms to the admin
     3. If a student wants to register for a particular program and or a selected course, he/she must sign up.
