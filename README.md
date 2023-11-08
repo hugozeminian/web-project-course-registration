@@ -60,12 +60,12 @@ The objective of this use case is to give you an idea what aspects to include in
 This project has 3 parts Assignment 1 and Assignment 2 and a final project. Assignment1 outcome will be used as input for your Assignment2. Then the combined final submission of this two-assignment work will be taken as your course project work. There will be a set of special features in each phase of this assessment. There will be optional check in and questions at the end of each phase.
 Assignment 1:
 - Assignment expectation
-    ● Implement your understanding of web application architecture in your web project.
-    ● Study the different scenario of the project to come up with inclusive wireframe design (structure of the website)
-    ● Prepare a prototype design of your web application.
-    ● Implementation should be done using react.js and related packages.
-    ● Adhere to formal project work file structure and good naming convention.
-    ● Store all course and students related data using array or object.
+    o Implement your understanding of web application architecture in your web project.
+    o Study the different scenario of the project to come up with inclusive wireframe design (structure of the website)
+    o Prepare a prototype design of your web application.
+    o Implementation should be done using react.js and related packages.
+    o Adhere to formal project work file structure and good naming convention.
+    o Store all course and students related data using array or object.
 
 # For assignment 1 your task is to design and create a front-end web application React.js and access data stored as array or object. This assignment is worth a total of 15 percent of your final mark.
 Wireframe design Frontend Design Process
@@ -105,11 +105,11 @@ Implementing Your project
 
 # Assignment 2:
 - Assignment expectation
-    ● Prepare the backend design of your website. Make sure it aligns to what you built on A1.
-    ● Implement backend web server using Node.Js and SQL/MySQL or MongoDB server, .JSON file etc as data storage.
-    ● Create different local APIs to process data from your database.
-    ● Discuss your ERD diagram or file structure to make sure the schema accommodates the features of your front-end website. You should be able to run, connect to, and query your dataset/database and populate the database with sample record/update the dataset.
-    ● Which API should you implement to retrieve information to/from the Bow course registration system?
+    o Prepare the backend design of your website. Make sure it aligns to what you built on A1.
+    o Implement backend web server using Node.Js and SQL/MySQL or MongoDB server, .JSON file etc as data storage.
+    o Create different local APIs to process data from your database.
+    o Discuss your ERD diagram or file structure to make sure the schema accommodates the features of your front-end website. You should be able to run, connect to, and query your dataset/database and populate the database with sample record/update the dataset.
+    o Which API should you implement to retrieve information to/from the Bow course registration system?
 
 # Assignment2 Requirements
 - In this part of the assignment2, you should work on
