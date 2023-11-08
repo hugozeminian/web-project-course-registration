@@ -207,11 +207,23 @@ export const getStudentInformation = () => {
 ##### PUBLIC  FUNCTIONS #####
 #############################
 */
-export const getCoursesList = () => {
-    let coursesData = localStorage.getItem("bvc-coursesData");
-    let coursesList = JSON.parse(coursesData || "[]");
-    return coursesList;
-}
+
+const url = 'http://localhost:3005'
+
+export const getCoursesList = async () => { 
+    try {
+      const response = await fetch(url + '/coursesList');
+      if (!response.ok) {
+        throw new Error('Could not load file');
+      }
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Could not fetch data:', error);
+      throw error;
+    }
+  };
 
 export const getStudentList = () => {
     let studentData = localStorage.getItem("bvc-studentData");
