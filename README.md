@@ -8,7 +8,7 @@ Bow Course registration fullstack web application
 This course work should be done with a group of 3 or 4 to fulfill the assessment of SODV2201 web programming course.
 Please join a group on d2l-communication-group tab. If you don’t join the group on d2l before A1 is due you will get zero.
 Bow online course registration is an online application that allow students to register for selected program in software development department (SD department)
-    • SD department has the following programs.
+    - SD department has the following programs.
         1. diploma (2 years),
         2. post diploma (1 year),
         3. certificate (3 months and 6 months),
@@ -59,7 +59,7 @@ Bow online course registration is an online application that allow students to r
 The objective of this use case is to give you an idea what aspects to include in your project. As a starting point you can use what is explained above and add different features and modification to it to meet your front-end and backend application development need as you learn progressively.
 This project has 3 parts Assignment 1 and Assignment 2 and a final project. Assignment1 outcome will be used as input for your Assignment2. Then the combined final submission of this two-assignment work will be taken as your course project work. There will be a set of special features in each phase of this assessment. There will be optional check in and questions at the end of each phase.
 Assignment 1:
-Assignment expectation
+- Assignment expectation
     ● Implement your understanding of web application architecture in your web project.
     ● Study the different scenario of the project to come up with inclusive wireframe design (structure of the website)
     ● Prepare a prototype design of your web application.
@@ -69,7 +69,7 @@ Assignment expectation
 
 # For assignment 1 your task is to design and create a front-end web application React.js and access data stored as array or object. This assignment is worth a total of 15 percent of your final mark.
 Wireframe design Frontend Design Process
-As in any large software project, you should take some time to consider your front-end design before starting the implementation. Consider the following questions while coming up with your design:
+- As in any large software project, you should take some time to consider your front-end design before starting the implementation. Consider the following questions while coming up with your design:
     1. What are my different pages?
     a. Which parts of these pages should be components?
     b. Which parts of these pages should be elements?
@@ -84,7 +84,7 @@ As in any large software project, you should take some time to consider your fro
 
 # Implementation
 Implementing Your project
-Remember to keep the following in mind as you write and test your code:
+- Remember to keep the following in mind as you write and test your code:
     1. Does this code adhere to the design?
     a. If not, is that an implementation oversight or a design oversight?
     2. Is this code maintainable?
@@ -97,14 +97,14 @@ Remember to keep the following in mind as you write and test your code:
     5. Much like your frontend, you should think carefully about your design before you start implementing any code. Consult your sketch and consider the back and front end to sync each other.
 
 # What to submit for A1
-You are expected to make progress on your site throughout the semester. You must meet the following conditions as part of A1 submission:
+- You are expected to make progress on your site throughout the semester. You must meet the following conditions as part of A1 submission:
     1. Project file zipped and uploaded on D2L A1 dropbox (10-to-15-minute demonstration video recording)
     2. Must be capable of running on a local machine.
     3. It should have full functionality of react based UI and user interaction feature.
     4. Each student must demonstrate the submission if requested.
 
 # Assignment 2:
-Assignment expectation
+- Assignment expectation
     ● Prepare the backend design of your website. Make sure it aligns to what you built on A1.
     ● Implement backend web server using Node.Js and SQL/MySQL or MongoDB server, .JSON file etc as data storage.
     ● Create different local APIs to process data from your database.
@@ -112,7 +112,7 @@ Assignment expectation
     ● Which API should you implement to retrieve information to/from the Bow course registration system?
 
 # Assignment2 Requirements
-In this part of the assignment2, you should work on
+- In this part of the assignment2, you should work on
     1. Working database schema implementation populated with sample data or structured dataset source.
     2. Working web server setup
     3. Backend web application and database/dataset integration
@@ -121,7 +121,7 @@ In this part of the assignment2, you should work on
     6. Login or session management
 
 # What to submit for A2
-Consider the following to submit as A2 file
+- Consider the following to submit as A2 file
     1. Node.js project file zipped and uploaded on D2L A2 dropbox (10-to-15-minute demonstration video recording)
     2. Must be capable of running on a local machine.
     3. It should have full functionality of fetching data from your data storage, validation, and certain level of security implementation by the time this assignment is due.
@@ -131,7 +131,7 @@ Consider the following to submit as A2 file
 Front End and Back End integration
 Implementation
 In this final project phase, you are expected to integrate your front-end work from A1 with your A2 backend project. Then instead of using postman or backend html page to utilize your backend data storage and API you will use your react UI.
-Much like your frontend, you should think carefully about your design before you start implementing any code. Consult your sketch and consider the following questions:
+- Much like your frontend, you should think carefully about your design before you start implementing any code. Consult your sketch and consider the following questions:
     1. Which API should get information to/from Bow registration system?
     2. Proper use and implementation of APIs to work on Bow registration system UI.
     3. What is the input and output of any functions I need? Are there edge cases?
@@ -141,7 +141,7 @@ Much like your frontend, you should think carefully about your design before you
     1. Does this design exhibit low coupling and high cohesion?
 
 # What to submit for Final project
-To pass A2, your back end must meet the following conditions:
+- To pass A2, your back end must meet the following conditions:
     1. Fullstack project that contains both front-end react project and backend node.js project file zipped and uploaded on D2L project dropbox
     2. Upload a 10-to-15-minute demonstration video recording
     3. Must be capable of running on a local machine.
