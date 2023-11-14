@@ -16,7 +16,7 @@ GO
 
 -- Access Level
 CREATE TABLE [AccessLevel](
-	LevelID				int PRIMARY KEY IDENTITY(10, 10),
+	LevelID				int PRIMARY KEY,
 	LevelName			varchar(50)
 );
 GO
@@ -141,3 +141,91 @@ CREATE TABLE [StudentCourses](
 	FOREIGN KEY (CourseCode, Section) REFERENCES [Course] (CourseCode, Section)
 	);
 GO
+
+/*=================================================*/
+
+IF LOGINPROPERTY('guestUser', 'IsLocked') IS NOT NULL
+BEGIN
+	DROP LOGIN guestUser	
+	CREATE LOGIN guestUser
+	WITH PASSWORD = 'guest', CHECK_POLICY = OFF
+END
+ELSE
+BEGIN
+	CREATE LOGIN guestUser
+	WITH PASSWORD = 'guest', CHECK_POLICY = OFF
+END
+GO
+
+IF DATABASE_PRINCIPAL_ID ('guestUser') IS NOT NULL
+	BEGIN
+		DROP USER guestUser;
+		CREATE USER guestUser
+	FOR LOGIN guestUser;
+	END
+ELSE
+BEGIN
+	CREATE USER guestUser
+	FOR LOGIN guestUser;
+END
+GO
+
+IF DATABASE_PRINCIPAL_ID ('guestUsers') IS NOT NULL
+	BEGIN
+		DROP ROLE guestUsers;
+		CREATE ROLE guestUsers;
+	END
+ELSE
+BEGIN
+	CREATE ROLE guestUsers;
+END
+GO
+
+GRANT SELECT ON Course TO guestUsers;
+GRANT SELECT ON DeliveryMode TO guestUsers;
+GRANT SELECT ON Department TO guestUsers;
+GRANT SELECT ON Program TO guestUsers;
+GRANT SELECT ON ProgramType TO guestUsers;
+GRANT SELECT ON Term TO guestUsers;
+GO
+
+ALTER ROLE guestUsers ADD MEMBER guestUser;
+
+IF LOGINPROPERTY('adminUser', 'IsLocked') IS NOT NULL
+BEGIN
+	DROP LOGIN adminUser	
+	CREATE LOGIN adminUser
+	WITH PASSWORD = 'admin', CHECK_POLICY = OFF
+END
+ELSE
+BEGIN
+	CREATE LOGIN adminUser
+	WITH PASSWORD = 'admin', CHECK_POLICY = OFF
+END
+GO
+
+IF DATABASE_PRINCIPAL_ID ('adminUser') IS NOT NULL
+	BEGIN
+		DROP USER adminUser;
+		CREATE USER adminUser
+	FOR LOGIN adminUser;
+	END
+ELSE
+BEGIN
+	CREATE USER adminUser
+	FOR LOGIN adminUser;
+END
+GO
+
+IF DATABASE_PRINCIPAL_ID ('adminUsers') IS NOT NULL
+	BEGIN
+		DROP ROLE adminUsers;
+		CREATE ROLE adminUsers;
+	END
+ELSE
+BEGIN
+	CREATE ROLE adminUsers;
+END
+GO
+
+ALTER ROLE db_owner ADD MEMBER adminUser;
