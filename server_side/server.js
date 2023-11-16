@@ -81,62 +81,6 @@ app.use(async (req, res, next)=>{
 
 //=================== MIDDLEWARE END ================================
 
-
-
-
-app.get('/admList', async (req, res) => {
-    try {
-      const response = await services.LoadAdmList(__dirname);
-      res.json(response);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/contactList', async (req, res) => {
-try {
-    const response = await services.LoadContactList(__dirname);
-    res.json(response);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// app.get('/coursesList', async (req, res) => {
-//     try {
-//         const response = await services.LoadCoursesList(__dirname);
-//         res.json(response);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// });
-
-app.get('/programsList', async (req, res) => {
-    try {
-        const response = await services.LoadProgramsList(__dirname);
-        res.json(response);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/studentsList', async (req, res) => {
-    try {
-        const response = await services.LoadStudentsList(__dirname);
-        res.json(response);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-//================= SQL server tests =========================
-
-
 app.get('/coursesList', async (req, res) => {
 
     try{
@@ -150,6 +94,9 @@ app.get('/coursesList', async (req, res) => {
     }
 });
 
+//
+
+//Hugo
 // app.post('/addCourse', async(req, res)=>{
 
 //     if(config.isAdmin === 1)
@@ -167,6 +114,7 @@ app.get('/coursesList', async (req, res) => {
 //     }
 // })
 
+//William
 // app.delete('/deleteCourse', async(req, res)=>{
 
 //     if(config.isAdmin === 1)
@@ -184,6 +132,7 @@ app.get('/coursesList', async (req, res) => {
 //     }
 // })
 
+//Fabio
 // app.put('/updateCourse', async (req,res) => {
 
 //     if(config.isAdmin === 1)
@@ -201,6 +150,7 @@ app.get('/coursesList', async (req, res) => {
 //     }
 // })
 
+//Ajustar resposta
 app.post('/addUser', async (req,res) => {
 
     const user = {

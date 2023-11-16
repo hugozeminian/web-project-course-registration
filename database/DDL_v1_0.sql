@@ -24,7 +24,7 @@ GO
 -- Department
 CREATE TABLE [Department](
 	DepartmentID		int PRIMARY KEY IDENTITY(100, 1),
-	DepartmentNAme		varchar(255)
+	DepartmentName		varchar(255)
 );
 GO
 
@@ -37,9 +37,10 @@ GO
 
 -- Term
 CREATE TABLE [Term](
-	TermID				int PRIMARY KEY IDENTITY(100, 1),
+	TermID				int IDENTITY(100, 1),
 	Term				varchar(20) NOT NULL,
-	[Year]				int NOT NULL
+	[Year]				int NOT NULL,
+	PRIMARY KEY (TermID, [Year])
 	);
 GO
 
@@ -129,7 +130,7 @@ CREATE TABLE [Course](
 	SeatsAvailable		int NOT NULL CHECK (SeatsAvailable >= 0 AND SeatsAvailable <= 40),
 	ClassSize			int NOT NULL,
 	DeliveryMode		varchar(255) CHECK (DeliveryMode IN ('ATOL','RTOL','In-Class','Hybrid'))
-	PRIMARY KEY (CourseCode, Section)
+	PRIMARY KEY (CourseCode, Section, TermID)
 	);
 GO
 
@@ -229,3 +230,5 @@ END
 GO
 
 ALTER ROLE db_owner ADD MEMBER adminUser;
+
+SELECT * FROM Login
