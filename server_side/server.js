@@ -2,8 +2,8 @@ import express, {json, urlencoded} from 'express';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import * as services from './services/readFiles.js';
-import * as update from './services/updateFiles.js';
+// import * as services from './services/readFiles.js';
+// import * as update from './services/updateFiles.js';
 import { readData } from './services/readCourses.js';
 import sql from 'mssql';
 import { SetConfig, config } from './services/config.js';
@@ -63,7 +63,7 @@ app.use(async (req, res, next)=>{
     SetConfig(user);
 
     try{
-
+        
         const passCheck = await CheckUser(user);
         if(passCheck)
         {

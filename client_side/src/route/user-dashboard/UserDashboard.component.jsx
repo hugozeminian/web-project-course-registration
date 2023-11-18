@@ -15,8 +15,6 @@ const UserDashboard = () => {
   });
   const userInformation = matchingUser;
   const { first_name, program, studentId } = userInformation || {}
-  console.log("🚀 ~ file: UserDashboard.component.jsx:18 ~ UserDashboard ~ userInformation:", userInformation)
-
   return (
     <>
       {isAdmin ? (

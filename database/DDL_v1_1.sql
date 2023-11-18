@@ -102,7 +102,7 @@ CREATE TABLE [Contact](
 	ContactID			int PRIMARY KEY IDENTITY(1, 1),
 	[Name]				varchar(255) NOT NULL,
 	Email				varchar(255) NOT NULL,
-	[Date]				DATE NOT NULL
+	[Date]				DATE NOT NULL,
 	);
 GO
 

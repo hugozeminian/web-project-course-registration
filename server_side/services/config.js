@@ -1,23 +1,20 @@
+const server = 'HUGO-DELLG715'
+
 export var config = {
-    server: 'WECK',
+    server: server,
     user: "adminUser",
     password: "admin",
     database: 'BowRegistration',
-    options:{
+    options: {
         trustServerCertificate: true
     }
 };
 
-export const SetConfig = (data)=>{
-
+export const SetConfig = (data) => {
     config = {
-        server: 'WECK',
+        ...config,
         user: data.userName,
         password: data.password,
         accessLevel: data.accessLevel,
-        database: 'BowRegistration',
-        options:{
-            trustServerCertificate: true
-        }
     };
 };

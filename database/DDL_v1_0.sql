@@ -100,7 +100,8 @@ CREATE TABLE [Contact](
 	ContactID			int PRIMARY KEY IDENTITY(1, 1),
 	[Name]				varchar(255) NOT NULL,
 	Email				varchar(255) NOT NULL,
-	[Date]				DATE NOT NULL
+	[Date]				DATE NOT NULL,
+	[Message]			varchar(max) NOT NULL,
 	);
 GO
 
@@ -171,64 +172,64 @@ BEGIN
 END
 GO
 
-IF DATABASE_PRINCIPAL_ID ('guestUsers') IS NOT NULL
+	IF DATABASE_PRINCIPAL_ID ('guestUsers') IS NOT NULL
+		BEGIN
+			DROP ROLE guestUsers;
+			CREATE ROLE guestUsers;
+		END
+	ELSE
 	BEGIN
-		DROP ROLE guestUsers;
 		CREATE ROLE guestUsers;
 	END
-ELSE
-BEGIN
-	CREATE ROLE guestUsers;
-END
-GO
+	GO
 
-GRANT SELECT ON Course TO guestUsers;
-GRANT SELECT ON DeliveryMode TO guestUsers;
-GRANT SELECT ON Department TO guestUsers;
-GRANT SELECT ON Program TO guestUsers;
-GRANT SELECT ON ProgramType TO guestUsers;
-GRANT SELECT ON Term TO guestUsers;
-GO
+	GRANT SELECT ON Course TO guestUsers;
+	GRANT SELECT ON DeliveryMode TO guestUsers;
+	GRANT SELECT ON Department TO guestUsers;
+	GRANT SELECT ON Program TO guestUsers;
+	GRANT SELECT ON ProgramType TO guestUsers;
+	GRANT SELECT ON Term TO guestUsers;
+	GO
 
-ALTER ROLE guestUsers ADD MEMBER guestUser;
+	ALTER ROLE guestUsers ADD MEMBER guestUser;
 
-IF LOGINPROPERTY('adminUser', 'IsLocked') IS NOT NULL
-BEGIN
-	DROP LOGIN adminUser	
-	CREATE LOGIN adminUser
-	WITH PASSWORD = 'admin', CHECK_POLICY = OFF
-END
-ELSE
-BEGIN
-	CREATE LOGIN adminUser
-	WITH PASSWORD = 'admin', CHECK_POLICY = OFF
-END
-GO
-
-IF DATABASE_PRINCIPAL_ID ('adminUser') IS NOT NULL
+	IF LOGINPROPERTY('adminUser', 'IsLocked') IS NOT NULL
 	BEGIN
-		DROP USER adminUser;
-		CREATE USER adminUser
-	FOR LOGIN adminUser;
+		DROP LOGIN adminUser	
+		CREATE LOGIN adminUser
+		WITH PASSWORD = 'admin', CHECK_POLICY = OFF
 	END
-ELSE
-BEGIN
-	CREATE USER adminUser
-	FOR LOGIN adminUser;
-END
-GO
-
-IF DATABASE_PRINCIPAL_ID ('adminUsers') IS NOT NULL
+	ELSE
 	BEGIN
-		DROP ROLE adminUsers;
+		CREATE LOGIN adminUser
+		WITH PASSWORD = 'admin', CHECK_POLICY = OFF
+	END
+	GO
+
+	IF DATABASE_PRINCIPAL_ID ('adminUser') IS NOT NULL
+		BEGIN
+			DROP USER adminUser;
+			CREATE USER adminUser
+		FOR LOGIN adminUser;
+		END
+	ELSE
+	BEGIN
+		CREATE USER adminUser
+		FOR LOGIN adminUser;
+	END
+	GO
+
+	IF DATABASE_PRINCIPAL_ID ('adminUsers') IS NOT NULL
+		BEGIN
+			DROP ROLE adminUsers;
+			CREATE ROLE adminUsers;
+		END
+	ELSE
+	BEGIN
 		CREATE ROLE adminUsers;
 	END
-ELSE
-BEGIN
-	CREATE ROLE adminUsers;
-END
-GO
+	GO
 
-ALTER ROLE db_owner ADD MEMBER adminUser;
+	ALTER ROLE db_owner ADD MEMBER adminUser;
 
-SELECT * FROM Login
+	SELECT * FROM Login
