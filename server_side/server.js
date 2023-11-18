@@ -92,25 +92,22 @@ app.get('/coursesList', async (req, res) => {
     }
 });
 
-//
 
-//Hugo
-// app.post('/addCourse', async(req, res)=>{
-
-//     if(config.isAdmin === 1)
-//     {
-//         try{
-//             await AddCourse();
-//             res.status(200).json({Success:"Course was added."})
-//         }
-//         catch{
-//             res.status(403).json({error: "Unable to add new course"})
-//         }  
-//     }
-//     else{
-//         res.status(401).json({ error: "Unauthorized"})
-//     }
-// })
+app.post('/addCourse', async(req, res)=>{
+    if(config.accessLevel === 99)
+    {
+        try{
+            await AddCourse(req.body);
+            res.status(200).json({Success:"Course was added."})
+        }
+        catch{
+            res.status(403).json({error: "Unable to add new course"})
+        }  
+    }
+    else{
+        res.status(401).json({ error: "Unauthorized"})
+    }
+})
 
 //William
 // app.delete('/deleteCourse', async(req, res)=>{

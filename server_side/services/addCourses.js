@@ -1,65 +1,54 @@
 import { config } from "./config.js";
 import sql from 'mssql';
 
-export const AddCourse = async ()=>{
-
-    const course = {
-        season: "Summer",
-        courseNumber: "CS0202",
-        title: "Full-Stack Web Development",
-        courseDescription: "Take a deep dive into the world of web development with our Full-Stack Web Development Bootcamp. In this intensive program, you'll master web development from front-end to back-end, equipping you with the latest technologies and frameworks to build modern web applications. Whether you're a beginner or an experienced developer looking to expand your skill set, this bootcamp will help you achieve your goals. Join us on Mondays from 6:30 PM to 8:30 PM, starting on July 15, 2024, and ending on November 30, 2024, in Calgary. This class-based program offers a collaborative learning environment and has a limited number of seats available, so reserve your spot now to secure your future in web development.",
-        weekDays: "Mondays",
-        courseHours: "6:30 PM - 8:30 PM",
-        startDate: "July 15, 2024",
-        endDate: "November 30, 2024",
-        campus: "Calgary",
-        deliveryMode: "In Class",
-        seatsAvailable: 22,
-        classSize: 40,
-        program: "Diploma (2 years)",
-        courseMin: 2,
-        courseMax: 5
-    }
+export const AddCourse = async (props) => {
 
     try{
 
         await sql.connect(config);
-
-        const query = `INSERT INTO Courses VALUES (
-            @season,
-            @courseNumber,
-            @title,
-            @courseDescription,
-            @weekDays,
-            @courseHours,
-            @startDate,
-            @endDate,
-            @campus,
-            @deliveryMode,
-            @seatsAvailable,
-            @classSize,
-            @program,
-            @courseMin,
-            @courseMax
-        )`;
+        const query = `
+            INSERT INTO Course
+            VALUES (
+                @CourseCode,
+                @Section,
+                @ProgramID,
+                @Name,
+                @Description,
+                @TermID,
+                @Year,
+                @Days,
+                @Hours,
+                @StartDate,
+                @EndDate,
+                @CampusID,
+                @Room,
+                @DomesticFees,
+                @InternationalFees,
+                @SeatsAvailable,
+                @ClassSize,
+                @DeliveryMode
+            )`;
 
         const request = new sql.Request();
 
-        request.input('season',             sql.NVarChar,   course.season);
-        request.input('courseNumber',       sql.NVarChar,   course.courseNumber);
-        request.input('title',              sql.NVarChar,   course.title);
-        request.input('courseDescription',  sql.NVarChar,   course.courseDescription);
-        request.input('weekDays',           sql.NVarChar,   course.weekDays);
-        request.input('courseHours',        sql.NVarChar,   course.courseHours);
-        request.input('startDate',          sql.NVarChar,   course.startDate);
-        request.input('endDate',            sql.NVarChar,   course.endDate);
-        request.input('campus',             sql.NVarChar,   course.campus);
-        request.input('deliveryMode',       sql.NVarChar,   course.deliveryMode);
-        request.input('seatsAvailable',     sql.Int,        course.seatsAvailable);
-        request.input('classSize',          sql.Int,        course.classSize);
-        request.input('program',            sql.NVarChar,   course.program);
-        request.input('courseMin',          sql.Int,        course.courseMin);
-        request.input('courseMax',          sql.Int,        course.courseMax);
+        request.input('CourseCode',             sql.NVarChar,       props.CourseCode);
+        request.input('Section',                sql.Int,            props.Section);
+        request.input('ProgramID',              sql.Int,            props.ProgramID);
+        request.input('Name',                   sql.NVarChar,       props.Name);
+        request.input('Description',            sql.NVarChar,       props.Description);
+        request.input('TermID',                 sql.Int,            props.TermID);
+        request.input('Year',                   sql.Int,            props.Year);
+        request.input('Days',                   sql.NVarChar,       props.Days);
+        request.input('Hours',                  sql.NVarChar,       props.Hours);
+        request.input('StartDate',              sql.Date,           props.StartDate);
+        request.input('EndDate',                sql.Date,           props.EndDate);
+        request.input('CampusID',               sql.Int,            props.CampusID);
+        request.input('Room',                   sql.NVarChar,       props.Room);
+        request.input('DomesticFees',           sql.SmallMoney,     props.DomesticFees);
+        request.input('InternationalFees',      sql.SmallMoney,     props.InternationalFees); 
+        request.input('SeatsAvailable',         sql.Int,            props.SeatsAvailable);
+        request.input('ClassSize',              sql.Int,            props.ClassSize);
+        request.input('DeliveryMode',           sql.NVarChar,       props.DeliveryMode);
 
         await request.query(query);
         
