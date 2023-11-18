@@ -2,8 +2,6 @@ import express, {json, urlencoded} from 'express';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-// import * as services from './services/readFiles.js';
-// import * as update from './services/updateFiles.js';
 import { readData } from './services/readCourses.js';
 import sql from 'mssql';
 import { SetConfig, config } from './services/config.js';
@@ -158,7 +156,6 @@ app.post('/addUser', async (req,res) => {
         password: req.body.password,
         accessLevel: req.body.accessLevel
     }
-
     try{
         const response = await AddUser(user);
         console.log(response);
