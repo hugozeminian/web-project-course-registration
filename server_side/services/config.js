@@ -1,4 +1,4 @@
-const server = 'HUGO-DELLG715'
+const server = 'WECK'
 
 export var config = {
     server: server,

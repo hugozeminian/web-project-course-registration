@@ -11,7 +11,9 @@ export const CheckUser = async (data) => {
     }
 
     try{
+
         await sql.connect(config);
+        
         const query = 'SELECT Password FROM Login WHERE UserName = @userName';
         const request = new sql.Request();
         request.input('userName', sql.NVarChar, data.userName);

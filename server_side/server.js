@@ -128,22 +128,23 @@ app.post('/addCourse', async(req, res)=>{
 // })
 
 //Fabio
-// app.put('/updateCourse', async (req,res) => {
+app.put('/updateCourse', async(req, res)=>{
+    
+    if(config.accessLevel === 99)
+    {
+        try{
+            await UpdateCourse(req.body);
+            res.status(200).json({Success:"Course was updated."})
+        }
+        catch{
+            res.status(403).json({error: "Unable to update course"})
+        }  
+    }
+    else{
+        res.status(401).json({ error: "Unauthorized"})
+    }
+})
 
-//     if(config.isAdmin === 1)
-//     {
-//         try{
-//             await UpdateCourse();
-//             res.status(200).json({Success:"Course was updated."})
-//         }
-//         catch{
-//             res.status(403).json({error: "Unable to update course"})
-//         }  
-//     }
-//     else{
-//         res.status(401).json({ error: "Unauthorized"})
-//     }
-// })
 
 //Ajustar resposta
 app.post('/addUser', async (req,res) => {
