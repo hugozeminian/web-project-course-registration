@@ -109,23 +109,30 @@ app.post('/addCourse', async(req, res)=>{
     }
 })
 
-//William
-// app.delete('/deleteCourse', async(req, res)=>{
+//Will
+app.delete('/deleteCourse', async(req, res)=>{
 
-//     if(config.isAdmin === 1)
-//     {
-//         try{
-//             await DeleteCourse();
-//             res.status(200).json({Success:"Course was deleted."})
-//         }
-//         catch{
-//             res.status(403).json({error: "Unable to delete course"})
-//         }  
-//     }
-//     else{
-//         res.status(401).json({ error: "Unauthorized"})
-//     }
-// })
+    const course = {
+        courseCode: req.body.courseCode,
+        section: req.body.section,
+        termID: req.body.termID,
+        year: req.body.year
+    }
+
+    if(config.accessLevel === 99)
+    {
+        try{
+            await DeleteCourse(course);
+            res.status(200).json({Success:"Course was deleted."})
+        }
+        catch{
+            res.status(403).json({error: "Unable to delete course"})
+        }  
+    }
+    else{
+        res.status(401).json({ error: "Unauthorized"})
+    }
+})
 
 //Fabio
 app.put('/updateCourse', async(req, res)=>{

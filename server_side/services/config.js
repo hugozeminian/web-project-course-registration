@@ -1,4 +1,4 @@
-const server = 'WECK'
+const server = 'WillCAN'
 
 export var config = {
     server: server,
