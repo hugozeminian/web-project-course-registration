@@ -14,14 +14,17 @@ export const CheckUser = async (data) => {
 
         await sql.connect(config);
         
-        const query = 'SELECT Password FROM Login WHERE UserName = @userName';
+        const query = 'SELECT dbo.ufCheckUser(@userName)';
         const request = new sql.Request();
         request.input('userName', sql.NVarChar, data.userName);
 
         const result = await request.query(query);
-        const passwordResult = result.recordset[0].Password;
-        
-        const match = await bcrypt.compare(user.password, passwordResult);
+
+        const passwordResult = Object.values(result.recordset[0]);
+
+        console.log(passwordResult[0]);
+
+        const match = await bcrypt.compare(user.password, passwordResult[0]);
 
         return match;
 
