@@ -1,4 +1,6 @@
 import { getNextAvailableID } from "../general-functions/generalFunctions";
+import Axios from "axios"
+
 /*
 #############################
 #####  ADMIN FUNCTIONS  #####
@@ -41,7 +43,7 @@ export const updateCourse = (courseInformation) => {
     // ############### ToDo ###############
 
 
-    
+
 }
 
 
@@ -206,22 +208,36 @@ export const getStudentInformation = () => {
 #############################
 */
 
-const url = 'http://localhost:3005'
+import axios from 'axios';
 
-export const getCoursesList = async () => { 
+const server = 'http://localhost:3005';
+
+const fetchData = async (route) => {
     try {
-      const response = await fetch(url + '/coursesList');
-      if (!response.ok) {
-        throw new Error('Could not load file');
-      }
-      const data = await response.json();
-      console.log(data);
-      return data;
+        const response = await axios.get(server + route);
+
+        if (response.status >= 200 && response.status < 300) {
+            console.log("🚀 ~ file: api.js:221 ~ fetchData ~ response.data:", response.data)
+            return response.data;
+        } else {
+            throw new Error('Server responded with an error');
+        }
     } catch (error) {
-      console.error('Could not fetch data:', error);
-      throw error;
+        console.error('Error fetching:', error.message);
+        throw error;
     }
-  };
+};
+
+export const getCoursesList = async () => {
+    const route = '/coursesList';
+    return fetchData(route);
+};
+
+export const getProgramsList = async () => {
+    const route = '/programsList';
+    return fetchData(route);
+};
+
 
 export const getStudentList = () => {
     let studentData = localStorage.getItem("bvc-studentData");
@@ -241,11 +257,7 @@ export const getContactList = () => {
     return contactList;
 }
 
-export const getProgramsList = () => {
-    let programsData = localStorage.getItem("bvc-programsData");
-    let programsList = JSON.parse(programsData || "[]");
-    return programsList;
-}
+
 
 export const getAuthenticatedUser = () => {
     let authenticatedData = localStorage.getItem("bvc-authentication");

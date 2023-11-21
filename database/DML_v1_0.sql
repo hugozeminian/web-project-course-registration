@@ -39,7 +39,7 @@ INSERT INTO Term
 
 INSERT INTO Program 
 	([Description], 
-	ProgramName,					DepartmentID,	[Type],		TermID,		[Year],	
+	ProgramName,					DepartmentID,	[TypeID],		TermID,		[Year],	
 	StartDate,		EndDate,		DomesticFees,	InternationalFees,		CourseMin,		CourseMax) VALUES
     ('A comprehensive two-year software development diploma program designed to equip students with advanced coding skills and industry-ready expertise. Join us this winter and embark on a journey to a rewarding tech career.', 
 	'Software Development',			100,			100,		103,	    2024,		

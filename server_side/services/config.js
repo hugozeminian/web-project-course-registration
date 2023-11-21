@@ -1,4 +1,4 @@
-const server = 'WillCAN'
+const server = 'HUGO-DELLG715'
 
 export var config = {
     server: server,

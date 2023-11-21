@@ -34,43 +34,31 @@ const CourseCard = ({
   const authenticatedUser = getAuthenticatedUser();
 
   const {
-    courseId,
-    season,
-    course_number,
-    title,
-    description,
-    week_day,
-    hour,
-    start_date,
-    end_date,
-    campus,
-    delivery_mode,
-    seats_available,
-    class_size,
-    program,
-    course_min,
-    course_max,
+    CourseCode,
+    Section, 
+    Name, 
+    Description, 
+    Year, 
+    Term, 
+    Days, 
+    Hours, 
+    StartDate, 
+    EndDate, 
+    CampusID, 
+    CampusName,
+    Room, 
+    DomesticFees, 
+    InternationalFees, 
+    SeatsAvailable, 
+    ClassSize, 
+    DeliveryMode,
   } = courseInformation;
+
   const handleButtonClickAddCourse = () => {
     const courseInformation = {
-      id: "",
-      studentId: authenticatedUser.userId,
-      courseId: courseId,
-      season: season,
-      course_number: course_number,
-      title: title,
-      description: description,
-      week_day: week_day,
-      hour: hour,
-      start_date: start_date,
-      end_date: end_date,
-      campus: campus,
-      delivery_mode: delivery_mode,
-      seats_available: seats_available,
-      class_size: class_size,
-      program: program,
-      course_min: course_min,
-      course_max: course_max,
+       
+      //ToDo
+
     };
     const isAlreadyRegistered = addCourseRegistration(courseInformation);
     if (isAlreadyRegistered) {
@@ -84,9 +72,9 @@ const CourseCard = ({
 
   const handleButtonClickRemoveCourse = () => {
     const courseInformation = {
-      id: "",
-      courseId: courseId,
-      studentId: authenticatedUser.userId,
+      
+      //ToDo
+
     };
 
     removeCourseRegistration(courseInformation);
@@ -97,8 +85,9 @@ const CourseCard = ({
 
   const handleButtonClickDeleteCourse = () => {
     const courseInformation = {
-      id: "",
-      courseId: courseId,
+      
+      //ToDo
+
     };
 
     admDeleteCourse(courseInformation);
@@ -123,7 +112,7 @@ const CourseCard = ({
           <Col>
             <div className="text-center">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>{title}</strong>
+                <strong>{Name}</strong>
               </Card.Title>
             </div>
           </Col>
@@ -131,20 +120,15 @@ const CourseCard = ({
 
         <Card.Body>
           <Row>
-            <Card.Title style={{ color: "var(--color_font2)" }}>
-              <strong>Program: {program}</strong>
-            </Card.Title>
-          </Row>
-          <Row>
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>Term: {season}</strong>
+                <strong>Term: {Term}/{Year}</strong>
               </Card.Title>
             </Col>
 
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>Code: {course_number}</strong>
+                <strong>Code: {CourseCode}</strong>
               </Card.Title>
             </Col>
           </Row>
@@ -156,7 +140,7 @@ const CourseCard = ({
                 <strong>Description: </strong>
               </Card.Title>
               <Card.Text style={{ color: "var(--color_font3)" }}>
-                {description}
+                {Description}
               </Card.Text>
             </Col>
             <Col md={12} xl={6}>
@@ -165,12 +149,12 @@ const CourseCard = ({
                   className="mt-3"
                   style={{ color: "var(--color_font1)" }}>
                   <strong>
-                    <em>{week_day}</em>
+                    <em>{Days}</em>
                   </strong>
                 </Card.Title>
                 <Card.Title style={{ color: "var(--color_font1)" }}>
                   <strong>
-                    <em>{hour}</em>
+                    <em>{Hours}</em>
                   </strong>
                 </Card.Title>
               </div>
@@ -181,37 +165,37 @@ const CourseCard = ({
                     <CustomTd>
                       <strong>Start date:</strong>
                     </CustomTd>
-                    <CustomTd>{start_date}</CustomTd>
+                    <CustomTd>{StartDate}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>End date:</strong>
                     </CustomTd>
-                    <CustomTd>{end_date}</CustomTd>
+                    <CustomTd>{EndDate}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>Campus:</strong>
                     </CustomTd>
-                    <CustomTd>{campus}</CustomTd>
+                    <CustomTd>{CampusName}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>Delivery mode:</strong>
                     </CustomTd>
-                    <CustomTd>{delivery_mode}</CustomTd>
+                    <CustomTd>{DeliveryMode}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>Seats available:</strong>
                     </CustomTd>
-                    <CustomTd>{seats_available}</CustomTd>
+                    <CustomTd>{SeatsAvailable}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>Class size:</strong>
                     </CustomTd>
-                    <CustomTd>{class_size}</CustomTd>
+                    <CustomTd>{ClassSize}</CustomTd>
                   </tr>
                 </tbody>
               </Table>

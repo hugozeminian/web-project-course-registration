@@ -3,7 +3,6 @@ import CourseCardList from "../../components/courses-card-list/CoursesCardList.c
 import { getCoursesList } from "../../util/api/api";
 
 const Courses = () => {
-
   const [coursesData, setCoursesData] = useState(null);
 
   useEffect(() => {
@@ -12,8 +11,7 @@ const Courses = () => {
         const data = await getCoursesList();
         setCoursesData(data);
       } catch (error) {
-        // Handle errors here if needed
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data on the component:", error.message);
       }
     };
 
