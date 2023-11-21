@@ -2,7 +2,7 @@ import express, {json, urlencoded} from 'express';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { readData } from './services/readCourses.js';
+import { ReadCourses } from './services/readCourses.js';
 import sql from 'mssql';
 import { SetConfig, config } from './services/config.js';
 import { AddCourse } from './services/addCourses.js';
@@ -10,6 +10,7 @@ import { DeleteCourse } from './services/deleteCourse.js';
 import { UpdateCourse } from './services/updateCourse.js';
 import { CheckUser } from './services/checkUser.js';
 import { AddUser } from './services/addUser.js';
+import { ReadPrograms } from './services/readPrograms.js';
 
 //Defines server and its port
 const app = express();
@@ -52,28 +53,35 @@ app.use((req, res, next) => {
 
 app.use(async (req, res, next)=>{
 
-    const user = {
-        userName: req.body.userName,
-        password: req.body.password,
-        accessLevel: req.body.accessLevel
-    }
-
-    SetConfig(user);
-
-    try{
-        
-        const passCheck = await CheckUser(user);
-        if(passCheck)
-        {
-            console.log("User verified.")
-            next();
-        }
-        
-    }
-    catch(err)
+    if(req.path == '/coursesList' || req.path == '/addUser' || '/programsList')
     {
-        console.error(err.message);
-        res.status(401).json({error: "Unauthorized."});  
+        next();
+    }
+    else
+    {
+        const user = {
+            userName: req.body.userName,
+            password: req.body.password,
+            accessLevel: req.body.accessLevel
+        }
+
+        SetConfig(user);
+
+        try{
+            
+            const passCheck = await CheckUser(user);
+            if(passCheck)
+            {
+                console.log("User verified.")
+                next();
+            }
+            
+        }
+        catch(err)
+        {
+            console.error(err.message);
+            res.status(401).json({error: "Unauthorized."});  
+        }
     }
 })
 
@@ -82,7 +90,7 @@ app.use(async (req, res, next)=>{
 app.get('/coursesList', async (req, res) => {
 
     try{
-        const data = await readData();
+        const data = await ReadCourses();
         res.json(data);
     }
     
@@ -92,6 +100,18 @@ app.get('/coursesList', async (req, res) => {
     }
 });
 
+app.get('/programsList', async (req, res) => {
+
+    try{
+        const data = await ReadPrograms();
+        res.json(data);
+    }
+    
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
 
 app.post('/addCourse', async(req, res)=>{
     if(config.accessLevel === 99)
@@ -134,7 +154,6 @@ app.delete('/deleteCourse', async(req, res)=>{
     }
 })
 
-//Fabio
 app.put('/updateCourse', async(req, res)=>{
     
     if(config.accessLevel === 99)
@@ -153,18 +172,28 @@ app.put('/updateCourse', async(req, res)=>{
 })
 
 
-//Ajustar resposta
 app.post('/addUser', async (req,res) => {
 
     const user = {
         userName: req.body.userName,
         password: req.body.password,
-        accessLevel: req.body.accessLevel
+        accessLevel: req.body.accessLevel,
+        firstName: req.body.firstName,
+        middleName: req.body.middleName,
+        lastName: req.body.lastName,
+        phone: req.body.phone,
+        email: req.body.email,
+        programID: req.body.programID,
+        dateOfBirth: req.body.dateOfBirth
     }
+
     try{
         const response = await AddUser(user);
-        console.log(response);
-        res.status(200).json({Success:"User was added."})
+        if(response == true) 
+        {
+            console.log(`User: ${user.userName} was added.`);
+            res.status(200).json({Success:"User was added."});
+        }
     }
     catch{
         res.status(403).json({error: "Unable to add user."})
