@@ -20,6 +20,7 @@ export const ReadCourses = async () =>
                 c.StartDate,
                 c.EndDate,
                 c.CampusID,
+                cp.CampusName,
                 c.Room,
                 c.DomesticFees,
                 c.InternationalFees,
@@ -29,6 +30,8 @@ export const ReadCourses = async () =>
         FROM Course c
         JOIN Term t
         ON c.TermID = t.TermID
+        JOIN Campus cp
+        ON c.CampusID = cp.CampusID
         `;
 
         const request = new sql.Request();

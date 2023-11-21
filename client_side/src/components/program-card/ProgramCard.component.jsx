@@ -5,14 +5,19 @@ import { CardWrapper, CustomTd } from "./ProgramCard.styles";
 
 const ProgramCard = ({ programData }) => {
   const {
-    title,
-    program_code,
-    description,
-    season,
-    start_date,
-    end_date,
-    fees_d,
-    fees_i,
+    ProgramID,
+    ProgramName,
+    Description,
+    Term,
+    Year,
+    StartDate,
+    EndDate,
+    DomesticFees,
+    InternationalFees,
+    CourseMin,
+    CourseMax,
+    ProgramType,
+    DepartmentName,
   } = programData || {};
 
   return (
@@ -22,7 +27,7 @@ const ProgramCard = ({ programData }) => {
           <Col>
             <div className="text-center">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>{title}</strong>
+                <strong>{ProgramName}</strong>
               </Card.Title>
             </div>
           </Col>
@@ -32,7 +37,9 @@ const ProgramCard = ({ programData }) => {
           <Row>
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>Code: {program_code}</strong>
+                <strong>
+                  Code: {Term}/{Year}
+                </strong>
               </Card.Title>
             </Col>
           </Row>
@@ -44,7 +51,7 @@ const ProgramCard = ({ programData }) => {
                 <strong>Description: </strong>
               </Card.Title>
               <Card.Text style={{ color: "var(--color_font3)" }}>
-                {description}
+                {Description}
               </Card.Text>
             </Col>
             <Col md={12} xl={6}>
@@ -53,7 +60,7 @@ const ProgramCard = ({ programData }) => {
                   className="mt-3"
                   style={{ color: "var(--color_font1)" }}>
                   <strong>
-                    <em>{season}</em>
+                    <em>{Term}</em>
                   </strong>
                 </Card.Title>
 
@@ -61,15 +68,21 @@ const ProgramCard = ({ programData }) => {
                   <Col md={12} xl={6}>
                     <Card.Title style={{ color: "var(--color_font1)" }}>
                       <strong>
-                        <em>{fees_d}</em>
+                        <em>{DomesticFees}</em>
                       </strong>
                     </Card.Title>
                   </Col>
-              
+
                   <Col lg={12} xl={6}>
-                    <Card.Title style={{ color: "var(--color_font1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Card.Title
+                      style={{
+                        color: "var(--color_font1)",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}>
                       <strong>
-                        <em>{fees_i}</em>
+                        <em>{InternationalFees}</em>
                       </strong>
                     </Card.Title>
                   </Col>
@@ -82,13 +95,13 @@ const ProgramCard = ({ programData }) => {
                     <CustomTd>
                       <strong>Start date:</strong>
                     </CustomTd>
-                    <CustomTd>{start_date}</CustomTd>
+                    <CustomTd>{StartDate}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>End date:</strong>
                     </CustomTd>
-                    <CustomTd>{end_date}</CustomTd>
+                    <CustomTd>{EndDate}</CustomTd>
                   </tr>
                 </tbody>
               </Table>
@@ -98,6 +111,6 @@ const ProgramCard = ({ programData }) => {
       </CardWrapper>
     </>
   );
-}
+};
 
 export default ProgramCard;
