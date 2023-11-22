@@ -21,6 +21,7 @@ import {
   faUser,
   faArrowRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import { capitalizeEachWord } from "../../util/general-functions/generalFunctions";
 
 const Navigation = ({ navPageTitle }) => {
   const navigate = useNavigate();
@@ -56,9 +57,8 @@ const Navigation = ({ navPageTitle }) => {
     const userData = getAuthenticatedUser();
 
     if (userData) {
-      setUserNameNav(userData.first_name || "");
+      setUserNameNav(capitalizeEachWord(userData.userName) || "");
 
-      
       setUserAccessLevel(userData.isAdmin ? "Admin" : userData.isAuthenticated ? "Student" : "");
 
       if (userNameNav && userNameNav.length > maxCharUserName) {

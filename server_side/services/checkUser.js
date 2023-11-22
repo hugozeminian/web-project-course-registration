@@ -3,12 +3,14 @@ import sql from 'mssql';
 import bcrypt from 'bcrypt';
 
 export const CheckUser = async (data) => {
+console.log("🚀 ~ file: checkUser.js:6 ~ CheckUser ~ data:", data)
 
     const user = {
         userName: data.userName,
         password: data.password,
         accessLevel: data.accessLevel
     }
+    console.log("🚀 ~ file: checkUser.js:13 ~ CheckUser ~ user.data.userName:", data.userName)
 
     try{
 
@@ -22,7 +24,7 @@ export const CheckUser = async (data) => {
 
         const passwordResult = Object.values(result.recordset[0]);
 
-        console.log(passwordResult[0]);
+        // console.log(passwordResult[0]);
 
         const match = await bcrypt.compare(user.password, passwordResult[0]);
 

@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 
 app.use(async (req, res, next)=>{
 
-    if(req.path == '/coursesList' || req.path == '/addUser' || '/programsList')
+    if(req.path == '/login' || req.path == '/coursesList' || req.path == '/addUser' || '/programsList')
     {
         next();
     }
@@ -86,6 +86,32 @@ app.use(async (req, res, next)=>{
 })
 
 //=================== MIDDLEWARE END ================================
+
+app.post('/login', async (req, res) => {
+
+    const user = {
+        userName: req.body.userName,
+        password: req.body.password,
+        accessLevel: req.body.accessLevel
+    }
+    console.log("🚀 ~ file: server.js:97 ~ app.post ~ user.req.body:", req.body)
+    
+    try{
+            
+        const passCheck = await CheckUser(user);
+        if(passCheck)
+        {
+            console.log("User logged.")
+            res.json(passCheck);
+        }
+        
+    }
+    catch(err)
+    {
+        console.error(err.message);
+        res.status(401).json({error: "Unauthorized."});  
+    }
+});
 
 app.get('/coursesList', async (req, res) => {
 
