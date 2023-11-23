@@ -12,9 +12,10 @@ export const CheckUser = async (data) => {
 
         await sql.connect(config);
         
-        const query = 'SELECT dbo.ufCheckUser(@userName)';
+        const query = 'SELECT dbo.ufCheckUser(@userName, @accessLevel)';
         const request = new sql.Request();
         request.input('userName', sql.NVarChar, data.userName);
+        request.input('accessLevel', sql.Int, data.accessLevel);
 
         const result = await request.query(query);
 
@@ -22,9 +23,11 @@ export const CheckUser = async (data) => {
 
         // console.log(passwordResult[0]);
 
-        const match = await bcrypt.compare(user.password, passwordResult[0]);
-
-        return match;
+        if (passwordResult[0] !== null) {
+            return await bcrypt.compare(user.password, passwordResult[0]);
+        } else {
+            return false;
+        }
 
     }
     catch(err)
