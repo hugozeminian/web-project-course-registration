@@ -2,7 +2,7 @@ import { config } from "./config.js";
 import sql from 'mssql';
 
 // Use props and course id?
-export const DeleteCourse = async (props)=>{
+export const AdminDeleteCourse = async (props)=>{
 
     const courseCode = props.courseCode
     const section = props.section

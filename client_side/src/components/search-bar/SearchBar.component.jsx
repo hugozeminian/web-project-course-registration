@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import {CustomMDBCol} from "./SearchBar.styles"
 
-const SearchBar = ({ onSearch, searchText }) => {
+const SearchBar = ({ onSearch, searchText, disabled }) => {
   const handleSearch = (event) => {
     onSearch(event.target.value);
   };
@@ -24,6 +24,7 @@ const SearchBar = ({ onSearch, searchText }) => {
             aria-label="Search"
             onChange={handleSearch}
             value={searchText}
+            disabled={disabled}
           />
         </div>
       </form>

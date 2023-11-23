@@ -8,8 +8,12 @@ const ProfileInformation = ({ authenticatedUser }) => {
 
   useEffect(() => {
     const fetchProfileInformation = async () => {
-      const profileInformation = await getProfileInformation(authenticatedUser);
-      setProfileInformation(profileInformation)
+      try {
+        const profileInfo = await getProfileInformation(authenticatedUser);
+        setProfileInformation(profileInfo);
+      } catch (error) {
+        console.error("Error fetching profile information:", error);
+      }
     };
 
     if (authenticatedUser) {
@@ -18,7 +22,7 @@ const ProfileInformation = ({ authenticatedUser }) => {
   }, [authenticatedUser]);
 
   if (!profileInformation) {
-    return <p>Loading...</p>; 
+    return <p>Loading...</p>;
   }
 
   const {

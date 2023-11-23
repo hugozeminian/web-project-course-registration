@@ -9,6 +9,7 @@ import {
   removeCourseRegistration,
   getAuthenticatedUser,
   updateCourse,
+  getStudentAddedCourses,
 } from "../../util/api/api";
 import {
   CustomRadioGroup,
@@ -30,8 +31,6 @@ const CourseCard = ({
   if (!courseData) {
     return null;
   }
-
-  const authenticatedUser = getAuthenticatedUser();
 
   const {
     CourseCode,
@@ -56,9 +55,12 @@ const CourseCard = ({
 
   const handleButtonClickAddCourse = () => {
     const courseInformation = {
-       
       //ToDo
-
+      // StudentID: StudentID,
+      CourseCode: CourseCode,
+      Section: Section,
+      TermID: Term,
+      Year: Year,
     };
     const isAlreadyRegistered = addCourseRegistration(courseInformation);
     if (isAlreadyRegistered) {
@@ -129,6 +131,11 @@ const CourseCard = ({
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
                 <strong>Code: {CourseCode}</strong>
+              </Card.Title>
+            </Col>
+            <Col xs="auto">
+              <Card.Title style={{ color: "var(--color_font2)" }}>
+                <strong>Section: {Section}</strong>
               </Card.Title>
             </Col>
           </Row>

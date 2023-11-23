@@ -1,7 +1,7 @@
 import { config } from "./config.js"
 import sql from 'mssql'
 
-export const UpdateCourse = async (props)=>{
+export const AdminUpdateCourse = async (props)=>{
 
     try{
 

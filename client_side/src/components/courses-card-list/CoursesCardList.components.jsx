@@ -7,11 +7,11 @@ const CourseCardList = ({ coursesData, disableaddCourseButton, addCourseButtonHi
     <>
       <div>
         {coursesData.length === 0 ? (
-          <p>No courses available, select program first.</p>
+          <p>No courses available, select program and term first.</p>
         ) : (
           coursesData.map((courseData) => (
             <CourseCard
-              key={courseData.courseId}
+              key={`${courseData.CourseCode}-${courseData.Section}-${courseData.TermID}-${courseData.Year}`}
               courseData={courseData}
               disableaddCourseButton={disableaddCourseButton}
               addCourseButtonHidden={addCourseButtonHidden}

@@ -26,12 +26,17 @@ export const ReadCourses = async () =>
                 c.InternationalFees,
                 c.SeatsAvailable,
                 c.ClassSize,
-                c.DeliveryMode
+                c.DeliveryMode,
+                pt.ProgramType
         FROM Course c
         JOIN Term t
         ON c.TermID = t.TermID
         JOIN Campus cp
         ON c.CampusID = cp.CampusID
+        JOIN Program p
+        ON c.ProgramID = p.ProgramID
+        JOIN ProgramType pt
+        ON p.TypeID = pt.TypeID
         `;
 
         const request = new sql.Request();

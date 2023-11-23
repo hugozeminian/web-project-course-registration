@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { CustomDropdownToggle, CustomDropdownItem } from "./DropdownTerm.styles";
 
-const DropdownTerm = ({ onTermSelect }) => {
+const DropdownTerm = ({ onTermSelect, disabled, initialSelectTerm  }) => {
   const [selectedTerm, setSelectedTerm] = useState("Select Term");
+
+  useEffect(() => {
+    setSelectedTerm(initialSelectTerm);
+  }, [initialSelectTerm]);
 
   const handleSelect = (eventKey) => {
     setSelectedTerm(eventKey);
@@ -13,7 +17,7 @@ const DropdownTerm = ({ onTermSelect }) => {
   return (
     <>
       <Dropdown onSelect={handleSelect}>
-        <CustomDropdownToggle variant="none">{selectedTerm}</CustomDropdownToggle>
+        <CustomDropdownToggle variant="none" disabled={disabled}>{selectedTerm}</CustomDropdownToggle>
         <Dropdown.Menu>
           <CustomDropdownItem eventKey="All">All</CustomDropdownItem>
           <CustomDropdownItem eventKey="Spring">Spring</CustomDropdownItem>
