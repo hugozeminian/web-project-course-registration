@@ -11,16 +11,18 @@ const AdmLogin = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
 
     const admLoginData = {
-      username: form.username.value,
-      current_password: form.current_password.value,
+      userName: form.username.value,
+      password: form.current_password.value,
+      accessLevel: 99,
     };
-    const isLoginValid = loginVerification(admLoginData, true);
+
+    const isLoginValid = await loginVerification(admLoginData, true);
     if (isLoginValid) {
       navigate("/user-dashboard");
       window.location.reload();

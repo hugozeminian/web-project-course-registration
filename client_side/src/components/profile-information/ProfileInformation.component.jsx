@@ -1,33 +1,37 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { FormWrapper } from "./ProfileInformation.styles";
 import { Form } from "react-bootstrap";
-import { getAdminList, getStudentList, getUserInformation } from "../../util/api/api";
+import { getProfileInformation } from "../../util/api/api";
 
 const ProfileInformation = ({ authenticatedUser }) => {
-  let profileInformation;
+  const [profileInformation, setProfileInformation] = useState(null);
 
-  if (authenticatedUser.isAdmin) {
-    const adminProfileList = getAdminList();
-    profileInformation = getUserInformation(authenticatedUser, adminProfileList)
-  } else {
-    const studentProfileList = getStudentList();
-    profileInformation = getUserInformation(authenticatedUser, studentProfileList)
+  useEffect(() => {
+    const fetchProfileInformation = async () => {
+      const profileInformation = await getProfileInformation(authenticatedUser);
+      setProfileInformation(profileInformation)
+    };
+
+    if (authenticatedUser) {
+      fetchProfileInformation();
+    }
+  }, [authenticatedUser]);
+
+  if (!profileInformation) {
+    return <p>Loading...</p>; 
   }
 
   const {
-    adminId,
-    studentId,
-    first_name,
-    last_name,
-    email,
-    phone,
-    date_of_birth,
-    username,
-    department,
-    program,
-    current_password,
-  } = profileInformation || {};
+    Username, 
+    FirstName,
+    LastName,
+    Phone, 
+    Email,
+    DateOfBirth,
+    ProgramName,
+    DepartmentName,
+  } = profileInformation[0] ;
+
   return (
     <>
       {authenticatedUser.isAdmin ? (
@@ -36,50 +40,50 @@ const ProfileInformation = ({ authenticatedUser }) => {
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>First Name:</strong>
             </Form.Label>
-            <Form.Control value={first_name} disabled />
+            <Form.Control value={FirstName} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Last Name:</strong>
             </Form.Label>
-            <Form.Control value={last_name} disabled />
+            <Form.Control value={LastName} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Email:</strong>
             </Form.Label>
-            <Form.Control value={email} disabled />
+            <Form.Control value={Email} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Phone:</strong>
             </Form.Label>
-            <Form.Control value={phone} disabled />
+            <Form.Control value={Phone} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Date of Birth:</strong>
             </Form.Label>
-            <Form.Control value={date_of_birth} disabled />
+            <Form.Control value={DateOfBirth} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Username:</strong>
             </Form.Label>
-            <Form.Control value={username} disabled />
+            <Form.Control value={Username} disabled />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Password:</strong>
             </Form.Label>
             <Form.Control type="password" value={current_password} disabled />
-          </Form.Group>
+          </Form.Group> */}
 
         </FormWrapper>
       ) : (
@@ -88,64 +92,64 @@ const ProfileInformation = ({ authenticatedUser }) => {
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>First Name:</strong>
             </Form.Label>
-            <Form.Control value={first_name} disabled />
+            <Form.Control value={FirstName} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Last Name:</strong>
             </Form.Label>
-            <Form.Control value={last_name} disabled />
+            <Form.Control value={LastName} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Email:</strong>
             </Form.Label>
-            <Form.Control value={email} disabled />
+            <Form.Control value={Email} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Phone:</strong>
             </Form.Label>
-            <Form.Control value={phone} disabled />
+            <Form.Control value={Phone} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Date of Birth:</strong>
             </Form.Label>
-            <Form.Control value={date_of_birth} disabled />
+            <Form.Control value={DateOfBirth} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Department:</strong>
             </Form.Label>
-            <Form.Control value={department} disabled />
+            <Form.Control value={DepartmentName} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Program:</strong>
             </Form.Label>
-            <Form.Control value={program} disabled />
+            <Form.Control value={ProgramName} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Username:</strong>
             </Form.Label>
-            <Form.Control value={username} disabled />
+            <Form.Control value={Username} disabled />
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Password:</strong>
             </Form.Label>
             <Form.Control type="password" value={current_password} disabled />
-          </Form.Group>
+          </Form.Group> */}
         </FormWrapper>
       )}
     </>

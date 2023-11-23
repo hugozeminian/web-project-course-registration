@@ -1,6 +1,14 @@
 import { getNextAvailableID } from "../general-functions/generalFunctions";
 import Axios from "axios"
 
+let authenticationData = {
+    "userName": null,
+    "password": null,
+    "accessLevel": 0,
+    "isAuthenticated": null,
+    "isAdmin": false,
+};
+
 /*
 #############################
 #####  ADMIN FUNCTIONS  #####
@@ -209,12 +217,16 @@ export const getStudentInformation = () => {
 */
 const server = 'http://localhost:3005';
 
-const fetchData = async (route) => {
+const fetchData = async (route, userName) => {
     try {
-        const response = await Axios.get(server + route);
+        const response = await Axios.get(server + route, {
+            headers: {
+                'userName': userName,
+            },
+        });
 
         if (response.status >= 200 && response.status < 300) {
-            console.log("🚀 ~ file: api.js:221 ~ fetchData ~ response.data:", response.data)
+            console.log("🚀 ~ file: api.js:223 ~ fetchData ~ response.data:", response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
@@ -235,6 +247,17 @@ export const getProgramsList = async () => {
     return fetchData(route);
 };
 
+export const getProfileInformation = async (authenticatedUser) => {
+    if(authenticatedUser.isAdmin){
+        const route = '/profileAdminInformation';
+        const userName = authenticatedUser.userName
+        return fetchData(route, userName);
+    }else{
+        const route = '/profileStudentInformation';
+        const userName = authenticatedUser.userName
+        return fetchData(route, userName);
+    }
+}
 
 export const getStudentList = () => {
     let studentData = localStorage.getItem("bvc-studentData");
@@ -256,6 +279,8 @@ export const getContactList = () => {
 
 
 
+
+
 export const getAuthenticatedUser = () => {
     let authenticatedData = localStorage.getItem("bvc-authentication");
 
@@ -270,13 +295,7 @@ export const getAuthenticatedUser = () => {
     return null;
 }
 
-let authenticationData = {
-    "userName": null,
-    "password": null,
-    "accessLevel": 0,
-    "isAuthenticated": null,
-    "isAdmin": false,
-};
+
 
 const postData = async (route, loginData) => {
     try {
@@ -306,7 +325,7 @@ export const loginVerification = async (loginData, isAdmin = false) => {
                 "password": loginData.password,
                 "accessLevel": 99,
                 "isAuthenticated": true,
-                 "isAdmin": true,
+                "isAdmin": true,
             };
         } else {
             authenticationData = {
