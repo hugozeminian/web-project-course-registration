@@ -92,17 +92,18 @@ app.post('/login', async (req, res) => {
         accessLevel: req.body.accessLevel
     }
 
+    const passCheck = await CheckUser(user);
     try {
-        const passCheck = await CheckUser(user);
         if (passCheck) {
             console.log("User logged.")
-            res.json(passCheck);
         }
     }
     catch (err) {
         console.error(err.message);
         res.status(401).json({ error: "Unauthorized." });
     }
+
+    res.json(passCheck);
 });
 
 app.get('/profileStudentInformation', async (req, res) => {
@@ -130,7 +131,6 @@ app.get('/profileAdminInformation', async (req, res) => {
             res.status(400).json({ error: 'User Name not provided in headers' });
             return;
         }
-
         const data = await ReadProfileAdmin(userName);
 
         res.json(data);

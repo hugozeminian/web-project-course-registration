@@ -20,7 +20,7 @@ export const ReadProfileAdmin = async (userName) => {
         FROM 
             Admin
         WHERE 
-            s.Username = @userName`;
+        Username = @userName`;
 
         const request = new sql.Request();
 
