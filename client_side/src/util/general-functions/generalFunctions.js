@@ -80,6 +80,10 @@ export const convertToAMPM = (timeString) => {
 
 
 export const capitalizeEachWord = (str) => {
+  if(str == undefined)
+  {
+    return
+  }
   const words = str.split(' ');
 
   const capitalizedWords = words.map(word => {

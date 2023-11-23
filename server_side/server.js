@@ -1,4 +1,4 @@
-import express, {json, urlencoded} from 'express';
+import express, { json, urlencoded } from 'express';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -11,6 +11,9 @@ import { UpdateCourse } from './services/updateCourse.js';
 import { CheckUser } from './services/checkUser.js';
 import { AddUser } from './services/addUser.js';
 import { ReadPrograms } from './services/readPrograms.js';
+import { ReadProfileStudent } from './services/readProfileStudent.js';
+import { ReadProfileAdmin } from './services/readProfileAdmin.js';
+
 
 //Defines server and its port
 const app = express();
@@ -35,15 +38,15 @@ app.use((req, res, next) => {
 
     res.header(
         "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
+        "Origin, X-Requested-With, Content-Type, Accept, username"
     );
-    res.header('Access-Control-Allow-Origin', '*'); 
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  
+
     next();
 
 });
-  
+
 app.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
     next();
@@ -51,49 +54,100 @@ app.use((req, res, next) => {
 
 //Uncomment to let the middleware check user credentials
 
-app.use(async (req, res, next)=>{
-
-    if(req.path == '/coursesList' || req.path == '/addUser' || '/programsList')
-    {
+app.use(async (req, res, next) => {
+    if (req.path == '/login' || req.path == '/coursesList' || req.path == '/addUser' || '/programsList') {
         next();
     }
-    else
-    {
+    else {
         const user = {
             userName: req.body.userName,
             password: req.body.password,
             accessLevel: req.body.accessLevel
         }
-
         SetConfig(user);
 
-        try{
-            
+        try {
+
             const passCheck = await CheckUser(user);
-            if(passCheck)
-            {
+            if (passCheck) {
                 console.log("User verified.")
                 next();
             }
-            
+
         }
-        catch(err)
-        {
+        catch (err) {
             console.error(err.message);
-            res.status(401).json({error: "Unauthorized."});  
+            res.status(401).json({ error: "Unauthorized." });
         }
     }
 })
 
 //=================== MIDDLEWARE END ================================
 
+app.post('/login', async (req, res) => {
+
+    const user = {
+        userName: req.body.userName,
+        password: req.body.password,
+        accessLevel: req.body.accessLevel
+    }
+
+    try {
+        const passCheck = await CheckUser(user);
+        if (passCheck) {
+            console.log("User logged.")
+            res.json(passCheck);
+        }
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(401).json({ error: "Unauthorized." });
+    }
+});
+
+app.get('/profileStudentInformation', async (req, res) => {
+    try {
+        const userName = req.headers['username']
+        if (!userName) {
+            res.status(400).json({ error: 'User Name not provided in headers' });
+            return;
+        }
+
+        const data = await ReadProfileStudent(userName);
+
+        res.json(data);
+    }
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
+
+app.get('/profileAdminInformation', async (req, res) => {
+    try {
+        const userName = req.headers['username']
+        if (!userName) {
+            res.status(400).json({ error: 'User Name not provided in headers' });
+            return;
+        }
+
+        const data = await ReadProfileAdmin(userName);
+
+        res.json(data);
+    }
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
+
 app.get('/coursesList', async (req, res) => {
 
-    try{
+    try {
         const data = await ReadCourses();
         res.json(data);
     }
-    
+
     catch (error) {
         console.error('Error connecting to the database:', error.message);
         res.status(500).json({ error: 'Internal Server Error: ' + error.message });
@@ -102,35 +156,33 @@ app.get('/coursesList', async (req, res) => {
 
 app.get('/programsList', async (req, res) => {
 
-    try{
+    try {
         const data = await ReadPrograms();
         res.json(data);
     }
-    
+
     catch (error) {
         console.error('Error connecting to the database:', error.message);
         res.status(500).json({ error: 'Internal Server Error: ' + error.message });
     }
 });
 
-app.post('/addCourse', async(req, res)=>{
-    if(config.accessLevel === 99)
-    {
-        try{
+app.post('/addCourse', async (req, res) => {
+    if (config.accessLevel === 99) {
+        try {
             await AddCourse(req.body);
-            res.status(200).json({Success:"Course was added."})
+            res.status(200).json({ Success: "Course was added." })
         }
-        catch{
-            res.status(403).json({error: "Unable to add new course"})
-        }  
+        catch {
+            res.status(403).json({ error: "Unable to add new course" })
+        }
     }
-    else{
-        res.status(401).json({ error: "Unauthorized"})
+    else {
+        res.status(401).json({ error: "Unauthorized" })
     }
 })
 
-//Will
-app.delete('/deleteCourse', async(req, res)=>{
+app.delete('/deleteCourse', async (req, res) => {
 
     const course = {
         courseCode: req.body.courseCode,
@@ -139,40 +191,38 @@ app.delete('/deleteCourse', async(req, res)=>{
         year: req.body.year
     }
 
-    if(config.accessLevel === 99)
-    {
-        try{
+    if (config.accessLevel === 99) {
+        try {
             await DeleteCourse(course);
-            res.status(200).json({Success:"Course was deleted."})
+            res.status(200).json({ Success: "Course was deleted." })
         }
-        catch{
-            res.status(403).json({error: "Unable to delete course"})
-        }  
+        catch {
+            res.status(403).json({ error: "Unable to delete course" })
+        }
     }
-    else{
-        res.status(401).json({ error: "Unauthorized"})
+    else {
+        res.status(401).json({ error: "Unauthorized" })
     }
 })
 
-app.put('/updateCourse', async(req, res)=>{
-    
-    if(config.accessLevel === 99)
-    {
-        try{
+app.put('/updateCourse', async (req, res) => {
+
+    if (config.accessLevel === 99) {
+        try {
             await UpdateCourse(req.body);
-            res.status(200).json({Success:"Course was updated."})
+            res.status(200).json({ Success: "Course was updated." })
         }
-        catch{
-            res.status(403).json({error: "Unable to update course"})
-        }  
+        catch {
+            res.status(403).json({ error: "Unable to update course" })
+        }
     }
-    else{
-        res.status(401).json({ error: "Unauthorized"})
+    else {
+        res.status(401).json({ error: "Unauthorized" })
     }
 })
 
 
-app.post('/addUser', async (req,res) => {
+app.post('/addUser', async (req, res) => {
 
     const user = {
         userName: req.body.userName,
@@ -187,20 +237,19 @@ app.post('/addUser', async (req,res) => {
         dateOfBirth: req.body.dateOfBirth
     }
 
-    try{
+    try {
         const response = await AddUser(user);
-        if(response == true) 
-        {
+        if (response == true) {
             console.log(`User: ${user.userName} was added.`);
-            res.status(200).json({Success:"User was added."});
+            res.status(200).json({ Success: "User was added." });
         }
     }
-    catch{
-        res.status(403).json({error: "Unable to add user."})
-    } 
+    catch {
+        res.status(403).json({ error: "Unable to add user." })
+    }
 })
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 

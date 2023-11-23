@@ -3,13 +3,11 @@ import sql from 'mssql';
 import bcrypt from 'bcrypt';
 
 export const CheckUser = async (data) => {
-
     const user = {
         userName: data.userName,
         password: data.password,
         accessLevel: data.accessLevel
     }
-
     try{
 
         await sql.connect(config);
@@ -22,7 +20,7 @@ export const CheckUser = async (data) => {
 
         const passwordResult = Object.values(result.recordset[0]);
 
-        console.log(passwordResult[0]);
+        // console.log(passwordResult[0]);
 
         const match = await bcrypt.compare(user.password, passwordResult[0]);
 

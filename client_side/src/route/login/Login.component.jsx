@@ -11,16 +11,17 @@ const Login = () => {
   const navigate = useNavigate();
   const [loginError, setLoginError] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
 
     const userLoginData = {
-      username: form.username.value,
-      current_password: form.current_password.value,
+      userName: form.username.value,
+      password: form.current_password.value,
+      accessLevel: 1,
     };
-    const isLoginValid = loginVerification(userLoginData);
+    const isLoginValid = await loginVerification(userLoginData);
     if (isLoginValid) {
       navigate("/user-dashboard");
       window.location.reload();

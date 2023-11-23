@@ -1,6 +1,14 @@
 import { getNextAvailableID } from "../general-functions/generalFunctions";
 import Axios from "axios"
 
+let authenticationData = {
+    "userName": null,
+    "password": null,
+    "accessLevel": 0,
+    "isAuthenticated": null,
+    "isAdmin": false,
+};
+
 /*
 #############################
 #####  ADMIN FUNCTIONS  #####
@@ -207,17 +215,18 @@ export const getStudentInformation = () => {
 ##### PUBLIC  FUNCTIONS #####
 #############################
 */
-
-import axios from 'axios';
-
 const server = 'http://localhost:3005';
 
-const fetchData = async (route) => {
+const fetchData = async (route, userName) => {
     try {
-        const response = await axios.get(server + route);
+        const response = await Axios.get(server + route, {
+            headers: {
+                'userName': userName,
+            },
+        });
 
         if (response.status >= 200 && response.status < 300) {
-            console.log("🚀 ~ file: api.js:221 ~ fetchData ~ response.data:", response.data)
+            console.log("🚀 ~ file: api.js:223 ~ fetchData ~ response.data:", response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
@@ -238,6 +247,17 @@ export const getProgramsList = async () => {
     return fetchData(route);
 };
 
+export const getProfileInformation = async (authenticatedUser) => {
+    if(authenticatedUser.isAdmin){
+        const route = '/profileAdminInformation';
+        const userName = authenticatedUser.userName
+        return fetchData(route, userName);
+    }else{
+        const route = '/profileStudentInformation';
+        const userName = authenticatedUser.userName
+        return fetchData(route, userName);
+    }
+}
 
 export const getStudentList = () => {
     let studentData = localStorage.getItem("bvc-studentData");
@@ -259,6 +279,8 @@ export const getContactList = () => {
 
 
 
+
+
 export const getAuthenticatedUser = () => {
     let authenticatedData = localStorage.getItem("bvc-authentication");
 
@@ -273,39 +295,64 @@ export const getAuthenticatedUser = () => {
     return null;
 }
 
-const authenticationData = {
-    "isAuthenticated": false,
-    "isAdmin": false,
-    "username": null,
-    "first_name": "Login",
-    "userId": null
+
+
+const postData = async (route, loginData) => {
+    try {
+        const response = await Axios.post(server + route, loginData);
+
+        if (response.status >= 200 && response.status < 300) {
+            console.log("🚀 ~ file: api.js:312 ~ postData ~ response.data:", response.data)
+            return response.data;
+        } else {
+            throw new Error('Server responded with an error');
+        }
+    } catch (error) {
+        console.error('Error fetching:', error.message);
+        throw error;
+    }
 };
 
-export const loginVerification = (loginData, isAdmin = false) => {
-    const userList = isAdmin ? getAdminList() : getStudentList();
-    const isLoginValid = userList.some((user) => {
-        return user.username === loginData.username && user.current_password === loginData.current_password;
-    });
-    const matchingUser = userList.find((user) => {
-        return user.username === loginData.username && user.current_password === loginData.current_password;
-    });
-    authenticationData.isAuthenticated = isLoginValid
-    authenticationData.isAdmin = isAdmin
-    authenticationData.username = matchingUser ? matchingUser.username : null
-    authenticationData.first_name = matchingUser ? matchingUser.first_name : "Login"
-    authenticationData.userId = matchingUser ? isAdmin ? matchingUser.adminId : matchingUser.studentId : null
+export const loginVerification = async (loginData, isAdmin = false) => {
+    const route = '/login';
+    const passCheck = await postData(route, loginData);
 
+    if (passCheck) {
+        if (isAdmin) {
+            authenticationData = {
+                ...authenticationData,
+                "userName": loginData.userName,
+                "password": loginData.password,
+                "accessLevel": 99,
+                "isAuthenticated": true,
+                "isAdmin": true,
+            };
+        } else {
+            authenticationData = {
+                ...authenticationData,
+                "userName": loginData.userName,
+                "password": loginData.password,
+                "accessLevel": 1,
+                "isAuthenticated": true,
+                "isAdmin": false,
+            };
+        }
+    }
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
+    return passCheck;
+};
 
-    return isLoginValid;
-}
 
 export const logout = () => {
-    authenticationData.isAuthenticated = false;
-    authenticationData.isAdmin = false;
-    authenticationData.username = null
-    authenticationData.first_name = "Login";
-    authenticationData.userId = null
+
+    authenticationData = {
+        ...authenticationData,
+        "userName": null,
+        "password": null,
+        "accessLevel": 0,
+        "isAuthenticated": null,
+        "isAdmin": false,
+    };
 
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
 
