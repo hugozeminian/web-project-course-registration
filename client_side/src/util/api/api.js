@@ -226,7 +226,7 @@ const fetchData = async (route, userName) => {
         });
 
         if (response.status >= 200 && response.status < 300) {
-            console.log("🚀 ~ file: api.js:223 ~ fetchData ~ response.data:", response.data)
+            // console.log("🚀 ~ file: api.js:223 ~ fetchData ~ response.data:", response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
@@ -248,15 +248,21 @@ export const getProgramsList = async () => {
 };
 
 export const getProfileInformation = async (authenticatedUser) => {
-    if(authenticatedUser.isAdmin){
+    if (authenticatedUser.isAdmin) {
         const route = '/profileAdminInformation';
         const userName = authenticatedUser.userName
         return fetchData(route, userName);
-    }else{
+    } else {
         const route = '/profileStudentInformation';
         const userName = authenticatedUser.userName
         return fetchData(route, userName);
     }
+}
+
+export const getStudentAddedCourses = async (authenticatedUser) => {
+    const route = '/studentAddedCourses';
+    const userName = authenticatedUser.userName
+    return fetchData(route, userName);
 }
 
 export const getStudentList = () => {
@@ -337,6 +343,15 @@ export const loginVerification = async (loginData, isAdmin = false) => {
                 "isAdmin": false,
             };
         }
+    } else {
+        authenticationData = {
+            ...authenticationData,
+            "userName": null,
+            "password": null,
+            "accessLevel": 0,
+            "isAuthenticated": null,
+            "isAdmin": false,
+        };
     }
     localStorage.setItem("bvc-authentication", JSON.stringify(authenticationData));
     return passCheck;

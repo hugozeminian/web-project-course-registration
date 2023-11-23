@@ -5,14 +5,15 @@ import { dirname } from 'path';
 import { ReadCourses } from './services/readCourses.js';
 import sql from 'mssql';
 import { SetConfig, config } from './services/config.js';
-import { AddCourse } from './services/addCourses.js';
-import { DeleteCourse } from './services/deleteCourse.js';
-import { UpdateCourse } from './services/updateCourse.js';
+import { AdminCreateCourses } from './services/adminCreateCourses.js';
+import { AdminDeleteCourse } from './services/adminDeleteCourse.js';
+import { AdminUpdateCourse } from './services/adminUpdateCourse.js';
 import { CheckUser } from './services/checkUser.js';
 import { AddUser } from './services/addUser.js';
 import { ReadPrograms } from './services/readPrograms.js';
 import { ReadProfileStudent } from './services/readProfileStudent.js';
 import { ReadProfileAdmin } from './services/readProfileAdmin.js';
+import { ReadStudentAddedCourses } from './services/readStudentAddedCourses.js';
 
 
 //Defines server and its port
@@ -141,6 +142,23 @@ app.get('/profileAdminInformation', async (req, res) => {
     }
 });
 
+app.get('/studentAddedCourses', async (req, res) => {
+    try {
+        const userName = req.headers['username']
+        if (!userName) {
+            res.status(400).json({ error: 'User Name not provided in headers' });
+            return;
+        }
+        const data = await ReadStudentAddedCourses(userName);
+        
+        res.json(data);
+    }
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
+
 app.get('/coursesList', async (req, res) => {
 
     try {
@@ -167,14 +185,14 @@ app.get('/programsList', async (req, res) => {
     }
 });
 
-app.post('/addCourse', async (req, res) => {
+app.post('/adminCreateCourses', async (req, res) => {
     if (config.accessLevel === 99) {
         try {
-            await AddCourse(req.body);
-            res.status(200).json({ Success: "Course was added." })
+            await AdminCreateCourses(req.body);
+            res.status(200).json({ Success: "Course was created." })
         }
         catch {
-            res.status(403).json({ error: "Unable to add new course" })
+            res.status(403).json({ error: "Unable to create new course" })
         }
     }
     else {
@@ -182,7 +200,7 @@ app.post('/addCourse', async (req, res) => {
     }
 })
 
-app.delete('/deleteCourse', async (req, res) => {
+app.delete('/adminDeleteCourse', async (req, res) => {
 
     const course = {
         courseCode: req.body.courseCode,
@@ -193,7 +211,7 @@ app.delete('/deleteCourse', async (req, res) => {
 
     if (config.accessLevel === 99) {
         try {
-            await DeleteCourse(course);
+            await AdminDeleteCourse(course);
             res.status(200).json({ Success: "Course was deleted." })
         }
         catch {
@@ -205,11 +223,11 @@ app.delete('/deleteCourse', async (req, res) => {
     }
 })
 
-app.put('/updateCourse', async (req, res) => {
+app.put('/adminUpdateCourse', async (req, res) => {
 
     if (config.accessLevel === 99) {
         try {
-            await UpdateCourse(req.body);
+            await AdminUpdateCourse(req.body);
             res.status(200).json({ Success: "Course was updated." })
         }
         catch {

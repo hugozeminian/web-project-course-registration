@@ -1,27 +1,49 @@
+import React, { useEffect, useState } from "react";
 import { CardWrapper } from "./UserDashboard.styles";
 import Card from "react-bootstrap/Card";
-import {
-  getAdminList,
-  getStudentList,
-  getAuthenticatedUser,
-} from "../../util/api/api";
+import { getAuthenticatedUser, getProfileInformation } from "../../util/api/api";
 
 const UserDashboard = () => {
-  const authenticatedUser = getAuthenticatedUser() || {};
-  const isAdmin = authenticatedUser.isAdmin;
-  const userInformationList = isAdmin ? getAdminList() : getStudentList();
-  const matchingUser = userInformationList.find((user) => {
-    return user.username === authenticatedUser.username;
-  });
-  const userInformation = matchingUser;
-  const { first_name, program, studentId } = userInformation || {}
+  const [profileInformation, setProfileInformation] = useState(null);
+  const [authenticatedUser, setAuthenticatedUser] = useState(null)
+  
+  useEffect(() => {
+    const authenticatedUser = getAuthenticatedUser() || {};
+    setAuthenticatedUser(authenticatedUser)
+  }, [])
+
+  useEffect(() => {
+    const fetchProfileInformation = async () => {
+      try {
+        const profileInfo = await getProfileInformation(authenticatedUser);
+        setProfileInformation(profileInfo);
+      } catch (error) {
+        console.error("Error fetching User Dashboard:", error);
+      }
+    };
+
+    if (authenticatedUser) {
+      fetchProfileInformation();
+    }
+  }, [authenticatedUser]);
+
+  if (!profileInformation) {
+    return <p>Loading...</p>;
+  }
+
+  const {
+    StudentID,
+    FirstName,
+    ProgramName,
+  } = profileInformation[0];
+
   return (
     <>
-      {isAdmin ? (
+      {authenticatedUser.isAdmin ? (
         <CardWrapper>
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              Hello, <strong>{first_name}</strong>
+              Hello, <strong>{FirstName}</strong>
             </Card.Title>
           </Card.Body>
 
@@ -35,7 +57,7 @@ const UserDashboard = () => {
         <CardWrapper>
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              Hello, <strong>{first_name}</strong>
+              Hello, <strong>{FirstName}</strong>
             </Card.Title>
           </Card.Body>
 
@@ -47,7 +69,7 @@ const UserDashboard = () => {
 
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              Student ID: <strong>{studentId}</strong>.
+              Student ID: <strong>{StudentID}</strong>.
             </Card.Title>
           </Card.Body>
 
@@ -59,7 +81,7 @@ const UserDashboard = () => {
 
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              Program: <strong>{program}</strong>
+              Program: <strong>{ProgramName}</strong>
             </Card.Title>
           </Card.Body>
         </CardWrapper>
