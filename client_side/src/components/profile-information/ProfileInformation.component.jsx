@@ -19,7 +19,7 @@ const ProfileInformation = ({ authenticatedUser }) => {
     if (authenticatedUser) {
       fetchProfileInformation();
     }
-  }, [authenticatedUser]);
+  }, []);
 
   if (!profileInformation) {
     return <p>Loading...</p>;

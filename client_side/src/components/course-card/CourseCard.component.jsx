@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import { Row, Col, Table, Form } from "react-bootstrap";
@@ -10,11 +10,9 @@ import {
   getAuthenticatedUser,
   updateCourse,
   getStudentAddedCourses,
+  getStudentID,
 } from "../../util/api/api";
-import {
-  CustomRadioGroup,
-  CustomGroupFormCheck,
-} from "../../route/adm-new-course-form/AdmNewCourseForm.styles";
+import { CustomRadioGroup, CustomGroupFormCheck } from "../../route/adm-new-course-form/AdmNewCourseForm.styles";
 
 const CourseCard = ({
   courseData,
@@ -22,9 +20,10 @@ const CourseCard = ({
   addCourseButtonHidden,
   removeCourseButtonHidden,
   deleteCourseButtonHidden,
+  authenticatedUser,
 }) => {
   const [courseInformation, setCourseInformation] = useState(courseData);
-  console.log("🚀 ~ file: CourseCard.component.jsx:27 ~ courseData:", courseData)
+  const [authenticatedUserData, setAuthenticatedUserData] = useState(authenticatedUser)
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -34,41 +33,41 @@ const CourseCard = ({
   }
 
   const {
-    StudentID,
     Username,
     ProgramName,
     CourseMin,
     CourseMax,
     CourseCode,
-    Section, 
-    Name, 
-    Description, 
-    Year, 
-    Term, 
-    Days, 
-    Hours, 
-    StartDate, 
-    EndDate, 
-    CampusID, 
+    Section,
+    Name,
+    Description,
+    Year,
+    TermID,
+    Term,
+    Days,
+    Hours,
+    StartDate,
+    EndDate,
+    CampusID,
     CampusName,
-    Room, 
-    DomesticFees, 
-    InternationalFees, 
-    SeatsAvailable, 
-    ClassSize, 
+    Room,
+    DomesticFees,
+    InternationalFees,
+    SeatsAvailable,
+    ClassSize,
     DeliveryMode,
   } = courseInformation;
 
+  
   const handleButtonClickAddCourse = () => {
-    //ToDo
-
     const courseInformation = {
-      StudentID: StudentID,
+      StudentID: authenticatedUserData.StudentID,
       CourseCode: CourseCode,
       Section: Section,
-      TermID: Term,
+      TermID: TermID,
       Year: Year,
     };
+    //ToDo
     const isAlreadyRegistered = addCourseRegistration(courseInformation);
     if (isAlreadyRegistered) {
       setConfirmationMessage("This course is already registered.");
@@ -80,16 +79,15 @@ const CourseCard = ({
   };
 
   const handleButtonClickRemoveCourse = () => {
-      //ToDo
-
     const courseInformation = {
-      StudentID: StudentID,
+      StudentID: authenticatedUserData.StudentID,
       CourseCode: CourseCode,
       Section: Section,
-      TermID: Term,
+      TermID: TermID,
       Year: Year,
     };
-
+    
+    //ToDo
     removeCourseRegistration(courseInformation);
 
     setConfirmationMessage("Course removed.");
@@ -98,15 +96,14 @@ const CourseCard = ({
 
   const handleButtonClickDeleteCourse = () => {
     const courseInformation = {
-      //ToDo
-
-      StudentID: StudentID,
+      StudentID: authenticatedUserData.StudentID,
       CourseCode: CourseCode,
       Section: Section,
-      TermID: Term,
+      TermID: TermID,
       Year: Year,
     };
-
+    
+    //ToDo
     admDeleteCourse(courseInformation);
 
     setConfirmationMessage("Course Deleted.");
@@ -139,7 +136,9 @@ const CourseCard = ({
           <Row>
             <Col xs="auto">
               <Card.Title style={{ color: "var(--color_font2)" }}>
-                <strong>Term: {Term}/{Year}</strong>
+                <strong>
+                  Term: {Term}/{Year}
+                </strong>
               </Card.Title>
             </Col>
 
@@ -156,20 +155,14 @@ const CourseCard = ({
           </Row>
           <Row>
             <Col md={12} xl={6}>
-              <Card.Title
-                className="mt-3"
-                style={{ color: "var(--color_font2)" }}>
+              <Card.Title className="mt-3" style={{ color: "var(--color_font2)" }}>
                 <strong>Description: </strong>
               </Card.Title>
-              <Card.Text style={{ color: "var(--color_font3)" }}>
-                {Description}
-              </Card.Text>
+              <Card.Text style={{ color: "var(--color_font3)" }}>{Description}</Card.Text>
             </Col>
             <Col md={12} xl={6}>
               <div className="text-center">
-                <Card.Title
-                  className="mt-3"
-                  style={{ color: "var(--color_font1)" }}>
+                <Card.Title className="mt-3" style={{ color: "var(--color_font1)" }}>
                   <strong>
                     <em>{Days}</em>
                   </strong>
@@ -223,32 +216,23 @@ const CourseCard = ({
               </Table>
 
               <div className="d-flex justify-content-end">
-                <CustomButton
-                  disabled={disableaddCourseButton}
-                  hidden={addCourseButtonHidden}
-                  onClick={handleButtonClickAddCourse}>
+                <CustomButton disabled={disableaddCourseButton} hidden={addCourseButtonHidden} onClick={handleButtonClickAddCourse}>
                   Add Course
                 </CustomButton>
               </div>
 
               <div className="d-flex justify-content-end">
-                <CustomButton
-                  hidden={removeCourseButtonHidden}
-                  onClick={handleButtonClickRemoveCourse}>
+                <CustomButton hidden={removeCourseButtonHidden} onClick={handleButtonClickRemoveCourse}>
                   Remove Course
                 </CustomButton>
               </div>
 
               <div className="d-flex justify-content-end">
-                <CustomButton
-                  hidden={deleteCourseButtonHidden}
-                  onClick={handleButtonClickEditCourse}>
+                <CustomButton hidden={deleteCourseButtonHidden} onClick={handleButtonClickEditCourse}>
                   Edit Course
                 </CustomButton>
 
-                <CustomButton
-                  hidden={deleteCourseButtonHidden}
-                  onClick={handleButtonClickDeleteCourse}>
+                <CustomButton hidden={deleteCourseButtonHidden} onClick={handleButtonClickDeleteCourse}>
                   Delete Course
                 </CustomButton>
               </div>
@@ -326,7 +310,6 @@ const CourseCard = ({
               </Col>
               <Col>
                 <Form.Group className="mt-3" controlId="season">
-
                   <Form.Label>Term</Form.Label>
                   <Form.Control
                     as="select"
@@ -377,9 +360,7 @@ const CourseCard = ({
                       })
                     }
                   />
-                  <Form.Control.Feedback type="invalid">
-                    Please enter start date.
-                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter start date.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
@@ -399,9 +380,7 @@ const CourseCard = ({
                       })
                     }
                   />
-                  <Form.Control.Feedback type="invalid">
-                    Please enter start date.
-                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter start date.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
@@ -424,9 +403,7 @@ const CourseCard = ({
                       })
                     }
                   />
-                  <Form.Control.Feedback type="invalid">
-                    Please enter a start time.
-                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter a start time.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
@@ -446,9 +423,7 @@ const CourseCard = ({
                       })
                     }
                   />
-                  <Form.Control.Feedback type="invalid">
-                    Please enter a start time.
-                  </Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">Please enter a start time.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
               </Col>
@@ -478,9 +453,7 @@ const CourseCard = ({
                 <option value="Saturday">Friday</option>
                 <option value="Sunday">Friday</option>
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please select a week day.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select a week day.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
@@ -506,9 +479,7 @@ const CourseCard = ({
                 <option value="Okotoks">Okotoks</option>
                 <option value="Cochrane">Cochrane</option>
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please select a campus.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select a campus.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
@@ -532,9 +503,7 @@ const CourseCard = ({
                 <option value="Real-time Online">Real-time Online</option>
                 <option value="Any-time Online">Any-time Online</option>
               </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                Please select a delivery mode.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please select a delivery mode.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 
@@ -556,9 +525,7 @@ const CourseCard = ({
                 placeholder="Class Size (1 ~ 40)"
                 required
               />
-              <Form.Control.Feedback type="invalid">
-                Please enter class size between 1 and 40.
-              </Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">Please enter class size between 1 and 40.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>
 

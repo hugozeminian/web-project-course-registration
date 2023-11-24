@@ -1,7 +1,7 @@
 import React from "react";
 import CourseCard from "../course-card/CourseCard.component";
 
-const CourseCardList = ({ coursesData, disableaddCourseButton, addCourseButtonHidden, removeCourseButtonHidden, deleteCourseButtonHidden }) => {
+const CourseCardList = ({ coursesData, disableaddCourseButton, addCourseButtonHidden, removeCourseButtonHidden, deleteCourseButtonHidden, authenticatedUser }) => {
 
   return (
     <>
@@ -17,6 +17,7 @@ const CourseCardList = ({ coursesData, disableaddCourseButton, addCourseButtonHi
               addCourseButtonHidden={addCourseButtonHidden}
               removeCourseButtonHidden={removeCourseButtonHidden}
               deleteCourseButtonHidden={deleteCourseButtonHidden}
+              authenticatedUser={authenticatedUser}
             />
           ))
         )}
