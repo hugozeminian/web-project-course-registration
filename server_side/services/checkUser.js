@@ -9,7 +9,6 @@ export const CheckUser = async (data) => {
         accessLevel: data.accessLevel
     }
     try{
-
         await sql.connect(config);
         
         const query = 'SELECT dbo.ufCheckUser(@userName, @accessLevel)';
@@ -21,14 +20,13 @@ export const CheckUser = async (data) => {
 
         const passwordResult = Object.values(result.recordset[0]);
 
-        // console.log(passwordResult[0]);
+        //console.log(passwordResult[0]);
 
         if (passwordResult[0] !== null) {
             return await bcrypt.compare(user.password, passwordResult[0]);
         } else {
             return false;
         }
-
     }
     catch(err)
     {
