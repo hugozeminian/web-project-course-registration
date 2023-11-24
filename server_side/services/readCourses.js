@@ -1,19 +1,19 @@
 import sql from 'mssql';
-import {config} from './config.js';
+import { config } from './config.js';
 
-export const ReadCourses = async () =>
-{
-
-    try{
+export const ReadCourses = async () => {
+    console.log('readReadCourses');
+    try {
 
         await sql.connect(config);
 
-        const query = 
-        `SELECT c.CourseCode,
+        const query =
+            `SELECT c.CourseCode,
                 c.Section,
                 c.Name,
                 c.Description,
                 c.Year,
+                t.TermID,
                 t.Term,
                 c.Days,
                 c.Hours,
@@ -46,10 +46,10 @@ export const ReadCourses = async () =>
         return result.recordset;
 
     }
-    catch(err){
+    catch (err) {
         console.error('Error reading data:', err);
     }
-    finally{
+    finally {
         await sql.close();
     }
 }

@@ -14,6 +14,9 @@ import { ReadPrograms } from './services/readPrograms.js';
 import { ReadProfileStudent } from './services/readProfileStudent.js';
 import { ReadProfileAdmin } from './services/readProfileAdmin.js';
 import { ReadStudentAddedCourses } from './services/readStudentAddedCourses.js';
+import { AddCourse } from './services/addCourse.js';
+import { readStudentID } from './services/readStudentId.js';
+import { RemoveCourse } from './services/removeCourse.js';
 
 
 //Defines server and its port
@@ -56,25 +59,25 @@ app.use((req, res, next) => {
 //Uncomment to let the middleware check user credentials
 
 app.use(async (req, res, next) => {
-    if (req.path == '/login' || req.path == '/coursesList' || req.path == '/addUser' || '/programsList') {
+    if (req.path == '/login' || req.path == '/coursesList' || req.path == '/addUser' || req.path == '/programsList') {
         next();
-    }
-    else {
+    } else {
         const user = {
-            userName: req.body.userName,
-            password: req.body.password,
-            accessLevel: req.body.accessLevel
+            // userName: req.body.userName,
+            // password: req.body.password,
+            // accessLevel: req.body.accessLevel
+            userName: "adminUser",
+            password: "admin",
+            accessLevel: 99
         }
         SetConfig(user);
 
         try {
-
             const passCheck = await CheckUser(user);
             if (passCheck) {
-                console.log("User verified.")
+                console.log(`User verified. Method: ${req.method}, Path: ${req.path}`)
                 next();
             }
-
         }
         catch (err) {
             console.error(err.message);
@@ -105,6 +108,24 @@ app.post('/login', async (req, res) => {
     }
 
     res.json(passCheck);
+});
+
+app.get('/studentID', async (req, res) => {
+    try {
+        const userName = req.headers['username']
+        if (!userName) {
+            res.status(400).json({ error: 'User Name not provided in headers' });
+            return;
+        }
+
+        const data = await readStudentID(userName);
+
+        res.json(data);
+    }
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
 });
 
 app.get('/profileStudentInformation', async (req, res) => {
@@ -150,7 +171,7 @@ app.get('/studentAddedCourses', async (req, res) => {
             return;
         }
         const data = await ReadStudentAddedCourses(userName);
-        
+
         res.json(data);
     }
     catch (error) {
@@ -158,6 +179,26 @@ app.get('/studentAddedCourses', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error: ' + error.message });
     }
 });
+
+app.post('/studentAddedCourses', async (req, res) => {
+        try {
+            await AddCourse(req.body);
+            res.status(200).json({ Success: "Course was added." })
+        }
+        catch {
+            res.status(403).json({ error: "Unable to add course" })
+        }
+});
+
+app.delete('/studentAddedCourses', async (req, res) => {
+        try {
+            await RemoveCourse(req.body.data);
+            res.status(200).json({ Success: "Course was removed." })
+        }
+        catch {
+            res.status(403).json({ error: "Unable to remove course" })
+        }
+})
 
 app.get('/coursesList', async (req, res) => {
 

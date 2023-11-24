@@ -1,7 +1,8 @@
 import sql from 'mssql';
 import { config } from './config.js';
 
-export const ReadProfileStudent = async (userName) => {
+export const readStudentID = async (userName) => {
+
     try {
 
         await sql.connect(config);
@@ -9,25 +10,9 @@ export const ReadProfileStudent = async (userName) => {
         const query =
 
             `SELECT 
-            s.StudentID,
-            s.Username,
-            s.FirstName,
-            s.LastName,
-            s.Phone,
-            s.Email,
-            s.DateOfBirth,
-            p.ProgramName,
-            p.CourseMin,
-            p.CourseMax,
-            d.DepartmentName
-        FROM 
-            Student s
-        JOIN 
-            Program p ON s.ProgramID = p.ProgramID
-        JOIN
-            Department d ON p.DepartmentID = d.DepartmentID
-        WHERE 
-            s.Username = @userName`;
+                StudentID 
+            FROM Student
+            WHERE Username = @userName`;
 
         const request = new sql.Request();
 

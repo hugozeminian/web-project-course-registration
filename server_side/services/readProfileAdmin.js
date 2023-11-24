@@ -1,14 +1,15 @@
 import sql from 'mssql';
-import {config} from './config.js';
+import { config } from './config.js';
 
 export const ReadProfileAdmin = async (userName) => {
-    try{
+    console.log('readProfileAdmin');
+    try {
 
         await sql.connect(config);
 
-        const query = 
+        const query =
 
-        `SELECT 
+            `SELECT 
             AdminID,
             Username,
             FirstName,
@@ -31,10 +32,15 @@ export const ReadProfileAdmin = async (userName) => {
         return result.recordset;
 
     }
-    catch(err){
+    catch (err) {
         console.error('Error reading data:', err);
+        throw err;
     }
-    finally{
-        await sql.close();
+    finally {
+        try {
+            await sql.close();
+        } catch (closeError) {
+            console.error('Error closing SQL connection:', closeError);
+        }
     }
 }
