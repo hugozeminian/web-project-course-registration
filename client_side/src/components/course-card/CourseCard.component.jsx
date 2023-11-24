@@ -24,6 +24,7 @@ const CourseCard = ({
   deleteCourseButtonHidden,
 }) => {
   const [courseInformation, setCourseInformation] = useState(courseData);
+  console.log("🚀 ~ file: CourseCard.component.jsx:27 ~ courseData:", courseData)
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
@@ -33,6 +34,11 @@ const CourseCard = ({
   }
 
   const {
+    StudentID,
+    Username,
+    ProgramName,
+    CourseMin,
+    CourseMax,
     CourseCode,
     Section, 
     Name, 
@@ -54,9 +60,10 @@ const CourseCard = ({
   } = courseInformation;
 
   const handleButtonClickAddCourse = () => {
+    //ToDo
+
     const courseInformation = {
-      //ToDo
-      // StudentID: StudentID,
+      StudentID: StudentID,
       CourseCode: CourseCode,
       Section: Section,
       TermID: Term,
@@ -73,10 +80,14 @@ const CourseCard = ({
   };
 
   const handleButtonClickRemoveCourse = () => {
-    const courseInformation = {
-      
       //ToDo
 
+    const courseInformation = {
+      StudentID: StudentID,
+      CourseCode: CourseCode,
+      Section: Section,
+      TermID: Term,
+      Year: Year,
     };
 
     removeCourseRegistration(courseInformation);
@@ -87,9 +98,13 @@ const CourseCard = ({
 
   const handleButtonClickDeleteCourse = () => {
     const courseInformation = {
-      
       //ToDo
 
+      StudentID: StudentID,
+      CourseCode: CourseCode,
+      Section: Section,
+      TermID: Term,
+      Year: Year,
     };
 
     admDeleteCourse(courseInformation);
