@@ -3,8 +3,8 @@ import CourseCardList from "../../components/courses-card-list/CoursesCardList.c
 import DropdownTerm from "../../components/dropdown-term/DropdownTerm.components";
 import SearchBar from "../../components/search-bar/SearchBar.component";
 import { FiltersContainer } from "./AddCourses.styles";
-import { getCoursesList, getStudentInformation, getStudentAddedCourses, getProfileInformation, getStudentID } from "../../util/api/api";
-import { getCourseRegistrationList, getAuthenticatedUser } from "../../util/api/api";
+import { getCoursesList, getStudentAddedCourses } from "../../util/api/api";
+import { getAuthenticatedUser } from "../../util/api/api";
 import { Row, Col } from "react-bootstrap";
 import DropdownProgram from "../../components/dropdown-program/DropdownProgram.components";
 
