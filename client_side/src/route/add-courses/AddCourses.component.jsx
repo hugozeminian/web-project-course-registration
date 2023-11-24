@@ -3,15 +3,8 @@ import CourseCardList from "../../components/courses-card-list/CoursesCardList.c
 import DropdownTerm from "../../components/dropdown-term/DropdownTerm.components";
 import SearchBar from "../../components/search-bar/SearchBar.component";
 import { FiltersContainer } from "./AddCourses.styles";
-import {
-  getCoursesList,
-  getStudentInformation,
-  getStudentAddedCourses,
-} from "../../util/api/api";
-import {
-  getCourseRegistrationList,
-  getAuthenticatedUser,
-} from "../../util/api/api";
+import { getCoursesList, getStudentAddedCourses } from "../../util/api/api";
+import { getAuthenticatedUser } from "../../util/api/api";
 import { Row, Col } from "react-bootstrap";
 import DropdownProgram from "../../components/dropdown-program/DropdownProgram.components";
 
@@ -20,14 +13,13 @@ const AddCourses = () => {
   const [selectedTerm, setSelectedTerm] = useState("Select Term");
   const [filteredCourseByProgram, setFilteredCourseByProgram] = useState([]);
   const [filteredCourseData, setFilteredCourseData] = useState([]);
-  const [filteredSearchBarCourseData, setFilteredSearchBarCourseData] =
-    useState([]);
+  const [filteredSearchBarCourseData, setFilteredSearchBarCourseData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [reachedMaximumCourses, setReachedMaximumCourses] = useState();
   const [coursesData, setcoursesData] = useState(null);
 
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
-  const [studentAddedCourses, setStudentAddedCourses] = useState(null);
+  const [studentAddedCoursesData, setStudentAddedCoursesData] = useState(null);
 
   const [programName, setProgramName] = useState(null);
   const [courseMax, setCourseMax] = useState(null);
@@ -43,10 +35,8 @@ const AddCourses = () => {
           const dataAuthenticatedUser = await getAuthenticatedUser();
           setAuthenticatedUser(dataAuthenticatedUser);
 
-          const dataStudentAddedCourses = await getStudentAddedCourses(
-            dataAuthenticatedUser
-          );
-          setStudentAddedCourses(dataStudentAddedCourses);
+          const dataStudentAddedCourses = await getStudentAddedCourses(dataAuthenticatedUser);
+          setStudentAddedCoursesData(dataStudentAddedCourses);
         }
       } catch (error) {
         console.error("Error fetching data on the component:", error.message);
@@ -54,21 +44,21 @@ const AddCourses = () => {
     };
 
     fetchData();
-  }, [authenticatedUser]);
+  }, []);
 
   useEffect(() => {
-    if (studentAddedCourses && studentAddedCourses.length > 0) {
-      setProgramName(studentAddedCourses[0].ProgramName);
-      setCourseMax(studentAddedCourses[0].CourseMax);
-      setCourseMin(studentAddedCourses[0].CourseMin);
+    if (studentAddedCoursesData && studentAddedCoursesData.length > 0) {
+      setProgramName(studentAddedCoursesData[0].ProgramName);
+      setCourseMax(studentAddedCoursesData[0].CourseMax);
+      setCourseMin(studentAddedCoursesData[0].CourseMin);
 
-      if (studentAddedCourses.length >= courseMax) {
+      if (studentAddedCoursesData.length >= courseMax) {
         setReachedMaximumCourses(true);
       } else {
         setReachedMaximumCourses(false);
       }
     }
-  }, [studentAddedCourses, courseMax]);
+  }, [studentAddedCoursesData, courseMax]);
 
   const handleProgramSelect = (selectedProgram) => {
     setSelectedProgram(selectedProgram);
@@ -78,9 +68,7 @@ const AddCourses = () => {
     } else if (selectedProgram === "All") {
       setFilteredCourseByProgram(coursesData);
     } else {
-      const filteredCourses = coursesData.filter((course) =>
-        course.ProgramType.includes(String(selectedProgram))
-      );
+      const filteredCourses = coursesData.filter((course) => course.ProgramType.includes(String(selectedProgram)));
       setFilteredCourseByProgram(filteredCourses);
     }
     setSelectedTerm("Select Term");
@@ -94,9 +82,7 @@ const AddCourses = () => {
     } else if (selectedTerm === "All") {
       setFilteredCourseData(filteredCourseByProgram);
     } else {
-      const filteredData = filteredCourseByProgram.filter(
-        (course) => course.Term === selectedTerm
-      );
+      const filteredData = filteredCourseByProgram.filter((course) => course.Term === selectedTerm);
       setFilteredCourseData(filteredData);
     }
     setSearchText("");
@@ -105,8 +91,7 @@ const AddCourses = () => {
   const handleSearch = (searchText) => {
     const filteredData = filteredCourseData.filter((course) => {
       const searchMatch =
-        course.Name.toLowerCase().includes(searchText.toLowerCase()) ||
-        course.CourseCode.toLowerCase().includes(searchText.toLowerCase());
+        course.Name.toLowerCase().includes(searchText.toLowerCase()) || course.CourseCode.toLowerCase().includes(searchText.toLowerCase());
       return searchMatch;
     });
     if (searchText === "") {
@@ -124,38 +109,27 @@ const AddCourses = () => {
           Based in your Program of <strong>{programName}</strong>:
         </Col>
         <Col className="mb-0" xl={12}>
-          The number of courses you can register is: minimum of{" "}
-          <strong>{courseMin}</strong> and maximum of{" "}
-          <strong>{courseMax}</strong>.
+          The number of courses you can register is: minimum of <strong>{courseMin}</strong> and maximum of <strong>{courseMax}</strong>.
         </Col>
         <Col className="mb-4">
-          You have added <strong>{studentAddedCourses?.length || 0}</strong>.
+          You have added <strong>{studentAddedCoursesData?.length || 0}</strong>.
         </Col>
       </Row>
 
       <FiltersContainer>
         <DropdownProgram onProgramSelect={handleProgramSelect} />
-        <DropdownTerm
-          onTermSelect={handleTermSelect}
-          disabled={selectedProgram === "Select Program"}
-          initialSelectTerm={selectedTerm}
-        />
+        <DropdownTerm onTermSelect={handleTermSelect} disabled={selectedProgram === "Select Program"} initialSelectTerm={selectedTerm} />
 
-        <SearchBar
-          onSearch={handleSearch}
-          searchText={searchText}
-          disabled={selectedProgram === "Select Program"}
-        />
+        <SearchBar onSearch={handleSearch} searchText={searchText} disabled={selectedProgram === "Select Program"} />
       </FiltersContainer>
 
       <CourseCardList
-        coursesData={
-          searchText ? filteredSearchBarCourseData : filteredCourseData
-        }
+        coursesData={searchText ? filteredSearchBarCourseData : filteredCourseData}
         disableaddCourseButton={reachedMaximumCourses}
         addCourseButtonHidden={false}
         removeCourseButtonHidden={true}
         deleteCourseButtonHidden={true}
+        authenticatedUser={authenticatedUser}
       />
     </>
   );
