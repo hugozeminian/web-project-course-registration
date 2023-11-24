@@ -17,13 +17,37 @@ export const ReadStudentAddedCourses = async (userName) => {
             sc.CourseCode,
             sc.Section,
             sc.TermID,
-            sc.Year
+            sc.Year,
+            c.Name,
+            c.Description,
+            c.StartDate,
+            c.EndDate,
+            c.Room,
+            c.SeatsAvailable,
+            c.ClassSize,
+            c.DeliveryMode,
+            cp.CampusName,
+            t.Term
         FROM 
             Student s
         JOIN 
-            Program p ON s.ProgramID = p.ProgramID
+            Program p ON 
+            s.ProgramID = p.ProgramID
         JOIN
-            StudentCourses sc ON sc.StudentID = s.StudentID
+            StudentCourses sc ON 
+            sc.StudentID = s.StudentID
+        JOIN 
+            Course c ON 
+            c.CourseCode = sc.CourseCode AND
+            c.Section = sc.Section AND
+            c.TermID = sc.TermID AND
+            c.Year = sc.Year
+        JOIN
+            Campus cp ON
+            cp.CampusID = c.CampusID
+        JOIN
+            Term t ON
+            t.TermID = sc.TermID
         WHERE 
             s.Username = @userName`;
 

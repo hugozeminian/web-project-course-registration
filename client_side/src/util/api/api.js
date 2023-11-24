@@ -226,7 +226,7 @@ const fetchData = async (route, userName) => {
         });
 
         if (response.status >= 200 && response.status < 300) {
-            // console.log("🚀 ~ file: api.js:223 ~ fetchData ~ response.data:", response.data)
+            console.log("🚀 ~ file: api.js:223 ~ fetchData ~ response.data:", response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
