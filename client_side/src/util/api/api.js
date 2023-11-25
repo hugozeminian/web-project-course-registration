@@ -190,18 +190,18 @@ export const getCourseRegistrationList = () => {
 // }
 
 
-export const sendMessageContact = (messageStudentsData) => {
-    let contactListData = JSON.parse(localStorage.getItem("bvc-contactListData"));
+// export const sendMessageContact = (messageStudentsData) => {
+//     let contactListData = JSON.parse(localStorage.getItem("bvc-contactListData"));
 
-    if (!contactListData) {
-        contactListData = [];
-    }
+//     if (!contactListData) {
+//         contactListData = [];
+//     }
 
-    let nextId = getNextAvailableID(contactListData);
-    messageStudentsData.id = nextId;
-    contactListData.push(messageStudentsData);
-    localStorage.setItem("bvc-contactListData", JSON.stringify(contactListData));
-}
+//     let nextId = getNextAvailableID(contactListData);
+//     messageStudentsData.id = nextId;
+//     contactListData.push(messageStudentsData);
+//     localStorage.setItem("bvc-contactListData", JSON.stringify(contactListData));
+// }
 
 export const getStudentInformation = () => {
     let authenticatedUser = getAuthenticatedUser();
@@ -431,12 +431,18 @@ export const logout = () => {
 
 }
 
+
 export const addCourseRegistration = async (courseInformation) => {
     const route = '/studentAddedCourses';
     const isAlreadyRegistered = await postData(route, courseInformation);
     return isAlreadyRegistered
 }
 
+
+export const sendMessageContact = async (messageStudentData) => {
+    const route = '/contactMessage';
+    await postData(route, messageStudentData);
+}
 
 /*
 ######################################################

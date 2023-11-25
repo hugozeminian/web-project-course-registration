@@ -106,8 +106,19 @@ export const getFormattedDateFromDB = (timestamp) => {
   const formattedDate = `${month}/${day}/${year}`;
 
   return formattedDate
-
 }
+
+
+export const getFormattedDateToDB = (timestamp) => {
+  const dateObject = new Date(timestamp);
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+  const day = dateObject.getDate().toString().padStart(2, '0');
+  const year = dateObject.getFullYear();
+  const formattedDate = `${year}-${month}-${day}`;
+
+  return formattedDate;
+};
+
 
 export const getFormattedMoney = (money) => {
   const formattedCurrency = `C$${money.toLocaleString('en-CA')}`;
