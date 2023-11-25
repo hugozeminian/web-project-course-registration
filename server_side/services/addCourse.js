@@ -77,7 +77,7 @@ export const AddCourse = async (props) => {
         return false;
     }
     catch (err) {
-        throw err
+        console.log(err);
     }
     finally {
         sql.close();

@@ -28,7 +28,7 @@ console.log("🚀 ~ file: contactMessage.js:5 ~ ContactMessage ~ props:", props)
         
     }
     catch (err) {
-        throw err
+        console.log(err);
     }
     finally {
         sql.close();

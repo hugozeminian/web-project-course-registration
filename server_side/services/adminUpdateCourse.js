@@ -58,7 +58,7 @@ export const AdminUpdateCourse = async (props)=>{
 
     }
     catch(err){
-        throw err;
+        console.log(err);
     }
     finally{
         await sql.close();
