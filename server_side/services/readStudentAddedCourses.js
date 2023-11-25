@@ -2,7 +2,6 @@ import sql from 'mssql';
 import { config } from './config.js';
 
 export const ReadStudentAddedCourses = async (userName) => {
-    console.log('readStudentAddedCourses');
     try {
 
         await sql.connect(config);

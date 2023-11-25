@@ -59,7 +59,7 @@ const CourseCard = ({
   } = courseInformation;
 
   
-  const handleButtonClickAddCourse = () => {
+  const handleButtonClickAddCourse = async () => {
     const courseInformation = {
       StudentID: authenticatedUserData.StudentID,
       CourseCode: CourseCode,
@@ -67,9 +67,9 @@ const CourseCard = ({
       TermID: TermID,
       Year: Year,
     };
-    //ToDo
-    const isAlreadyRegistered = addCourseRegistration(courseInformation);
-    if (isAlreadyRegistered) {
+
+    const courseRegistration = await addCourseRegistration(courseInformation);
+    if (courseRegistration.isAlreadyRegistered) {
       setConfirmationMessage("This course is already registered.");
       setShowConfirmationModal(true);
     } else {
@@ -78,7 +78,7 @@ const CourseCard = ({
     }
   };
 
-  const handleButtonClickRemoveCourse = () => {
+  const handleButtonClickRemoveCourse = async () => {
     const courseInformation = {
       StudentID: authenticatedUserData.StudentID,
       CourseCode: CourseCode,
@@ -87,8 +87,7 @@ const CourseCard = ({
       Year: Year,
     };
     
-    //ToDo
-    removeCourseRegistration(courseInformation);
+    await removeCourseRegistration(courseInformation);
 
     setConfirmationMessage("Course removed.");
     setShowConfirmationModal(true);
