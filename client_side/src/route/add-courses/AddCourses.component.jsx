@@ -3,7 +3,7 @@ import CourseCardList from "../../components/courses-card-list/CoursesCardList.c
 import DropdownTerm from "../../components/dropdown-term/DropdownTerm.components";
 import SearchBar from "../../components/search-bar/SearchBar.component";
 import { FiltersContainer } from "./AddCourses.styles";
-import { getCoursesList, getStudentAddedCourses } from "../../util/api/api";
+import { getCoursesList, getStudentAddedCourses, getProfileInformation } from "../../util/api/api";
 import { getAuthenticatedUser } from "../../util/api/api";
 import { Row, Col } from "react-bootstrap";
 import DropdownProgram from "../../components/dropdown-program/DropdownProgram.components";
@@ -19,7 +19,7 @@ const AddCourses = () => {
   const [coursesData, setcoursesData] = useState(null);
 
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
-  const [studentAddedCoursesData, setStudentAddedCoursesData] = useState(null);
+  const [studentProfileInformation, setStudentProfileInformation] = useState(null);
 
   const [programName, setProgramName] = useState(null);
   const [courseMax, setCourseMax] = useState(null);
@@ -34,9 +34,9 @@ const AddCourses = () => {
         if (!authenticatedUser) {
           const dataAuthenticatedUser = await getAuthenticatedUser();
           setAuthenticatedUser(dataAuthenticatedUser);
-
-          const dataStudentAddedCourses = await getStudentAddedCourses(dataAuthenticatedUser);
-          setStudentAddedCoursesData(dataStudentAddedCourses);
+          
+          const dataStudentProfile = await getProfileInformation(dataAuthenticatedUser);
+          setStudentProfileInformation(dataStudentProfile)
         }
       } catch (error) {
         console.error("Error fetching data on the component:", error.message);
@@ -47,18 +47,18 @@ const AddCourses = () => {
   }, []);
 
   useEffect(() => {
-    if (studentAddedCoursesData && studentAddedCoursesData.length > 0) {
-      setProgramName(studentAddedCoursesData[0].ProgramName);
-      setCourseMax(studentAddedCoursesData[0].CourseMax);
-      setCourseMin(studentAddedCoursesData[0].CourseMin);
+    if (studentProfileInformation && studentProfileInformation.length > 0) {
+      setProgramName(studentProfileInformation[0].ProgramName);
+      setCourseMax(studentProfileInformation[0].CourseMax);
+      setCourseMin(studentProfileInformation[0].CourseMin);
 
-      if (studentAddedCoursesData.length >= courseMax) {
+      if (studentProfileInformation[0].CoursesRegistered >= courseMax) {
         setReachedMaximumCourses(true);
       } else {
         setReachedMaximumCourses(false);
       }
     }
-  }, [studentAddedCoursesData, courseMax]);
+  }, [studentProfileInformation, courseMax]);
 
   const handleProgramSelect = (selectedProgram) => {
     setSelectedProgram(selectedProgram);
@@ -112,7 +112,7 @@ const AddCourses = () => {
           The number of courses you can register is: minimum of <strong>{courseMin}</strong> and maximum of <strong>{courseMax}</strong>.
         </Col>
         <Col className="mb-4">
-          You have added <strong>{studentAddedCoursesData?.length || 0}</strong>.
+        You have added <strong>{studentProfileInformation && studentProfileInformation.length > 0 ? studentProfileInformation[0].CoursesRegistered : 0}</strong>.
         </Col>
       </Row>
 

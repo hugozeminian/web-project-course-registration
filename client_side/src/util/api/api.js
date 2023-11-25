@@ -433,8 +433,8 @@ export const logout = () => {
 
 export const addCourseRegistration = async (courseInformation) => {
     const route = '/studentAddedCourses';
-    const isCourseAdded = await postData(route, courseInformation);
-    return isCourseAdded
+    const isAlreadyRegistered = await postData(route, courseInformation);
+    return isAlreadyRegistered
 }
 
 

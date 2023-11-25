@@ -182,8 +182,8 @@ app.get('/studentAddedCourses', async (req, res) => {
 
 app.post('/studentAddedCourses', async (req, res) => {
         try {
-            await AddCourse(req.body);
-            res.status(200).json({ Success: "Course was added." })
+            const isAlreadyRegistered = await AddCourse(req.body);
+            res.status(200).json({ isAlreadyRegistered: isAlreadyRegistered, message: "Course was added." });
         }
         catch {
             res.status(403).json({ error: "Unable to add course" })
