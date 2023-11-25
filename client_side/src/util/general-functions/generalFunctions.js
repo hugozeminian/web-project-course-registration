@@ -80,8 +80,7 @@ export const convertToAMPM = (timeString) => {
 
 
 export const capitalizeEachWord = (str) => {
-  if(str == undefined)
-  {
+  if (str == undefined) {
     return
   }
   const words = str.split(' ');
@@ -96,4 +95,22 @@ export const capitalizeEachWord = (str) => {
 
 export const getFormattedPhoneNumber = (countryCode, numericPhoneNumber) => {
   return `${countryCode} (${numericPhoneNumber.slice(0, 3)}) ${numericPhoneNumber.slice(3, 6)}-${numericPhoneNumber.slice(6)}`;
+}
+
+export const getFormattedDateFromDB = (timestamp) => {
+  const dateObject = new Date(timestamp);
+  const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+  const day = dateObject.getDate().toString().padStart(2, '0');
+  const year = dateObject.getFullYear();
+
+  const formattedDate = `${month}/${day}/${year}`;
+
+  return formattedDate
+
+}
+
+export const getFormattedMoney = (money) => {
+  const formattedCurrency = `C$${money.toLocaleString('en-CA')}`;
+
+  return formattedCurrency
 }
