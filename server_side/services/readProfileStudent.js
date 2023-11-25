@@ -41,7 +41,6 @@ export const ReadProfileStudent = async (userName) => {
     }
     catch (err) {
         console.error('Error reading data:', err);
-        throw err;
     }
     finally {
         try {

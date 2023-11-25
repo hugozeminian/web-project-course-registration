@@ -55,7 +55,7 @@ export const AdminCreateCourses = async (props) => {
     }
     catch(err)
     {
-        throw err;
+        console.log(err);
     }
     finally
     {

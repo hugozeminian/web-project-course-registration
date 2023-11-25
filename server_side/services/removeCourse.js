@@ -47,7 +47,7 @@ export const RemoveCourse = async (props) => {
     }
     catch(err)
     {
-        throw err;
+        console.log(err);
     }
     finally
     {

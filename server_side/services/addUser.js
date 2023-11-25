@@ -90,7 +90,6 @@ export const AddUser = async (data) =>
         }
         catch(err){
             console.log("Unable to perform queries: " + err);
-            throw err;
         }
         finally{
             await sql.close();
@@ -99,7 +98,6 @@ export const AddUser = async (data) =>
     })
     .catch(err => {
         console.log("Unable to hash the password: " + err);
-        throw err;
     });
 
     return true;

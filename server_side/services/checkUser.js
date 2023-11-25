@@ -30,7 +30,7 @@ export const CheckUser = async (data) => {
     }
     catch(err)
     {
-        throw err;
+        console.log(err);
     }
     finally{
         sql.close();
