@@ -17,6 +17,7 @@ import { ReadStudentAddedCourses } from './services/readStudentAddedCourses.js';
 import { AddCourse } from './services/addCourse.js';
 import { readStudentID } from './services/readStudentId.js';
 import { RemoveCourse } from './services/removeCourse.js';
+import { ContactMessage } from './services/contactMessage.js';
 
 
 //Defines server and its port
@@ -223,6 +224,16 @@ app.get('/programsList', async (req, res) => {
     catch (error) {
         console.error('Error connecting to the database:', error.message);
         res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
+
+app.post('/contactMessage', async (req, res) => {
+    try {
+        await ContactMessage(req.body);
+        res.status(200).json({ Success: "Message sent." });
+    }
+    catch {
+        res.status(403).json({ error: "Unable to send message" })
     }
 });
 
