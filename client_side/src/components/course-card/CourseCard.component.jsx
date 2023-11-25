@@ -13,6 +13,7 @@ import {
   getStudentID,
 } from "../../util/api/api";
 import { CustomRadioGroup, CustomGroupFormCheck } from "../../route/adm-new-course-form/AdmNewCourseForm.styles";
+import { getFormattedDateFromDB } from "../../util/general-functions/generalFunctions";
 
 const CourseCard = ({
   courseData,
@@ -57,6 +58,9 @@ const CourseCard = ({
     ClassSize,
     DeliveryMode,
   } = courseInformation;
+
+  const startDateformatted = getFormattedDateFromDB(StartDate)
+  const endDateformatted = getFormattedDateFromDB(EndDate)
 
   
   const handleButtonClickAddCourse = async () => {
@@ -179,13 +183,13 @@ const CourseCard = ({
                     <CustomTd>
                       <strong>Start date:</strong>
                     </CustomTd>
-                    <CustomTd>{StartDate}</CustomTd>
+                    <CustomTd>{startDateformatted}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>End date:</strong>
                     </CustomTd>
-                    <CustomTd>{EndDate}</CustomTd>
+                    <CustomTd>{endDateformatted}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>

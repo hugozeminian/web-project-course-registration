@@ -2,6 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import { Row, Col, Table } from "react-bootstrap";
 import { CardWrapper, CustomTd } from "./ProgramCard.styles";
+import { getFormattedDateFromDB, getFormattedMoney } from "../../util/general-functions/generalFunctions";
 
 const ProgramCard = ({ programData }) => {
   const {
@@ -19,6 +20,11 @@ const ProgramCard = ({ programData }) => {
     ProgramType,
     DepartmentName,
   } = programData || {};
+
+  const startDateformatted = getFormattedDateFromDB(StartDate);
+  const endDateformatted = getFormattedDateFromDB(EndDate);
+  const domesticFeesFormatted = getFormattedMoney(DomesticFees);
+  const internationalFeesFormatted = getFormattedMoney(InternationalFees);
 
   return (
     <>
@@ -45,20 +51,14 @@ const ProgramCard = ({ programData }) => {
           </Row>
           <Row>
             <Col md={12} xl={6}>
-              <Card.Title
-                className="mt-3"
-                style={{ color: "var(--color_font2)" }}>
+              <Card.Title className="mt-3" style={{ color: "var(--color_font2)" }}>
                 <strong>Description: </strong>
               </Card.Title>
-              <Card.Text style={{ color: "var(--color_font3)" }}>
-                {Description}
-              </Card.Text>
+              <Card.Text style={{ color: "var(--color_font3)" }}>{Description}</Card.Text>
             </Col>
             <Col md={12} xl={6}>
               <div className="text-center">
-                <Card.Title
-                  className="mt-3"
-                  style={{ color: "var(--color_font1)" }}>
+                <Card.Title className="mt-3" style={{ color: "var(--color_font1)" }}>
                   <strong>
                     <em>{Term}</em>
                   </strong>
@@ -66,23 +66,17 @@ const ProgramCard = ({ programData }) => {
 
                 <Row>
                   <Col md={12} xl={6}>
-                    <Card.Title style={{ color: "var(--color_font1)" }}>
+                    <Card.Title style={{ color: "var(--color_font1)", fontSize: "var(--font-size-m1)" }}>
                       <strong>
-                        <em>{DomesticFees}</em>
+                      Domestic: <em>{domesticFeesFormatted}</em>
                       </strong>
                     </Card.Title>
                   </Col>
 
                   <Col lg={12} xl={6}>
-                    <Card.Title
-                      style={{
-                        color: "var(--color_font1)",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}>
+                  <Card.Title style={{ color: "var(--color_font1)", fontSize: "var(--font-size-m1)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                       <strong>
-                        <em>{InternationalFees}</em>
+                        International: <em>{internationalFeesFormatted}</em>
                       </strong>
                     </Card.Title>
                   </Col>
@@ -95,13 +89,13 @@ const ProgramCard = ({ programData }) => {
                     <CustomTd>
                       <strong>Start date:</strong>
                     </CustomTd>
-                    <CustomTd>{StartDate}</CustomTd>
+                    <CustomTd>{startDateformatted}</CustomTd>
                   </tr>
                   <tr>
                     <CustomTd>
                       <strong>End date:</strong>
                     </CustomTd>
-                    <CustomTd>{EndDate}</CustomTd>
+                    <CustomTd>{endDateformatted}</CustomTd>
                   </tr>
                 </tbody>
               </Table>
