@@ -15,21 +15,21 @@ let authenticationData = {
 #####  ADMIN FUNCTIONS  #####
 #############################
 */
-export const admDeleteCourse = (courseInformation) => {
-    let courseList = getCoursesList();
+// export const admDeleteCourse = (courseInformation) => {
+//     let courseList = getCoursesList();
 
-    if (courseList) {
-        const indexToRemove = courseList.findIndex(
-            (course) => course.courseId === courseInformation.courseId
-        );
+//     if (courseList) {
+//         const indexToRemove = courseList.findIndex(
+//             (course) => course.courseId === courseInformation.courseId
+//         );
 
-        if (indexToRemove !== -1) {
-            courseList.splice(indexToRemove, 1);
-            localStorage.setItem("bvc-coursesData", JSON.stringify(courseList));
-        }
+//         if (indexToRemove !== -1) {
+//             courseList.splice(indexToRemove, 1);
+//             localStorage.setItem("bvc-coursesData", JSON.stringify(courseList));
+//         }
 
-    }
-}
+//     }
+// }
 
 
 export const admAddNewCourse = (courseInformation) => {
@@ -46,14 +46,14 @@ export const admAddNewCourse = (courseInformation) => {
 }
 
 
-export const updateCourse = (courseInformation) => {
+// export const updateCourse = (courseInformation) => {
 
 
-    // ############### ToDo ###############
+//     // ############### ToDo ###############
 
 
 
-}
+// }
 
 
 /*
@@ -451,6 +451,7 @@ export const sendMessageContact = async (messageStudentData) => {
 */
 
 const deleteData = async (route, params) => {
+    console.log("🚀 ~ file: api.js:454 ~ deleteData ~ params:", params)
     try {
         const response = await Axios.delete(server + route, { data: params });
 
@@ -469,4 +470,34 @@ const deleteData = async (route, params) => {
 export const removeCourseRegistration = async (courseInformation) => {
     const route = '/studentAddedCourses';
     await deleteData(route, { data: courseInformation });
+};
+
+export const deleteCourse = async (courseInformation) => {
+    const route = '/adminDeleteCourse';
+    await deleteData(route, { data: courseInformation });
+};
+
+/*
+######################################################
+                    PUT METHODS          
+######################################################
+*/
+const updateData = async (route, params) => {
+    try {
+      const response = await Axios.put(server + route, params);
+  
+      if (response.status >= 200 && response.status < 300) {
+        return response.data;
+      } else {
+        throw new Error('Server responded with an error');
+      }
+    } catch (error) {
+      console.error('Error fetching:', error.message);
+      throw error;
+    }
+  };
+  
+  export const updateCourse = async (courseInformation) => {
+    const route = '/adminUpdateCourse';
+    await updateData(route, courseInformation);
 };

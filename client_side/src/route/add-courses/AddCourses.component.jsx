@@ -3,7 +3,7 @@ import CourseCardList from "../../components/courses-card-list/CoursesCardList.c
 import DropdownTerm from "../../components/dropdown-term/DropdownTerm.components";
 import SearchBar from "../../components/search-bar/SearchBar.component";
 import { FiltersContainer } from "./AddCourses.styles";
-import { getCoursesList, getStudentAddedCourses, getProfileInformation } from "../../util/api/api";
+import { getCoursesList, getProfileInformation } from "../../util/api/api";
 import { getAuthenticatedUser } from "../../util/api/api";
 import { Row, Col } from "react-bootstrap";
 import DropdownProgram from "../../components/dropdown-program/DropdownProgram.components";
@@ -75,6 +75,7 @@ const AddCourses = () => {
     setFilteredCourseData([]);
     setSearchText("");
   };
+
   const handleTermSelect = (selectedTerm) => {
     setSelectedTerm(selectedTerm);
     if (selectedTerm === "Select Term" || undefined) {
