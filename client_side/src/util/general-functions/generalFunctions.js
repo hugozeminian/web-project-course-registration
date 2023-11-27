@@ -1,33 +1,4 @@
-export const getNextAvailableID = (existingIDs, idProperty = 'id') => {
-  let maxID = 0;
 
-  if (existingIDs) {
-    existingIDs.forEach((existingID) => {
-      if (existingID[idProperty] > maxID) {
-        maxID = existingID[idProperty];
-      }
-    });
-  }
-
-  return maxID + 1;
-}
-
-
-export const setLocalStoreList = (storageName, dataCollection) => {
-  let storageData = JSON.parse(localStorage.getItem(storageName));
-
-  if (!storageData) {
-    storageData = [];
-  }
-
-  let nextId = getNextAvailableID(storageData);
-  dataCollection.id = nextId;
-  dataCollection.forEach(data => {
-    storageData.push(data);
-  })
-
-  localStorage.setItem(storageName, JSON.stringify(storageData));
-}
 
 
 export const getCurrentFormattedDateAndTime = () => {

@@ -402,7 +402,7 @@ const CourseCard = ({
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mt-3" controlId="code">
+                <Form.Group className="mt-3" controlId="section">
                   <Form.Label>Section</Form.Label>
                   <Form.Control
                     disabled

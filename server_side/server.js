@@ -337,10 +337,10 @@ app.post('/addUser', async (req, res) => {
     }
 
     try {
-        const response = await AddUser(user);
-        if (response == true) {
+        const isUserCreated = await AddUser(user);
+        if (isUserCreated == true) {
             console.log(`User: ${user.userName} was added.`);
-            res.status(200).json({ Success: "User was added." });
+            res.status(200).json({ isUserCreated: isUserCreated, message: "User was added." });
         }
     }
     catch {

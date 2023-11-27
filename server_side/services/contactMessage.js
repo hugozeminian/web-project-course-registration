@@ -2,8 +2,6 @@ import { config } from "./config.js";
 import sql from 'mssql';
 
 export const ContactMessage = async (props) => {
-console.log("🚀 ~ file: contactMessage.js:5 ~ ContactMessage ~ props:", props)
-
     try {
 
         await sql.connect(config);

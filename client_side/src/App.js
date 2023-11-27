@@ -21,15 +21,8 @@ import AdmNewCourseForm from './route/adm-new-course-form/AdmNewCourseForm.compo
 import AdmStudentList from './route/adm-student-list/AdmStudentList.component'
 import AdmForms from './route/adm-forms/AdmForms.component'
 
-import coursesDataJson from './util/json-information/startCoursesList.json'
-import studentDataJson from './util/json-information/startStudentList.json'
-import adminDataJson from './util/json-information/startAdmList.json'
-import contactListDataJson from "./util/json-information/startContactList.json"
-import programsListDataJson from './util/json-information/startProgramsList.json'
-import { setLocalStoreList } from "./util/general-functions/generalFunctions";
-
 import NotFound from "./route/not-found/NotFound.component";
-import { getAuthenticatedUser, logout } from "./util/api/api";
+import { getAuthenticatedUser } from "./util/api/api";
 
 
 const App = () => {
@@ -39,27 +32,6 @@ const App = () => {
         const authenticatedUser = getAuthenticatedUser() || {};
         setIsAuthenticated(authenticatedUser.isAuthenticated)
     },[])
-
-    useEffect(() => {
-        if (!localStorage.getItem("bvc-authentication")) {
-            logout();
-        }
-        if (!localStorage.getItem("bvc-coursesData")) {
-            setLocalStoreList("bvc-coursesData", coursesDataJson);
-        }
-        if (!localStorage.getItem("bvc-studentData")) {
-            setLocalStoreList("bvc-studentData", studentDataJson);
-        }
-        if (!localStorage.getItem("bvc-adminData")) {
-            setLocalStoreList("bvc-adminData", adminDataJson);
-        }
-        if (!localStorage.getItem("bvc-contactListData")) {
-            setLocalStoreList("bvc-contactListData", contactListDataJson);
-        }
-        if (!localStorage.getItem("bvc-programsData")) {
-            setLocalStoreList("bvc-programsData", programsListDataJson);
-        }
-    }, []);
 
 
     return (

@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-import { getStudentList, getStudentsList } from "../../util/api/api";
+import { getStudentsList } from "../../util/api/api";
 import { Container } from "@mui/system";
 import { getFormattedDateFromDB } from "../../util/general-functions/generalFunctions";
 

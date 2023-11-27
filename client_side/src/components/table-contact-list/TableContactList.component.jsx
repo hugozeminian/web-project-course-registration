@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-import { getContactList, getStudentsForms } from "../../util/api/api";
+import { getStudentsForms } from "../../util/api/api";
 import { Container } from "@mui/system";
 import { getFormattedDateFromDB } from "../../util/general-functions/generalFunctions";
 
@@ -34,8 +34,7 @@ const TableContactList = () => {
     
     fetchData();
   }, []);
-  console.log("🚀 ~ file: TableContactList.component.jsx:21 ~ TableContactList ~ studentsForms:", studentsForms)
-
+ 
   const columns = [
     {
       name: "Name",
