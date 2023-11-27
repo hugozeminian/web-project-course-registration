@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-import { getStudentList } from "../../util/api/api";
+import { getStudentList, getStudentsList } from "../../util/api/api";
 import { Container } from "@mui/system";
+import { getFormattedDateFromDB } from "../../util/general-functions/generalFunctions";
 
 const TableStudentList = () => {
   const muiCache = createCache({
@@ -16,46 +17,59 @@ const TableStudentList = () => {
 
   const [searchBtn, setSearchBtn] = useState(true);
   const [filterBtn, setFilterBtn] = useState(true);
+  const [studentsList, setStudentsList] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const studentsListData = await getStudentsList();
+        setStudentsList(studentsListData.map(student => ({
+          ...student,
+          DateOfBirth: getFormattedDateFromDB(student.DateOfBirth),
+        })));
+      } catch (error) {
+        console.error("Error fetching data on the component:", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
     {
-      name: "first_name",
+      name: "FirstName",
       label: "First Name",
-      options: {
-      },
+      options: {},
     },
     {
-      name: "last_name",
+      name: "LastName",
       label: "Last Name",
-      options: {
-      },
+      options: {},
     },
     {
-      name: "email",
-      label: "Email",
-      options: {
-      },
+      name: "Email",
+      label: "E-mail",
+      options: {},
     },
     {
-      name: "phone",
+      name: "Phone",
       label: "Phone",
       options: { setCellProps: () => ({ style: { width: "160px" } }) },
     },
     {
-      name: "date_of_birth",
+      name: "DateOfBirth",
       label: "Birthday",
       options: { setCellProps: () => ({ style: { width: "110px" } }) },
     },
     {
-      name: "department",
-      label: "Department",
+      name: "ProgramName",
+      label: "Program Name",
       options: {},
     },
     {
-      name: "program",
-      label: "Program",
-      options: {
-      },
+      name: "ProgramType",
+      label: "Program Type",
+      options: {},
     },
   ];
 
@@ -75,18 +89,11 @@ const TableStudentList = () => {
     },
   };
 
-  const data = getStudentList();
-
   return (
     <CacheProvider value={muiCache}>
       <ThemeProvider theme={createTheme()}>
         <Container>
-          <MUIDataTable
-            title={"BVC Students"}
-            data={data}
-            columns={columns}
-            options={options}
-          />
+          <MUIDataTable title={"BVC Students"} data={studentsList} columns={columns} options={options} />
         </Container>
       </ThemeProvider>
     </CacheProvider>

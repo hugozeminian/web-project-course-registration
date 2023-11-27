@@ -296,6 +296,16 @@ export const getStudentID = async (_userName) => {
     return fetchData(route, userName);
 }
 
+export const getStudentsList = async () => {
+    const route = '/studentList';
+    return fetchData(route);
+}
+
+export const getStudentsForms = async () => {
+    const route = '/studentForms';
+    return fetchData(route);
+}
+
 export const getProfileInformation = async (authenticatedUser) => {
     if (authenticatedUser.isAdmin) {
         const route = '/profileAdminInformation';

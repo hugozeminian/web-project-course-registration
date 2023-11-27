@@ -99,13 +99,13 @@ export const getFormattedPhoneNumber = (countryCode, numericPhoneNumber) => {
 
 export const getFormattedDateFromDB = (timestamp) => {
   const dateObject = new Date(timestamp);
-  const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-  const day = dateObject.getDate().toString().padStart(2, '0');
-  const year = dateObject.getFullYear();
-
+  const utcString = dateObject.toISOString();
+  const year = utcString.slice(0, 4);
+  const month = utcString.slice(5, 7);
+  const day = utcString.slice(8, 10);
   const formattedDate = `${month}/${day}/${year}`;
 
-  return formattedDate
+  return formattedDate;
 }
 
 
