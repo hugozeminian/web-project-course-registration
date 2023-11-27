@@ -59,7 +59,7 @@ const Navigation = ({ navPageTitle }) => {
     if (userData) {
       setUserNameNav(capitalizeEachWord(userData.userName) || "");
 
-      setUserAccessLevel(userData.isAdmin ? "Admin" : userData.isAuthenticated ? "Student" : "");
+      setUserAccessLevel(userData.isAdmin ? "Admin" : userData.isAuthenticated ? "Student" : "Login");
 
       if (userNameNav && userNameNav.length > maxCharUserName) {
         setUserNameNav(userNameNav.slice(0, maxCharUserName));

@@ -5,12 +5,12 @@ import { getAuthenticatedUser, getProfileInformation } from "../../util/api/api"
 
 const UserDashboard = () => {
   const [profileInformation, setProfileInformation] = useState(null);
-  const [authenticatedUser, setAuthenticatedUser] = useState(null)
-  
+  const [authenticatedUser, setAuthenticatedUser] = useState(null);
+
   useEffect(() => {
     const authenticatedUser = getAuthenticatedUser() || {};
-    setAuthenticatedUser(authenticatedUser)
-  }, [])
+    setAuthenticatedUser(authenticatedUser);
+  }, []);
 
   useEffect(() => {
     const fetchProfileInformation = async () => {
@@ -32,10 +32,20 @@ const UserDashboard = () => {
   }
 
   const {
-    StudentID,
+    CourseMax,
+    CourseMin,
+    CoursesRegistered,
+    DateOfBirth,
+    DepartmentName,
+    Email,
     FirstName,
+    LastName,
+    Phone,
     ProgramName,
+    StudentID,
+    Username,
   } = profileInformation[0];
+  console.log("🚀 ~ file: UserDashboard.component.jsx:39 ~ UserDashboard ~ profileInformation[0]:", profileInformation[0]);
 
   return (
     <>
@@ -73,15 +83,21 @@ const UserDashboard = () => {
             </Card.Title>
           </Card.Body>
 
+          {/* <Card.Body>
+            <Card.Title style={{ color: "var(--color_font2)" }}>
+              Department: <strong>{DepartmentName}</strong>
+            </Card.Title>
+          </Card.Body> */}
+
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              Department: <strong>Software Development</strong>
+              Program: <strong>{ProgramName}</strong>
             </Card.Title>
           </Card.Body>
 
           <Card.Body>
             <Card.Title style={{ color: "var(--color_font2)" }}>
-              Program: <strong>{ProgramName}</strong>
+              Courses registred: <strong>{CoursesRegistered}</strong>
             </Card.Title>
           </Card.Body>
         </CardWrapper>

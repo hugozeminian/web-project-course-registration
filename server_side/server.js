@@ -261,7 +261,7 @@ app.delete('/adminDeleteCourse', async (req, res) => {
         termID: req.body.data.TermID,
         year: req.body.data.Year,
     }
-    console.log("🚀 ~ file: server.js:263 ~ app.delete ~ course:", course)
+
     if (config.accessLevel === 99) {
         try {
             await AdminDeleteCourse(course);

@@ -3,7 +3,7 @@ import Axios from "axios"
 let authenticationData = {
     "StudentID": null,
     "userName": null,
-    "password": null,
+    // "password": null,
     "accessLevel": 0,
     "isAuthenticated": null,
     "isAdmin": false,
@@ -133,7 +133,6 @@ const postData = async (route, data) => {
 };
 
 export const loginVerification = async (loginData, isAdmin = false) => {
-    console.log("🚀 ~ file: api.js:204 ~ loginVerification ~ loginData:", loginData)
     const route = '/login';
     const passCheck = await postData(route, loginData);
 
@@ -142,7 +141,7 @@ export const loginVerification = async (loginData, isAdmin = false) => {
             authenticationData = {
                 ...authenticationData,
                 "userName": loginData.userName,
-                "password": loginData.password,
+                // "password": loginData.password,
                 "accessLevel": 99,
                 "isAuthenticated": true,
                 "isAdmin": true,
@@ -150,24 +149,22 @@ export const loginVerification = async (loginData, isAdmin = false) => {
         } else {
             const dataStudentID = await getStudentID(loginData.userName)
             const {StudentID} = dataStudentID[0]
-            console.log("🚀 ~ file: api.js:220 ~ loginVerification ~ StudentID:", StudentID)
             authenticationData = {
                 ...authenticationData,
                 "StudentID": StudentID,
                 "userName": loginData.userName,
-                "password": loginData.password,
+                // "password": loginData.password,
                 "accessLevel": 1,
                 "isAuthenticated": true,
                 "isAdmin": false,
             };
-            console.log("🚀 ~ file: api.js:222 ~ loginVerification ~ authenticationData:", authenticationData)
         }
     } else {
         authenticationData = {
             ...authenticationData,
             "StudentID": null,
             "userName": null,
-            "password": null,
+            // "password": null,
             "accessLevel": 0,
             "isAuthenticated": null,
             "isAdmin": false,
@@ -184,7 +181,7 @@ export const logout = () => {
         ...authenticationData,
         "StudentID": null,
         "userName": null,
-        "password": null,
+        // "password": null,
         "accessLevel": 0,
         "isAuthenticated": null,
         "isAdmin": false,
