@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import MUIDataTable from "mui-datatables";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
-import { getContactList } from "../../util/api/api";
+import { getStudentsForms } from "../../util/api/api";
 import { Container } from "@mui/system";
+import { getFormattedDateFromDB } from "../../util/general-functions/generalFunctions";
 
 const TableContactList = () => {
   const muiCache = createCache({
@@ -16,31 +17,48 @@ const TableContactList = () => {
 
   const [searchBtn, setSearchBtn] = useState(true);
   const [filterBtn, setFilterBtn] = useState(true);
-
+  const [studentsForms, setStudentsForms] = useState();
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const studentsFormsData = await getStudentsForms();
+        setStudentsForms(studentsFormsData.map(student => ({
+          ...student,
+          Date: getFormattedDateFromDB(student.Date),
+        })));
+      } catch (error) {
+        console.error("Error fetching data on the component:", error.message);
+      }
+    };
+    
+    fetchData();
+  }, []);
+ 
   const columns = [
     {
-      name: "name",
+      name: "Name",
       label: "Name",
       options: {
         setCellProps: () => ({ style: { width: "140px" } }),
       },
     },
     {
-      name: "email",
+      name: "Email",
       label: "Email",
       options: {
         setCellProps: () => ({ style: { width: "160px" } }),
       },
     },
     {
-      name: "date",
+      name: "Date",
       label: "Date",
       options: {
         setCellProps: () => ({ style: { width: "200px" } }),
       },
     },
     {
-      name: "message",
+      name: "Message",
       label: "Message",
       options: {
         setCellProps: () => ({ style: { width: "500px" } }),
@@ -64,7 +82,6 @@ const TableContactList = () => {
     },
   };
 
-  const data = getContactList();
 
   return (
     <CacheProvider value={muiCache}>
@@ -72,7 +89,7 @@ const TableContactList = () => {
         <Container>
           <MUIDataTable
             title={"BVC Form"}
-            data={data}
+            data={studentsForms}
             columns={columns}
             options={options}
           />

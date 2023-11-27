@@ -1,3 +1,4 @@
+import React from "react";
 import { CardWrapper } from "./About.styles";
 import Card from "react-bootstrap/Card";
 
@@ -33,7 +34,13 @@ const About = () => {
             </ul>
           </Card.Text>
           <Card.Text>
-            Group Members: Fabio, Hugo, Regina, Willian.
+            Group Members:
+            <ul>
+              <li>Fabio - <a href="https://github.com/fabioweck" target="_blank" rel="noopener noreferrer">https://github.com/fabioweck</a></li>
+              <li>Hugo - <a href="https://github.com/hugozeminian" target="_blank" rel="noopener noreferrer">https://github.com/hugozeminian</a></li>
+              <li>Regina - <a href="https://github.com/ReginaSi" target="_blank" rel="noopener noreferrer">https://github.com/ReginaSi</a></li>
+              <li>Willian - <a href="https://github.com/theWillPM" target="_blank" rel="noopener noreferrer">https://github.com/theWillPM</a></li>
+            </ul>
           </Card.Text>
         </Card.Body>
       </CardWrapper>

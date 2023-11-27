@@ -18,6 +18,8 @@ import { AddCourse } from './services/addCourse.js';
 import { readStudentID } from './services/readStudentId.js';
 import { RemoveCourse } from './services/removeCourse.js';
 import { ContactMessage } from './services/contactMessage.js';
+import { ReadStudentList } from './services/readStudentList.js';
+import { ReadStudentForms } from './services/readStudentForms.js';
 
 
 //Defines server and its port
@@ -290,6 +292,35 @@ app.put('/adminUpdateCourse', async (req, res) => {
 })
 
 
+app.get('/studentList', async (req, res) => {
+
+    try {
+        const data = await ReadStudentList();
+        res.json(data);
+    }
+
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
+
+
+app.get('/studentForms', async (req, res) => {
+
+    try {
+        const data = await ReadStudentForms();
+        res.json(data);
+    }
+
+    catch (error) {
+        console.error('Error connecting to the database:', error.message);
+        res.status(500).json({ error: 'Internal Server Error: ' + error.message });
+    }
+});
+
+
+
 app.post('/addUser', async (req, res) => {
 
     const user = {
@@ -306,10 +337,10 @@ app.post('/addUser', async (req, res) => {
     }
 
     try {
-        const response = await AddUser(user);
-        if (response == true) {
+        const isUserCreated = await AddUser(user);
+        if (isUserCreated == true) {
             console.log(`User: ${user.userName} was added.`);
-            res.status(200).json({ Success: "User was added." });
+            res.status(200).json({ isUserCreated: isUserCreated, message: "User was added." });
         }
     }
     catch {
