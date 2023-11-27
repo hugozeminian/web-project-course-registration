@@ -2,32 +2,47 @@ import { config } from "./config.js";
 import sql from 'mssql';
 
 // Use props and course id?
-export const AdminDeleteCourse = async (props)=>{
-
-    const courseCode = props.courseCode
-    const section = props.section
-    const termID = props.termID
-    const year = props.year
+export const AdminDeleteCourse = async (props) => {
+    
+    const { courseCode, section, termID, year } = props;
 
     try{
 
         await sql.connect(config);
 
-        const query =   
+        // Delete from StudentCourses table
+        const studentCoursesQuery =   
+            `DELETE FROM StudentCourses WHERE 
+            CourseCode = @courseCode AND 
+            Section = @section AND 
+            TermID = @termID AND 
+            Year = @year`;
+
+        const studentCoursesRequest = new sql.Request();
+
+        studentCoursesRequest.input('courseCode', sql.VarChar, courseCode);
+        studentCoursesRequest.input('section', sql.Int, section);
+        studentCoursesRequest.input('termID', sql.Int, termID);
+        studentCoursesRequest.input('year', sql.Int, year);
+
+        await studentCoursesRequest.query(studentCoursesQuery);
+
+        // Delete from Course table
+        const courseQuery =   
             `DELETE FROM Course WHERE 
             CourseCode = @courseCode AND 
             Section = @section AND 
             TermID = @termID AND 
             Year = @year`;
 
-        const request = new sql.Request();
+        const courseRequest = new sql.Request();
 
-        request.input('courseCode', sql.VarChar, courseCode);
-        request.input('section', sql.Int, section);
-        request.input('termID', sql.Int, termID);
-        request.input('year', sql.Int, year);
+        courseRequest.input('courseCode', sql.VarChar, courseCode);
+        courseRequest.input('section', sql.Int, section);
+        courseRequest.input('termID', sql.Int, termID);
+        courseRequest.input('year', sql.Int, year);
 
-        await request.query(query);
+        await courseRequest.query(courseQuery);
 
     }
     catch(err){

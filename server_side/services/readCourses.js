@@ -7,13 +7,15 @@ export const ReadCourses = async () => {
         await sql.connect(config);
 
         const query =
-            `SELECT c.CourseCode,
+            `SELECT 
+                c.CourseCode,
                 c.Section,
+                c.ProgramID,
                 c.Name,
                 c.Description,
-                c.Year,
                 t.TermID,
                 t.Term,
+                c.Year,
                 c.Days,
                 c.Hours,
                 c.StartDate,

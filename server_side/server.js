@@ -202,7 +202,6 @@ app.delete('/studentAddedCourses', async (req, res) => {
 })
 
 app.get('/coursesList', async (req, res) => {
-
     try {
         const data = await ReadCourses();
         res.json(data);
@@ -255,12 +254,12 @@ app.post('/adminCreateCourses', async (req, res) => {
 app.delete('/adminDeleteCourse', async (req, res) => {
 
     const course = {
-        courseCode: req.body.courseCode,
-        section: req.body.section,
-        termID: req.body.termID,
-        year: req.body.year
+        courseCode: req.body.data.CourseCode,
+        section: req.body.data.Section,
+        termID: req.body.data.TermID,
+        year: req.body.data.Year,
     }
-
+    console.log("🚀 ~ file: server.js:263 ~ app.delete ~ course:", course)
     if (config.accessLevel === 99) {
         try {
             await AdminDeleteCourse(course);
@@ -276,7 +275,6 @@ app.delete('/adminDeleteCourse', async (req, res) => {
 })
 
 app.put('/adminUpdateCourse', async (req, res) => {
-
     if (config.accessLevel === 99) {
         try {
             await AdminUpdateCourse(req.body);

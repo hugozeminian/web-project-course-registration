@@ -111,9 +111,10 @@ export const getFormattedDateFromDB = (timestamp) => {
 
 export const getFormattedDateToDB = (timestamp) => {
   const dateObject = new Date(timestamp);
-  const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-  const day = dateObject.getDate().toString().padStart(2, '0');
-  const year = dateObject.getFullYear();
+  const utcString = dateObject.toISOString();
+  const year = utcString.slice(0, 4);
+  const month = utcString.slice(5, 7);
+  const day = utcString.slice(8, 10);
   const formattedDate = `${year}-${month}-${day}`;
 
   return formattedDate;
@@ -125,3 +126,46 @@ export const getFormattedMoney = (money) => {
 
   return formattedCurrency
 }
+
+export const getFormattedHoursFromDB = (hours) => {
+  if (!hours) {
+    return { initialTime: '', endTime: '' };
+  }
+
+  const [initialTime, endTime] = hours.split(' - ');
+
+  const formatTo24Hour = (timeString) => {
+    const [hour, minute, period] = timeString.match(/(\d+):(\d+) (\w+)/).slice(1);
+
+    let hour24 = parseInt(hour, 10);
+    if (period === 'PM' && hour24 !== 12) {
+      hour24 += 12;
+    } else if (period === 'AM' && hour24 === 12) {
+      hour24 = 0;
+    }
+
+    return `${hour24.toString().padStart(2, '0')}:${minute}`;
+  };
+
+  return {
+    initialTime: formatTo24Hour(initialTime),
+    endTime: formatTo24Hour(endTime),
+  };
+};
+
+
+export const getFormattedHoursToDB = (initialTime24, endTime24) => {
+  const formatTo12Hour = (timeString24) => {
+    const [hour, minute] = timeString24.split(':');
+    const hour24 = parseInt(hour, 10);
+    const period = hour24 >= 12 ? 'PM' : 'AM';
+    const hour12 = hour24 % 12 || 12; 
+
+    return `${hour12}:${minute} ${period}`;
+  };
+
+  return {
+    initialTime: formatTo12Hour(initialTime24),
+    endTime: formatTo12Hour(endTime24),
+  };
+};

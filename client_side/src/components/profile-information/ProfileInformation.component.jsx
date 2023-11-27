@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FormWrapper } from "./ProfileInformation.styles";
 import { Form } from "react-bootstrap";
 import { getProfileInformation } from "../../util/api/api";
+import { getFormattedDateFromDB } from "../../util/general-functions/generalFunctions";
 
 const ProfileInformation = ({ authenticatedUser }) => {
   const [profileInformation, setProfileInformation] = useState(null);
@@ -35,6 +36,8 @@ const ProfileInformation = ({ authenticatedUser }) => {
     ProgramName,
     DepartmentName,
   } = profileInformation[0] ;
+
+  const DateOfBirthFormatted = getFormattedDateFromDB(DateOfBirth)
 
   return (
     <>
@@ -72,7 +75,7 @@ const ProfileInformation = ({ authenticatedUser }) => {
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Date of Birth:</strong>
             </Form.Label>
-            <Form.Control value={DateOfBirth} disabled />
+            <Form.Control value={DateOfBirthFormatted} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -124,7 +127,7 @@ const ProfileInformation = ({ authenticatedUser }) => {
             <Form.Label style={{ color: "var(--color_font2)" }}>
               <strong>Date of Birth:</strong>
             </Form.Label>
-            <Form.Control value={DateOfBirth} disabled />
+            <Form.Control value={DateOfBirthFormatted} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">

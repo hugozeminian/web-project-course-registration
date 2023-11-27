@@ -2,7 +2,6 @@ import sql from 'mssql';
 import { config } from './config.js';
 
 export const ReadProfileAdmin = async (userName) => {
-    console.log('readProfileAdmin');
     try {
 
         await sql.connect(config);

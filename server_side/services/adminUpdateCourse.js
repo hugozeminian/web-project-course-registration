@@ -1,8 +1,7 @@
 import { config } from "./config.js"
 import sql from 'mssql'
 
-export const AdminUpdateCourse = async (props)=>{
-
+export const AdminUpdateCourse = async (props) => {
     try{
 
         await sql.connect(config);
@@ -26,11 +25,11 @@ export const AdminUpdateCourse = async (props)=>{
                         SeatsAvailable = @SeatsAvailable,
                         ClassSize = @ClassSize,
                         DeliveryMode = @DeliveryMode
-                        WHERE CourseCode = @CourseCode  AND
-                              Section = @Section        AND
-                              ProgramID = @ProgramID    AND
-                              TermID = @TermID          AND
-                              Year = @Year
+                        WHERE CourseCode = @OldCourseCode  AND
+                              Section = @OldSection        AND
+                              ProgramID = @OldProgramID    AND
+                              TermID = @OldTermID          AND
+                              Year = @OldYear
                         `;
 
         const request = new sql.Request();
@@ -53,6 +52,11 @@ export const AdminUpdateCourse = async (props)=>{
         request.input('SeatsAvailable',         sql.Int,            props.SeatsAvailable);
         request.input('ClassSize',              sql.Int,            props.ClassSize);
         request.input('DeliveryMode',           sql.NVarChar,       props.DeliveryMode);
+        request.input('OldCourseCode',          sql.NVarChar,       props.OldCourseCode);
+        request.input('OldSection',             sql.Int,            props.OldSection);
+        request.input('OldProgramID',           sql.Int,            props.OldProgramID);
+        request.input('OldTermID',              sql.Int,            props.OldTermID);
+        request.input('OldYear',                sql.Int,            props.OldYear);
 
         await request.query(query);
 

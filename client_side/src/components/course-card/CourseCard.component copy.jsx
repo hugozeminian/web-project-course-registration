@@ -3,8 +3,17 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import { Row, Col, Table, Form } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styles";
-import { addCourseRegistration, removeCourseRegistration, updateCourse, deleteCourse } from "../../util/api/api";
-import { getFormattedDateToDB, getFormattedHoursFromDB, getFormattedHoursToDB } from "../../util/general-functions/generalFunctions";
+import {
+  addCourseRegistration,
+  admDeleteCourse,
+  removeCourseRegistration,
+  getAuthenticatedUser,
+  updateCourse,
+  getStudentAddedCourses,
+  getStudentID,
+} from "../../util/api/api";
+import { CustomRadioGroup, CustomGroupFormCheck } from "../../route/adm-new-course-form/AdmNewCourseForm.styles";
+import { getFormattedDateFromDB, getFormattedDateToDB, getFormattedHoursFromDB, getFormattedHoursToDB } from "../../util/general-functions/generalFunctions";
 
 const CourseCard = ({
   courseData,
@@ -15,19 +24,14 @@ const CourseCard = ({
   authenticatedUser,
 }) => {
   const [courseInformation, setCourseInformation] = useState(courseData);
-  const [editCourseData, setEditCourseData] = useState({});
-  const [authenticatedUserData, setAuthenticatedUserData] = useState(authenticatedUser);
+  const [authenticatedUserData, setAuthenticatedUserData] = useState(authenticatedUser)
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [startDateFormatted, setStartDateFormatted] = useState("");
-  const [startDateFormattedEdited, setStartDateFormattedEdited] = useState("");
   const [initialTime, setInitialTime] = useState("");
   const [endDateFormatted, setEndDateFormatted] = useState("");
-  const [endDateFormattedEdited, setEndDateFormattedEdited] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [selectedCourseForDeletion, setSelectedCourseForDeletion] = useState(null);
 
   useEffect(() => {
     const startDateFormattedData = getFormattedDateToDB(courseInformation.StartDate);
@@ -35,13 +39,10 @@ const CourseCard = ({
     const hoursFormatted = getFormattedHoursFromDB(courseInformation.Hours);
 
     setStartDateFormatted(startDateFormattedData);
-    setStartDateFormattedEdited(startDateFormattedData);
-
     setEndDateFormatted(endDateFormattedData);
-    setEndDateFormattedEdited(endDateFormattedData);
-
     setInitialTime(hoursFormatted.initialTime || "");
     setEndTime(hoursFormatted.endTime || "");
+
   }, [courseInformation.StartDate, courseInformation.EndDate, courseInformation.Hours]);
 
   if (!courseData) {
@@ -49,14 +50,18 @@ const CourseCard = ({
   }
 
   const {
+    Username,
+    ProgramName,
+    CourseMin,
+    CourseMax,
     CourseCode,
     Section,
     ProgramID,
     Name,
     Description,
+    Year,
     TermID,
     Term,
-    Year,
     Days,
     Hours,
     StartDate,
@@ -69,7 +74,6 @@ const CourseCard = ({
     SeatsAvailable,
     ClassSize,
     DeliveryMode,
-    ProgramType,
   } = courseInformation;
 
   const handleButtonClickAddCourse = async () => {
@@ -99,61 +103,58 @@ const CourseCard = ({
       TermID: TermID,
       Year: Year,
     };
-
+    
     await removeCourseRegistration(courseInformation);
 
     setConfirmationMessage("Course removed.");
     setShowConfirmationModal(true);
   };
 
-  const handleButtonClickDeleteCourse = (course) => {
-    setSelectedCourseForDeletion(course);
-    setConfirmationMessage("Are you sure you want to delete the course?");
-    setShowDeleteConfirmationModal(true);
-  };
+  const handleButtonClickDeleteCourse = () => {
+    const courseInformation = {
+      StudentID: authenticatedUserData.StudentID,
+      CourseCode: CourseCode,
+      Section: Section,
+      TermID: TermID,
+      Year: Year,
+    };
+    
+    //ToDo
+    admDeleteCourse(courseInformation);
 
-  const deleteSelectedCourse = async () => {
-    if (selectedCourseForDeletion) {
-      const courseInformation = {
-        StudentID: authenticatedUserData.StudentID,
-        CourseCode: selectedCourseForDeletion.CourseCode,
-        Section: selectedCourseForDeletion.Section,
-        TermID: selectedCourseForDeletion.TermID,
-        Year: selectedCourseForDeletion.Year,
-      };
-
-      await deleteCourse(courseInformation);
-      setShowDeleteConfirmationModal(false);
-      setConfirmationMessage("Course deleted.");
-      setShowConfirmationModal(true);
-    }
+    setConfirmationMessage("Course Deleted.");
+    setShowConfirmationModal(true);
   };
 
   const handleButtonClickEditCourse = () => {
-    setEditCourseData(courseInformation);
     setShowEditModal(true);
   };
 
-  const handleEditCourse = async () => {
+  // const handleEditCourse = () => {
+  //   const updatedHours = `${initialTime} - ${endTime}`;
+  //   getFormattedHoursFromDB(initialTime, endTime)
+  //   const updatedHoursFormatted = getFormattedHoursToDB(...updatedHours.split(' - '));
+  //   setCourseInformation({
+  //     ...courseInformation,
+  //     Hours: updatedHoursFormatted,
+  //   });
+  //   updateCourse(courseInformation);
+  //   setShowEditModal(false);
+  // };
+
+  const handleEditCourse = () => {
     const updatedHoursFormatted = getFormattedHoursToDB(initialTime, endTime);
-    const updatedCourseData = {
-      ...editCourseData,
-      Hours: `${updatedHoursFormatted.initialTime} - ${updatedHoursFormatted.endTime}`,
-      StartDate: startDateFormattedEdited,
-      EndDate: endDateFormattedEdited,
 
-      OldCourseCode: courseInformation.CourseCode,
-      OldSection: courseInformation.Section,
-      OldProgramID: courseInformation.ProgramID,
-      OldTermID: courseInformation.TermID,
-      OldYear: courseInformation.Year,
-    };
+      setCourseInformation({
+        ...courseInformation,
+        Hours: `${updatedHoursFormatted.initialTime} - ${updatedHoursFormatted.endTime}`,
+      });
+      
+      updateCourse(courseInformation);
+      setShowEditModal(false);
 
-    await updateCourse(updatedCourseData);
-    setShowEditModal(false);
-
-    window.location.reload();
   };
+  
 
   return (
     <>
@@ -268,7 +269,7 @@ const CourseCard = ({
                   Edit Course
                 </CustomButton>
 
-                <CustomButton hidden={deleteCourseButtonHidden} onClick={() => handleButtonClickDeleteCourse(courseInformation)}>
+                <CustomButton hidden={deleteCourseButtonHidden} onClick={handleButtonClickDeleteCourse}>
                   Delete Course
                 </CustomButton>
               </div>
@@ -290,9 +291,7 @@ const CourseCard = ({
               ? "bg-success text-white"
               : confirmationMessage === "Course removed."
               ? "bg-warning"
-              : confirmationMessage === "Course deleted."
-              ? "bg-danger text-white"
-              : "bg-warning"
+              : "bg-danger text-white"
           }>
           <Modal.Title>Confirmation message</Modal.Title>
         </Modal.Header>
@@ -310,40 +309,6 @@ const CourseCard = ({
         </Modal.Footer>
       </Modal>
 
-      <Modal
-        show={showDeleteConfirmationModal}
-        onHide={() => {
-          setShowDeleteConfirmationModal(false);
-          setSelectedCourseForDeletion(null);
-        }}>
-        <Modal.Header
-          closeButton
-          className={
-            confirmationMessage === "The course has been added successfully."
-              ? "bg-success text-white"
-              : confirmationMessage === "Course removed."
-              ? "bg-warning"
-              : confirmationMessage === "Course deleted."
-              ? "bg-danger text-white"
-              : "bg-warning"
-          }>
-          <Modal.Title>Confirmation message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to delete the course?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <CustomButton onClick={deleteSelectedCourse}>Yes</CustomButton>
-          <CustomButton
-            onClick={() => {
-              setShowDeleteConfirmationModal(false);
-              setSelectedCourseForDeletion(null);
-            }}>
-            No
-          </CustomButton>
-        </Modal.Footer>
-      </Modal>
-
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Course</Modal.Title>
@@ -354,10 +319,10 @@ const CourseCard = ({
               <Form.Label>Course</Form.Label>
               <Form.Control
                 type="text"
-                value={editCourseData.Name}
+                value={Name}
                 onChange={(e) =>
-                  setEditCourseData({
-                    ...editCourseData,
+                  setCourseInformation({
+                    ...courseInformation,
                     Name: e.target.value,
                   })
                 }
@@ -369,12 +334,11 @@ const CourseCard = ({
                 <Form.Group className="mt-3" controlId="code">
                   <Form.Label>Code</Form.Label>
                   <Form.Control
-                    disabled
                     type="text"
-                    value={editCourseData.CourseCode}
+                    value={CourseCode}
                     onChange={(e) =>
-                      setEditCourseData({
-                        ...editCourseData,
+                      setCourseInformation({
+                        ...courseInformation,
                         CourseCode: e.target.value,
                       })
                     }
@@ -385,12 +349,11 @@ const CourseCard = ({
                 <Form.Group className="mt-3" controlId="season">
                   <Form.Label>Term</Form.Label>
                   <Form.Control
-                    disabled
                     as="select"
-                    value={editCourseData.Term}
+                    value={Term}
                     onChange={(e) =>
-                      setEditCourseData({
-                        ...editCourseData,
+                      setCourseInformation({
+                        ...courseInformation,
                         Term: e.target.value,
                       })
                     }>
@@ -401,32 +364,16 @@ const CourseCard = ({
                   </Form.Control>
                 </Form.Group>
               </Col>
-              <Col>
-                <Form.Group className="mt-3" controlId="code">
-                  <Form.Label>Section</Form.Label>
-                  <Form.Control
-                    disabled
-                    type="text"
-                    value={editCourseData.Section}
-                    onChange={(e) =>
-                      setEditCourseData({
-                        ...editCourseData,
-                        Section: e.target.value,
-                      })
-                    }
-                  />
-                </Form.Group>
-              </Col>
             </Row>
 
             <Form.Group className="mt-3" controlId="description">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type="text"
-                value={editCourseData.Description}
+                value={Description}
                 onChange={(e) =>
-                  setEditCourseData({
-                    ...editCourseData,
+                  setCourseInformation({
+                    ...courseInformation,
                     Description: e.target.value,
                   })
                 }
@@ -441,17 +388,14 @@ const CourseCard = ({
                   </Form.Label>
                   <Form.Control
                     type="date"
-                    min={`${startDateFormattedEdited.substring(0, 4)}-01-01`}
-                    max={`${startDateFormattedEdited.substring(0, 4)}-12-31`}
                     required
-                    value={startDateFormattedEdited}
-                    onChange={(e) => setStartDateFormattedEdited(e.target.value)}
-                    onKeyDown={(e) => {
-                      // Prevent the default behavior for the DEL key (key code 46) and Backspace key (key code 8)
-                      if (e.keyCode === 46 || e.keyCode === 8) {
-                        e.preventDefault();
-                      }
-                    }}
+                    value={startDateFormatted}
+                    onChange={(e) =>
+                      setCourseInformation({
+                        ...courseInformation,
+                        StartDate: e.target.value,
+                      })
+                    }
                   />
                   <Form.Control.Feedback type="invalid">Please enter start date.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -464,17 +408,14 @@ const CourseCard = ({
                   </Form.Label>
                   <Form.Control
                     type="date"
-                    min={`${endDateFormattedEdited.substring(0, 4)}-01-01`}
-                    max={`${endDateFormattedEdited.substring(0, 4)}-12-31`}
                     required
-                    value={endDateFormattedEdited}
-                    onChange={(e) => setEndDateFormattedEdited(e.target.value)}
-                    onKeyDown={(e) => {
-                      // Prevent the default behavior for the DEL key (key code 46) and Backspace key (key code 8)
-                      if (e.keyCode === 46 || e.keyCode === 8) {
-                        e.preventDefault();
-                      }
-                    }}
+                    value={endDateFormatted}
+                    onChange={(e) =>
+                      setCourseInformation({
+                        ...courseInformation,
+                        EndDate: e.target.value,
+                      })
+                    }
                   />
                   <Form.Control.Feedback type="invalid">Please enter start date.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -493,7 +434,8 @@ const CourseCard = ({
                     required
                     value={initialTime}
                     onChange={(e) => {
-                      setInitialTime(e.target.value);
+                      setInitialTime(e.target.value)
+                      console.log("🚀 ~ file: CourseCard.component.jsx:427 ~ e.target.value:", e.target.value)
                     }}
                   />
                   <Form.Control.Feedback type="invalid">Please enter a start time.</Form.Control.Feedback>
@@ -509,9 +451,7 @@ const CourseCard = ({
                     type="time"
                     required
                     value={endTime}
-                    onChange={(e) => {
-                      setEndTime(e.target.value);
-                    }}
+                    onChange={(e) => setEndTime(e.target.value)}
                   />
                   <Form.Control.Feedback type="invalid">Please enter a start time.</Form.Control.Feedback>
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -525,10 +465,10 @@ const CourseCard = ({
               </Form.Label>
               <Form.Select
                 required
-                value={editCourseData.Days}
+                value={Days}
                 onChange={(e) =>
-                  setEditCourseData({
-                    ...editCourseData,
+                  setCourseInformation({
+                    ...courseInformation,
                     Days: e.target.value,
                   })
                 }>
@@ -553,23 +493,21 @@ const CourseCard = ({
               </Form.Label>
               <Form.Select
                 required
-                value={`${editCourseData.CampusID}-${editCourseData.CampusName}`}
-                onChange={(e) => {
-                  const [campusID, campus] = e.target.value.split("-");
-                  setEditCourseData({
-                    ...editCourseData,
-                    CampusID: campusID,
-                    CampusName: campus,
-                  });
-                }}>
+                value={CampusName}
+                onChange={(e) =>
+                  setCourseInformation({
+                    ...courseInformation,
+                    CampusName: e.target.value,
+                  })
+                }>
                 <option value="" disabled>
-                  Select a Delivery Mode
+                  Select a Campus
                 </option>
-                <option value="1-Calgary">Calgary</option>
-                <option value="2-Airdrie">Airdrie</option>
-                <option value="3-Banff">Banff</option>
-                <option value="4-Okotoks">Okotoks</option>
-                <option value="5-Cochrane">Cochrane</option>
+                <option value="Calgary">Calgary</option>
+                <option value="Airdrie">Airdrie</option>
+                <option value="Banff">Banff</option>
+                <option value="Okotoks">Okotoks</option>
+                <option value="Cochrane">Cochrane</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">Please select a campus.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -581,20 +519,19 @@ const CourseCard = ({
               </Form.Label>
               <Form.Select
                 required
-                value={editCourseData.DeliveryMode}
+                value={DeliveryMode}
                 onChange={(e) =>
-                  setEditCourseData({
-                    ...editCourseData,
+                  setCourseInformation({
+                    ...courseInformation,
                     DeliveryMode: e.target.value,
                   })
                 }>
                 <option value="" disabled>
                   Select a Delivery Mode
                 </option>
-                <option value="In-Class">In-Class</option>
-                <option value="Hybrid">Hybrid</option>
-                <option value="ATOL">ATOL</option>
-                <option value="RTOL">RTOL</option>
+                <option value="In Class">In Class</option>
+                <option value="Real-time Online">Real-time Online</option>
+                <option value="Any-time Online">Any-time Online</option>
               </Form.Select>
               <Form.Control.Feedback type="invalid">Please select a delivery mode.</Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -608,10 +545,10 @@ const CourseCard = ({
                 type="number"
                 min="1"
                 max="40"
-                value={editCourseData.ClassSize}
+                value={ClassSize}
                 onChange={(e) =>
-                  setEditCourseData({
-                    ...editCourseData,
+                  setCourseInformation({
+                    ...courseInformation,
                     ClassSize: e.target.value,
                   })
                 }

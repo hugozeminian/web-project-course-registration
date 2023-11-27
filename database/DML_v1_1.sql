@@ -199,6 +199,7 @@ INSERT INTO Course
 
 	INSERT INTO StudentCourses 
 	(StudentID, 	CourseCode, 	Section, 	TermID, 	[Year]) VALUES
+	(4,				'AI0404',		1,			103,		2024),
     (4,				'IOS1515',		1,			103,		2024),
 	(4,				'CI1414',		1,			103,		2024),
 	(3,				'CI1414',		1,			103,		2024)

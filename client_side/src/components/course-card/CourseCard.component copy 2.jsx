@@ -3,8 +3,17 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import { Row, Col, Table, Form } from "react-bootstrap";
 import { CardWrapper, CustomButton, CustomTd } from "./CourseCard.styles";
-import { addCourseRegistration, removeCourseRegistration, updateCourse, deleteCourse } from "../../util/api/api";
-import { getFormattedDateToDB, getFormattedHoursFromDB, getFormattedHoursToDB } from "../../util/general-functions/generalFunctions";
+import {
+  addCourseRegistration,
+  removeCourseRegistration,
+  updateCourse,
+  deleteCourse,
+} from "../../util/api/api";
+import {
+  getFormattedDateToDB,
+  getFormattedHoursFromDB,
+  getFormattedHoursToDB,
+} from "../../util/general-functions/generalFunctions";
 
 const CourseCard = ({
   courseData,
@@ -19,7 +28,6 @@ const CourseCard = ({
   const [authenticatedUserData, setAuthenticatedUserData] = useState(authenticatedUser);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState("");
   const [startDateFormatted, setStartDateFormatted] = useState("");
   const [startDateFormattedEdited, setStartDateFormattedEdited] = useState("");
@@ -27,7 +35,6 @@ const CourseCard = ({
   const [endDateFormatted, setEndDateFormatted] = useState("");
   const [endDateFormattedEdited, setEndDateFormattedEdited] = useState("");
   const [endTime, setEndTime] = useState("");
-  const [selectedCourseForDeletion, setSelectedCourseForDeletion] = useState(null);
 
   useEffect(() => {
     const startDateFormattedData = getFormattedDateToDB(courseInformation.StartDate);
@@ -36,10 +43,10 @@ const CourseCard = ({
 
     setStartDateFormatted(startDateFormattedData);
     setStartDateFormattedEdited(startDateFormattedData);
-
+    
     setEndDateFormatted(endDateFormattedData);
     setEndDateFormattedEdited(endDateFormattedData);
-
+    
     setInitialTime(hoursFormatted.initialTime || "");
     setEndTime(hoursFormatted.endTime || "");
   }, [courseInformation.StartDate, courseInformation.EndDate, courseInformation.Hours]);
@@ -106,27 +113,20 @@ const CourseCard = ({
     setShowConfirmationModal(true);
   };
 
-  const handleButtonClickDeleteCourse = (course) => {
-    setSelectedCourseForDeletion(course);
-    setConfirmationMessage("Are you sure you want to delete the course?");
-    setShowDeleteConfirmationModal(true);
-  };
+  const handleButtonClickDeleteCourse = () => {
+    const courseInformation = {
+      StudentID: authenticatedUserData.StudentID,
+      CourseCode: CourseCode,
+      Section: Section,
+      TermID: TermID,
+      Year: Year,
+    };
 
-  const deleteSelectedCourse = async () => {
-    if (selectedCourseForDeletion) {
-      const courseInformation = {
-        StudentID: authenticatedUserData.StudentID,
-        CourseCode: selectedCourseForDeletion.CourseCode,
-        Section: selectedCourseForDeletion.Section,
-        TermID: selectedCourseForDeletion.TermID,
-        Year: selectedCourseForDeletion.Year,
-      };
+    //ToDo
+    deleteCourse(courseInformation);
 
-      await deleteCourse(courseInformation);
-      setShowDeleteConfirmationModal(false);
-      setConfirmationMessage("Course deleted.");
-      setShowConfirmationModal(true);
-    }
+    setConfirmationMessage("Course Deleted.");
+    setShowConfirmationModal(true);
   };
 
   const handleButtonClickEditCourse = () => {
@@ -148,11 +148,11 @@ const CourseCard = ({
       OldTermID: courseInformation.TermID,
       OldYear: courseInformation.Year,
     };
-
+    console.log("🚀 ~ file: CourseCard.component.jsx:150 ~ handleEditCourse ~ updatedCourseData:", updatedCourseData)
     await updateCourse(updatedCourseData);
     setShowEditModal(false);
 
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
@@ -268,7 +268,7 @@ const CourseCard = ({
                   Edit Course
                 </CustomButton>
 
-                <CustomButton hidden={deleteCourseButtonHidden} onClick={() => handleButtonClickDeleteCourse(courseInformation)}>
+                <CustomButton hidden={deleteCourseButtonHidden} onClick={handleButtonClickDeleteCourse}>
                   Delete Course
                 </CustomButton>
               </div>
@@ -290,9 +290,7 @@ const CourseCard = ({
               ? "bg-success text-white"
               : confirmationMessage === "Course removed."
               ? "bg-warning"
-              : confirmationMessage === "Course deleted."
-              ? "bg-danger text-white"
-              : "bg-warning"
+              : "bg-danger text-white"
           }>
           <Modal.Title>Confirmation message</Modal.Title>
         </Modal.Header>
@@ -306,40 +304,6 @@ const CourseCard = ({
               window.location.reload();
             }}>
             Close
-          </CustomButton>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal
-        show={showDeleteConfirmationModal}
-        onHide={() => {
-          setShowDeleteConfirmationModal(false);
-          setSelectedCourseForDeletion(null);
-        }}>
-        <Modal.Header
-          closeButton
-          className={
-            confirmationMessage === "The course has been added successfully."
-              ? "bg-success text-white"
-              : confirmationMessage === "Course removed."
-              ? "bg-warning"
-              : confirmationMessage === "Course deleted."
-              ? "bg-danger text-white"
-              : "bg-warning"
-          }>
-          <Modal.Title>Confirmation message</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Are you sure you want to delete the course?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <CustomButton onClick={deleteSelectedCourse}>Yes</CustomButton>
-          <CustomButton
-            onClick={() => {
-              setShowDeleteConfirmationModal(false);
-              setSelectedCourseForDeletion(null);
-            }}>
-            No
           </CustomButton>
         </Modal.Footer>
       </Modal>
