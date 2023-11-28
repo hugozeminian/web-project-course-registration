@@ -71,7 +71,7 @@ GO
 -- Login -- We removed email beacause we can't reference both admin and student
 CREATE TABLE [Login]
 (
-	UserName varchar(255) UNIQUE PRIMARY KEY,
+	UserName varchar(255) PRIMARY KEY,
 	[Password] varchar(255) NOT NULL,
 	LevelID int FOREIGN KEY REFERENCES [AccessLevel] (LevelID)
 );
