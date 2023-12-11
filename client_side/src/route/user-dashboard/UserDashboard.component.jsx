@@ -45,7 +45,7 @@ const UserDashboard = () => {
     StudentID,
     Username,
   } = profileInformation[0];
-  console.log("🚀 ~ file: UserDashboard.component.jsx:39 ~ UserDashboard ~ profileInformation[0]:", profileInformation[0]);
+  // console.log("🚀 ~ file: UserDashboard.component.jsx:39 ~ UserDashboard ~ profileInformation[0]:", profileInformation[0]);
 
   return (
     <>

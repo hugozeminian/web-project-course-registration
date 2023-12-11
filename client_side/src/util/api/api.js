@@ -26,7 +26,7 @@ const fetchData = async (route, userName) => {
         });
 
         if (response.status >= 200 && response.status < 300) {
-            console.log(`🚀 ~ file: api.js:223 ~ fetchData ~ response.data ~ route:${route} :`, response.data)
+            // console.log(`🚀 ~ file: api.js:223 ~ fetchData ~ response.data ~ route:${route} :`, response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
@@ -121,7 +121,7 @@ const postData = async (route, data) => {
         const response = await Axios.post(server + route, data);
 
         if (response.status >= 200 && response.status < 300) {
-            console.log("🚀 ~ file: api.js:312 ~ postData ~ response.data:", response.data)
+            // console.log("🚀 ~ file: api.js:312 ~ postData ~ response.data:", response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
@@ -227,7 +227,7 @@ const deleteData = async (route, params) => {
         const response = await Axios.delete(server + route, { data: params });
 
         if (response.status >= 200 && response.status < 300) {
-            console.log("🚀 ~ file: api.js:454 ~ deleteData ~ response.data:", response.data)
+            // console.log("🚀 ~ file: api.js:454 ~ deleteData ~ response.data:", response.data)
             return response.data;
         } else {
             throw new Error('Server responded with an error');
@@ -258,7 +258,7 @@ const updateData = async (route, params) => {
       const response = await Axios.put(server + route, params);
   
       if (response.status >= 200 && response.status < 300) {
-          console.log("🚀 ~ file: api.js:500 ~ updateData ~ response.data:", response.data)
+        //   console.log("🚀 ~ file: api.js:500 ~ updateData ~ response.data:", response.data)
         return response.data;
       } else {
         throw new Error('Server responded with an error');
